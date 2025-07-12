@@ -2,14 +2,12 @@ import React from 'react'
 import Nav from '../components/nav'
 import Footer from '../components/footer'
 import Card from '../components/Card'
+
+
 function Home() {
   return (
     <>
-      <div className='fixed top-0 right-0 left-0 z-10'>
-        <Nav />
-      </div>
-
-      <div className="relative w-full h-screen overflow-hidden">
+    <div className="relative w-full h-screen overflow-hidden">
         <video
           autoPlay
           muted

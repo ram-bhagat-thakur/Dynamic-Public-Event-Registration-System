@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 
 function Card() {
     return (
@@ -14,7 +15,8 @@ function Card() {
                 <div className='w-80 mt-4'>
                     <h2 className='mb-1 text-lg font-bold'>Innovators Connect 2025 Empowering Tech Minds</h2><hr className='outline-amber-500 outline-1' />
                     <h3 className='font-normal mb-4 mt-4 h-19 overflow-clip text-justify text-ellipsis text-base'>Join fellow developers, tech enthusiasts, and industry mentors at Innovators Connect 2025—an interactive seminar focused on emerging technologies, career guidance, and team-building.</h3>
-                    <button className='font-semibold bg-[#FFFFFF] p-2 text-xl rounded-2xl border-none text-[#000000]'><a href="">View Details →</a></button>
+                    <button className='font-semibold bg-[#FFFFFF] p-2 text-xl rounded-2xl border-none text-[#000000]'><a href="">
+                        <NavLink to='/Event-Details'>View Details →</NavLink> </a></button>
                 </div>
             </div>
         </>
