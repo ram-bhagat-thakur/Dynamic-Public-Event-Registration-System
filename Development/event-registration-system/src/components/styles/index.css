@@ -3,3 +3,11 @@
 body {
   font-family: 'Poppins', sans-serif;
 }
+
+button{
+  cursor: pointer;
+}
+
+table, tr, td, th{
+  border: 2px solid black;
+}

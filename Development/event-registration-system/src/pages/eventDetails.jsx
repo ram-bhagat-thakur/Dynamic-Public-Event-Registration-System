@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 
 function EventDetails() {
     return (
@@ -26,8 +27,8 @@ function EventDetails() {
                     <h2><span className='font-bold'>Location : </span>Sandip University Auditorium, Sijaul, Bihar</h2>
                     <h2 className='mt-2'><span className='font-bold'>Category : </span>Technical Seminar & Networking</h2>
                     <div>
-                        <button className='mt-12 bg-[#FEBA34] p-5 rounded-2xl'>Book Now</button>
-                        <button className='mt-12 bg-[#FEBA34] p-5 rounded-2xl ml-5'>Find More Events</button>
+                        <NavLink to='/Resister-Event'><button className='mt-12 bg-[#FEBA34] p-5 rounded-2xl'>Book Now</button></NavLink> 
+                        <NavLink to='/Events'><button className='mt-12 bg-[#FEBA34] p-5 rounded-2xl ml-5'> Find More Events </button></NavLink>
                     </div>
                 </div>
             </div>

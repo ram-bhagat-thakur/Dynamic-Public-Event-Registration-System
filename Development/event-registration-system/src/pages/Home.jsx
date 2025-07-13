@@ -1,8 +1,6 @@
 import React from 'react'
-import Nav from '../components/nav'
-import Footer from '../components/footer'
 import Card from '../components/Card'
-
+import { NavLink } from 'react-router-dom'
 
 function Home() {
   return (
@@ -22,7 +20,7 @@ function Home() {
             <div className='flex flex-col gap-10 h-screen justify-center w-1/2'>
               <h1 className='text-4xl'>Plan. Register. Attend</h1> <hr className='w-20'/>
               <h3 className='text-3xl w-2/3'>Manage your events with ease. Find and register for upcoming programs.</h3>
-              <button className='shadow-xl shadow-indigo-500/50 font-semibold bg-[#2563EB] p-2 text-2xl rounded-2xl border-none text-[#FFFFFF] w-2/5'><a href="">Browse Events</a></button>
+          <NavLink to='/Events'  className='font-semibold bg-[#2563EB] p-2 text-2xl rounded-2xl border-none text-center text-[#FFFFFF] w-3/7'><button>Browse Events</button></NavLink>
             </div>
             <div className='w-1/2 h-screen content-center'>
               <img src="/Resister-Event-Easily.png" alt="" className='h-4/5 m-auto' />
@@ -38,7 +36,7 @@ function Home() {
             <Card />
             <Card />
           </div>
-          <button className='font-semibold bg-[#2563EB] p-2 text-2xl rounded-2xl border-none text-[#FFFFFF] w-2/7'><a href="">See All Events</a></button>
+          <NavLink to='/Events'  className='font-semibold bg-[#2563EB] p-2 text-2xl rounded-2xl border-none text-center text-[#FFFFFF] w-2/7'><button>See All Events</button></NavLink>
         </div>
       </section>
 
@@ -100,7 +98,6 @@ function Home() {
           </div>
         </div>
       </section>
-      <Footer />
     </>
   )
 }

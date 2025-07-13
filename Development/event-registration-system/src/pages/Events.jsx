@@ -36,7 +36,7 @@ function Events() {
           <div className='flex justify-center mt-10'>
             <div className='flex flex-row gap-5'>
               <div>
-                <input type="text" placeholder='Search Events...' className='outline-none text-xl p-2 border-1 rounded-xl rounded-r-none' />
+                <input type="search" placeholder='Search Events...' className='outline-none text-xl p-2 border-1 rounded-xl rounded-r-none' />
                 <button className='text-xl bg-[#2563EB] rounded-r-xl p-2 cursor-pointer text-[#F3F4F6]'>Search</button>
               </div>
               <select className="border p-3 rounded-xl cursor-pointer outline-none">

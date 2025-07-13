@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link, NavLink } from 'react-router-dom'
 
-function Nav() {
+function AdminNav() {
   return (
     <>
 
@@ -12,7 +12,8 @@ function Nav() {
             <ul className='flex gap-6 float-end items-center'>
               <li><NavLink to='/'>Home</NavLink></li>
               <li><NavLink to='/Events'>Events</NavLink> </li>
-              <li><NavLink to='/Admin-Login'>Admin Login</NavLink> </li>
+              <li><NavLink to='/Admin-Login/Dashboard'>Dashboard</NavLink> </li>
+              <li><NavLink to='/Admin-Login'>Log-Out</NavLink> </li>
             </ul>
           </div>
         </div>
@@ -21,4 +22,4 @@ function Nav() {
   )
 }
 
-export default Nav
+export default AdminNav
