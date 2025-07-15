@@ -43,8 +43,8 @@ A full-stack web application for managing event registrations, built with the ME
 
 **Ram Bhagat Thakur**  
 B.Tech CSE @ Sandip University  
-GitHub: [@RamBhagatThakur](https://github.com/RamBhagatThakur)  
-LinkedIn: [Ram Bhagat Thakur](https://www.linkedin.com/in/rambhagatthakur)
+GitHub: [@RamBhagatThakur](https://github.com/ram-bhagat-thakur)  
+LinkedIn: [Ram Bhagat Thakur](https://www.linkedin.com/in/ram-bhagat-thakur)
 
 ---
 
