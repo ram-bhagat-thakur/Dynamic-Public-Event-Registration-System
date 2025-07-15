@@ -34,11 +34,11 @@ const router = createBrowserRouter([
         element: <WrongUrl />
       },
       {
-        path: '/Event-Details',
+        path: '/Event-Details/:id',
         element: <EventDetails />
       },
       {
-        path: '/Resister-Event',
+        path: '/Resister-Event/:id',
         element: <ResisterEvent />
       }
     ]
