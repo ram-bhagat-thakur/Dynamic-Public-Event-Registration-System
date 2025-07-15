@@ -6,7 +6,7 @@ function Card(props) {
         <>
             <div className='inset-shadow-sm inset-shadow-indigo-500 shadow-xl bg-[#DCBEFD] h-fit w-fit p-5 rounded-2xl text-[#1F2937]'>
                 <div>
-                    <img src={props.image} alt="Event Poster" className='w-80 h-50 rounded-2xl' />
+                    <img src={`http://localhost:5000/${event.bannerPath}`} alt="Event Poster" className='w-80 h-50 rounded-2xl' />
                     <div className='grid grid-cols-2 gap-5'>
                         <h3 className='text-sm w-fit h-fit p-2 bg-amber-300 rounded-2xl mt-5'>Left Seat : {props.leftSeate}</h3>
                         <h3 className='text-sm w-fit h-fit p-2 bg-amber-300 rounded-2xl mt-5'>Date : {props.date}</h3>
