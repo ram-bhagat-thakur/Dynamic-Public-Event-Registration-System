@@ -37,6 +37,8 @@ function AdminDashboard() {
     .then(res => res.json())
     .then(data => setRegistrations(data))
     .catch(err => console.error("Failed to fetch:", err));
+    
+    let a= 1;
 
 
   return (
