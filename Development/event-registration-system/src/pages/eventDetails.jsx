@@ -1,26 +1,38 @@
-import React from 'react'
-import { NavLink, useParams } from 'react-router-dom'
-import TechData from '../components/DataComponents/TechData'
-import SportsData from '../components/DataComponents/SportsData'
-import CultureData from '../components/DataComponents/CultureData'
+import React, { useEffect, useState } from 'react';
+import { NavLink, useParams } from 'react-router-dom';
 
 
-function EventDetails(props) {
-    const allEvents = [...TechData, ...SportsData, ...CultureData];
+function EventDetails() {
+
     const { id } = useParams();
-    const event = allEvents.find(e => e.id === parseInt(id));
+    const [event, setEvent] = useState(null);
+    const [loading, setLoading] = useState(true);
 
-    if (!event) return <p className='mt-25 mb-25'>Event not found</p>;
+    useEffect(() => {
+        fetch(`http://localhost:5000/api/events/${id}`)
+            .then(res => res.json())
+            .then(data => {
+                setEvent(data);
+                setLoading(false);
+            })
+            .catch(err => {
+                console.error("Failed to fetch event:", err);
+                setLoading(false);
+            });
+    }, [id]);
+
+    if (loading) return <p className='mt-25 mb-25'>Loading event...</p>;
+    if (!event || !event.title) return <p className='mt-25 mb-25'>Event not found</p>;
 
     return (
         <>
             <div className='flex max-md:flex-col flex-row gap-10 mt-15 p-15'>
                 <div className='w-1/2 max-md:w-full' overflow-y-auto='true'>
-                    <img src={event.image} alt="" className='w-full rounded-2xl' />
+                    <img src={`http://localhost:5000/${event.bannerPath}`} alt="Event Banner" className='w-full rounded-2xl' />
                     <div className='m-5 max-md:m-0'>
-                        <p className='text-xl max-md:text-sm max-md:mt-10 font-medium'>{event.briefDescription}</p>
+                        <p className='text-xl max-md:text-sm max-md:mt-10 font-medium'>{event.description}</p>
                         <h2 className='mt-5 text-2xl max-md:text-xl font-bold'>Highlights include:</h2>
-                        <p className='mt-2 text-xl max-md:text-sm font-medium ml-2'>{event.Highlight}</p>
+                        <p className='mt-2 text-xl max-md:text-sm font-medium ml-2'>{event.highlights}</p>
 
                         <h2 className='mt-5 mb-2 text-xl font-medium'><span className='text-2xl max-md:text-xl font-bold'>Seats Availability : </span>{event.leftSeate}</h2>
                         <i className='text-xl max-md:text-sm'>⚠️ Limited seats left! Register early to reserve yours.</i>

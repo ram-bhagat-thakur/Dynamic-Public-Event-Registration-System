@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Card from '../components/Card'
 import { NavLink } from 'react-router-dom'
 import TechData from '../components/DataComponents/TechData'
@@ -6,6 +6,18 @@ import SportsData from '../components/DataComponents/SportsData'
 import CultureData from '../components/DataComponents/CultureData'
 
 function Home() {
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:5000/api/events')
+      .then(res => res.json())
+      .then(data => setEvents(data))
+      .catch(err => console.error("Failed to fetch events:", err));
+  }, []);
+
+  const techEvent = events.find(ev => ev.tags === 'Tech');
+  const culturalEvent = events.find(ev => ev.tags === 'Cultural');
+  const sportsEvent = events.find(ev => ev.tags === 'Sports');
   return (
     <>
       <div className="relative w-full h-screen max-md:h-fit overflow-hidden max-md:pb-10">
@@ -21,7 +33,7 @@ function Home() {
         <section className='max-md:mt-25 max-md:m-auto max-md:text-center'>
           <header className='text-[#F3F4F6] p-5 flex flex-row gap-2 max-md:flex-col '>
             <div className='flex flex-col gap-10 h-screen max-md:h-fit justify-center w-1/2 max-md:w-full'>
-              <h1 className='text-4xl max-md:text-3xl max-md:m-auto font-black'>Plan. Register. Attend</h1> <hr className='w-20 max-md:m-auto'/>
+              <h1 className='text-4xl max-md:text-3xl max-md:m-auto font-black'>Plan. Register. Attend</h1> <hr className='w-20 max-md:m-auto' />
               <h3 className='text-3xl max-md:text-2xl w-2/3 max-md:w-full font-bold'>Manage your events with ease. Find and register for upcoming programs.</h3>
               <NavLink to='/Events' className='max-md:m-auto max-md:text-xl font-semibold bg-[#2563EB] p-2 text-2xl rounded-2xl border-none text-center text-[#FFFFFF] w-3/7'><button>Browse Events</button></NavLink>
             </div>
@@ -35,27 +47,54 @@ function Home() {
         <div className='flex flex-col items-center mt-15'>
           <h1 className='text-center text-4xl mb-9 max-md:text-3xl font-bold'>Seats Are Filling Fast — Grab Yours Now</h1>
           <div className='flex flex-row gap-10 max-md:gap-0 justify-center flex-wrap mb-10 mt-10'>
-            {TechData.map(event => (
-              <div key={event.id} className='flex flex-row gap-10 justify-center flex-wrap mb-10'>
+
+            <div className='flex flex-row gap-10 justify-center flex-wrap mb-10'>
+              {techEvent && (
+                <Card
+                  key={techEvent._id}
+                  id={techEvent._id}
+                  title={techEvent.title}
+                  date={techEvent.date}
+                  location={techEvent.location}
+                  description={techEvent.description}
+                  leftSeate={techEvent.leftSeate}
+                  bannerPath={techEvent.bannerPath}
+                />
+              )}
+            </div>
 
 
-                <Card id={event.id} title={event.title} date={event.date} location={event.location} description={event.description} leftSeate={event.leftSeate} image={event.image} />
-              </div>
-            ))}
-            {CultureData.map(event => (
-              <div key={event.id} className='flex flex-row gap-10 justify-center flex-wrap mb-10'>
+            <div className='flex flex-row gap-10 justify-center flex-wrap mb-10'>
+              {culturalEvent && (
+                <Card
+                  key={culturalEvent._id}
+                  id={culturalEvent._id}
+                  title={culturalEvent.title}
+                  date={culturalEvent.date}
+                  location={culturalEvent.location}
+                  description={culturalEvent.description}
+                  leftSeate={culturalEvent.leftSeate}
+                  bannerPath={culturalEvent.bannerPath}
+                />
+              )}
+            </div>
 
 
-                <Card id={event.id} title={event.title} date={event.date} location={event.location} description={event.description} leftSeate={event.leftSeate} image={event.image} />
-              </div>
-            ))}
-            {SportsData.map(event => (
-              <div key={event.id} className='flex flex-row gap-10 justify-center flex-wrap mb-10'>
+            <div className='flex flex-row gap-10 justify-center flex-wrap mb-10'>
+              {sportsEvent && (
+                <Card
+                  key={sportsEvent._id}
+                  id={sportsEvent._id}
+                  title={sportsEvent.title}
+                  date={sportsEvent.date}
+                  location={sportsEvent.location}
+                  description={sportsEvent.description}
+                  leftSeate={sportsEvent.leftSeate}
+                  bannerPath={sportsEvent.bannerPath}
+                />
+              )}
+            </div>
 
-
-                <Card id={event.id} title={event.title} date={event.date} location={event.location} description={event.description} leftSeate={event.leftSeate} image={event.image} />
-              </div>
-            ))}
           </div>
           <NavLink to='/Events' className='font-semibold bg-[#2563EB] p-2 text-2xl rounded-2xl border-none text-center text-[#FFFFFF] w-2/7 max-md:text-xl max-md:w-fit'><button>See All Events</button></NavLink>
         </div>

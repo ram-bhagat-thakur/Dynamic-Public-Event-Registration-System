@@ -1,14 +1,14 @@
-const mongoose = require("mongoose")
+const mongoose = require('mongoose');
 
 const registrationSchema = new mongoose.Schema({
-  
+  eventId: String,
+  eventTitle: String,
   name: String,
   email: String,
-  phone: Number,
+  phone: String,
   message: String,
-  eventId: Number,
-  eventTitle: String
-
+  timestamp: { type: Date, default: Date.now }
 });
 
-module.exports=mongoose.model('Registration', registrationSchema);
+module.exports = mongoose.model('Registration', registrationSchema);
+  

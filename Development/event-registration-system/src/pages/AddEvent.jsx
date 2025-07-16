@@ -50,18 +50,9 @@ function AddEvent() {
     }
 
     const payload = new FormData();
-    payload.append('title', formData.title);
-    payload.append('date', formData.date);
-    payload.append('time', formData.time);
-    payload.append('totalSeats', formData.totalSeats);
-    payload.append('leftSeate', formData.totalSeats); // default
-    payload.append('location', formData.location);
-    payload.append('tags', formData.tags);
-    payload.append('description', formData.description);
-    payload.append('highlights', formData.highlights);
-    payload.append('organizer', formData.organizer);
-    payload.append('banner', formData.banner); // ✅ file
-
+    for (const key in formData) {
+  payload.append(key, formData[key]);
+}
     try {
       const res = await fetch('http://localhost:5000/api/events', {
         method: 'POST',
@@ -75,6 +66,7 @@ function AddEvent() {
       alert("Failed to add event");
     }
   };
+  
 
   return (
     <>

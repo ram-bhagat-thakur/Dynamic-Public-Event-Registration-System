@@ -9,19 +9,28 @@ const eventRoute = require('./routes/events.js');
 
 dotenv.config();
 const app = express();
+//✅ These must come BEFORE any routes
 app.use(cors());
-app.use('/api/register', registerRoute);
-app.use('/api/events', eventRoute);
+app.use(express.json()); // Parses JSON bodies
+app.use(express.urlencoded({ extended: true })); // Parses form data
+
+// ✅ Then mount your routes
+app.use('/api/admin', require('./routes/admin'));
+app.use('/api/events', require('./routes/events'));
+
+app.use('/api/register', require('./routes/register'));
 app.use(express.json());
 app.use('/uploads', express.static('uploads'));
+const adminRoutes = require('./routes/admin');
+app.use('/api/admin', adminRoutes); // ✅ This works only if adminRoutes is a router
+
+console.log("adminRoutes type:", typeof adminRoutes);
 
 // Test route
 app.get('/', (req, res) => {
   res.send('Server is running');
 });
 
-// Import and use registration route
-app.use('/api/register', registerRoute);
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, {

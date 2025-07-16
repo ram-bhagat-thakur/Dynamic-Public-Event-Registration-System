@@ -1,10 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom'
+import { Navigate, NavLink, useNavigate } from 'react-router-dom'
 
 
 function AdminDashboard() {
   const [events, setEvents] = useState([]);
   const [registrations, setRegistrations] = useState([]);
+  const Navigate = useNavigate();
+  const token = localStorage.getItem('adminToken');
+
+  useEffect(() => {
+    const token = localStorage.getItem('adminToken');
+    if (!token) {
+      Navigate('/AdminLogin');
+    }
+  }, []);
 
   useEffect(() => {
     fetch('http://localhost:5000/api/events')
@@ -19,6 +28,15 @@ function AdminDashboard() {
       .then(data => setRegistrations(data))
       .catch(err => console.error("Failed to fetch registrations:", err));
   }, []);
+
+  fetch('http://localhost:5000/api/events/registrations', {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  })
+    .then(res => res.json())
+    .then(data => setRegistrations(data))
+    .catch(err => console.error("Failed to fetch:", err));
 
 
   return (
@@ -56,15 +74,15 @@ function AdminDashboard() {
                 <th>Event ID</th>
                 <th>Title</th>
                 <th>Date</th>
-                <th>Seat Field</th>
+                <th>Seat Left</th>
                 <th>Tags</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody className='max-md:text-sm'>
               {events.map(event => (
-                <tr key={event.id}>
-                  <td>{event.id}</td>
+                <tr key={event._id}>
+                  <td>{event._id}</td>
                   <td>{event.title}</td>
                   <td>{event.date}</td>
                   <td>{event.leftSeate}/{event.totalSeats}</td>

@@ -1,17 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavLink, useParams } from 'react-router-dom'
-import TechData from '../components/DataComponents/TechData'
-import SportsData from '../components/DataComponents/SportsData'
-import CultureData from '../components/DataComponents/CultureData'
 
-const allEvents = [...TechData, ...SportsData, ...CultureData];
 
 function ResisterEvent() {
     const { id } = useParams();
-    const event = allEvents.find(e => e.id === parseInt(id));
-
-    if (!event) return <p>Event not found</p>;
-
+    const [event, setEvent] = useState();
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -19,50 +12,55 @@ function ResisterEvent() {
         message: ''
     });
 
+    useEffect(() => {
+        fetch(`http://localhost:5000/api/events/${id}`)
+            .then(res => res.json())
+            .then(data => setEvent(data))
+            .catch(err => console.error("Failed to fetch event:", err));
+    }, [id]);
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
     };
-// const message = `
-// ✅ Registration Successful!
 
-//     👤 Name: ${formData.name}
-//     📧 Email: ${formData.email}
-//     📞 Phone: ${formData.phone}
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-//     📅 Event: ${event.title}
-//     📍 Location: ${event.location}
-//     🗓️ Date: ${event.date}
-// `;
-   
-const handleSubmit = async (e) => {
-  e.preventDefault();
+        try {
+            const res = await fetch(`http://localhost:5000/api/register/${id}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
 
-  const payload = {
-    message:event.message,
-    phone: event.phone,
-    email : event.email,
-    name: event.name,
-    eventId: event.id,
-    eventTitle: event.title
-  };
+            if (!res.ok) {
+                const text = await res.text();
+                throw new Error(`Server error: ${text}`);
+            }
 
-  try {
-    const res = await fetch('http://localhost:5000/api/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    });
+            const data = await res.json();
+            alert(data.message || "Registration successful");
+        } catch (err) {
+            console.error("Registration failed:", err);
+            alert("Something went wrong");
+        }
+    };
 
-    const data = await res.json();
-    alert(data.message);
-  } catch (err) {
-    console.error(err);
-    alert("Registration failed");
-  }
-};
+    if (!event) return <p>Loading event...</p>;
+
+
+    // const message = `
+    // ✅ Registration Successful!
+
+    //     👤 Name: ${formData.name}
+    //     📧 Email: ${formData.email}
+    //     📞 Phone: ${formData.phone}
+
+    //     📅 Event: ${event.title}
+    //     📍 Location: ${event.location}
+    //     🗓️ Date: ${event.date}
+    // `;
 
 
     return (
@@ -72,15 +70,15 @@ const handleSubmit = async (e) => {
             <form onSubmit={handleSubmit} className='pt-10 m-auto w-fit flex flex-col gap-10 pb-10 bg-[#D9D9D9] p-5 rounded-2xl mt-10 mb-10 max-md:ml-10 max-md:mr-10'>
                 <div>
                     <h3 className='text-xl font-bold mb-0'>👤 Full Name</h3><br />
-                    <input type="text" name="name" placeholder='Enter your name..' value={formData.name} onChange={handleChange} className='b-2 bg-amber-300 rounded-xl p-3 w-120 max-md:w-full -mt-10 text-xl' />
+                    <input name='name' type="text" placeholder="Your Name" value={formData.name} onChange={handleChange} required className='b-2 bg-amber-300 rounded-xl p-3 w-120 max-md:w-full -mt-10 text-xl' />
                 </div>
                 <div>
                     <h3 className='text-xl font-bold mb-0'>📧 Email Address</h3><br />
-                    <input type="Email" name="email" placeholder='Enter your Email..' value={formData.email} onChange={handleChange} required className='b-2 bg-amber-300 rounded-xl p-3 w-120 max-md:w-full -mt-10 text-xl' />
+                    <input type="Email" name="email" placeholder="Your Email" value={formData.email} onChange={handleChange} required className='b-2 bg-amber-300 rounded-xl p-3 w-120 max-md:w-full -mt-10 text-xl' />
                 </div>
                 <div>
                     <h3 className='text-xl font-bold mb-0'>📞  Phone Number</h3><br />
-                    <input type="tel" name="phone" placeholder='Enter your Contact Number..' value={formData.phone} onChange={handleChange} required className='b-2 bg-amber-300 rounded-xl p-3 w-120 max-md:w-full -mt-10 text-xl' />
+                    <input type="tel" name="phone" placeholder="Your Phone" value={formData.phone} onChange={handleChange} required className='b-2 bg-amber-300 rounded-xl p-3 w-120 max-md:w-full -mt-10 text-xl' />
                 </div>
                 <div className='w-120 max-md:w-full'>
                     <h3 className='text-xl font-bold mb-0'>🧾 Additional Notes or Special Request</h3><br />
