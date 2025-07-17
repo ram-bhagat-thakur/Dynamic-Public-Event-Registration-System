@@ -13,6 +13,8 @@ import AdminLog from './pages/AdminLog';
 import AdminDashboard from './pages/AdminDashboard';
 import AddEvent from './pages/AddEvent';
 import Resistrant from './pages/Resistrant';
+import ProtectedRoute from './components/HOC/ProtectedRoute';
+import EditEvent from './pages/EditEvent';
 
 
 const router = createBrowserRouter([
@@ -44,30 +46,62 @@ const router = createBrowserRouter([
     ]
   },
 
-
   {
-  path: '/Admin-Login',
-  element: <AdminLayout />,
-  children: [
-    {
-      path: '', // ✅ this will render at /Dashobard/AdminLogin
-      element: <AdminLog />
-    },
-    {
-      path: 'Dashboard', // ✅ this will render at /Dashobard
-      element: <AdminDashboard />
-    },
-    {
-      path : '/Admin-Login/Dashboard/Add-Event',
-      element : <AddEvent />
-    },
-    {
-      path : '/Admin-Login/Dashboard/Resistrant',
-      element : <Resistrant />
-    }
-  ]
-}
+    path: '/Admin-Login',
+    element: <AdminLayout />,
+    children: [
+      {
+        path: '', // ✅ renders at /Admin-Login
+        element: <AdminLog />
+      },
+      {
+        path: 'Dashboard',
+        element: (
+          <ProtectedRoute>
+            <AdminDashboard />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: 'Dashboard/Add-Event',
+        element: (
+          <ProtectedRoute>
+            <AddEvent />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: 'Dashboard/Resistrant',
+        element: (
+          <ProtectedRoute>
+            <Resistrant />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: '/Admin-Login/Dashboard/Edit-Event/:id',
+        element: (
+          <ProtectedRoute>
+            <EditEvent />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path:'/Admin-Login/Dashboard/Resistrant/:eventId',
+        
+        element:(
+        <ProtectedRoute>
+          <Resistrant />
+        </ProtectedRoute>
+        )
 
+      },
+      {
+        path: 'Events',
+        element: <Events />
+      },
+    ]
+  }
 ])
 
 

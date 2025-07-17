@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
-const SECRET = 'your_secret_key'; // 🔒 Use environment variable in production
+const SECRET = process.env.JWT_SECRET;
+console.log("🔐 JWT_SECRET in events.js:", SECRET); // ✅ Confirm it's loaded
 
 function verifyAdmin(req, res, next) {
   const authHeader = req.headers.authorization;
@@ -8,11 +9,10 @@ function verifyAdmin(req, res, next) {
   const token = authHeader.split(' ')[1];
   try {
     const decoded = jwt.verify(token, SECRET);
-    req.admin = decoded; // You can access this in the route if needed
+    req.admin = decoded;
     next();
   } catch (err) {
+    console.log("❌ JWT verification failed:", err.message);
     res.status(403).json({ message: "Invalid or expired token" });
   }
 }
-
-module.exports = verifyAdmin;

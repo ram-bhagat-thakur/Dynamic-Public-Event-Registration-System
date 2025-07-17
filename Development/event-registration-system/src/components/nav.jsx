@@ -12,7 +12,7 @@ function Nav() {
             <ul className='flex gap-6 float-end items-center'>
               <li><NavLink to='/'>Home</NavLink></li>
               <li><NavLink to='/Events'>Events</NavLink> </li>
-              <li><NavLink to='/Admin-Login'>Admin Login</NavLink> </li>
+              <li><NavLink to='/Admin-Login/Dashboard'>Admin-Space</NavLink> </li>
             </ul>
           </div>
         </div>

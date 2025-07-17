@@ -63,15 +63,15 @@ function Events() {
             <hr />
             <h1 className='text-3xl text-center mt-5 mb-5 font-bold'>💻 Tech Eventt</h1>
             <hr />
-            {filteredEvents
-              .filter(ev => ev.tags === 'Tech')
-              .map(event =>
-                <div key={event._id} className='flex flex-row gap-10 justify-center flex-wrap mb-10 mt-12'>
+            <div  className='flex flex-row gap-10 justify-center flex-wrap mb-10 mt-12'>
+            {filteredEvents.filter(ev => ev.tags === 'Tech').map(event =>
+                <div key={event._id}>
 
 
                   <Card bannerPath={event.bannerPath} id={event._id} title={event.title} date={event.date} location={event.location} description={event.description} leftSeate={event.leftSeate} image={event.image} />
                 </div>
               )}
+              </div>
           </div>
         )}
 
@@ -80,33 +80,33 @@ function Events() {
             <hr />
             <h1 className='text-3xl text-center mt-5 mb-5 font-bold'>🎭 Cultural Event</h1>
             <hr />
-            {filteredEvents
-              .filter(ev => ev.tags === 'Cultural')
-              .map(event =>
-                <div key={event.id} className='flex flex-row gap-10 justify-center flex-wrap mb-10 mt-12'>
+            <div  className='flex flex-row gap-10 justify-center flex-wrap mb-10 mt-12'>
+            {filteredEvents.filter(ev => ev.tags === 'Cultural').map(event =>
+                <div key={event._id}>
 
 
-                  <Card bannerPath={event.bannerPath} id={event.id} title={event.title} date={event.date} location={event.location} description={event.description} leftSeate={event.leftSeate} image={event.image} />
+                  <Card bannerPath={event.bannerPath} id={event._id} title={event.title} date={event.date} location={event.location} description={event.description} leftSeate={event.leftSeate} image={event.image} />
                 </div>
               )}
+              </div>
           </div>
         )}
-
+        
         {(category === 'All' || category === 'Sports') && (
 
           <div>
             <hr />
             <h1 className='text-3xl text-center mt-5 mb-5 font-bold'>🏅 Sports Events</h1>
             <hr />
-            {filteredEvents
-              .filter(ev => ev.tags === 'Sports')
-              .map(event =>
-                <div key={event._id} className='flex flex-row gap-10 justify-center flex-wrap mb-10 mt-12'>
+            <div  className='flex flex-row gap-10 justify-center flex-wrap mb-10 mt-12'>
+            {filteredEvents.filter(ev => ev.tags === 'Sports').map(event =>
+                <div key={event._id}>
 
 
                   <Card bannerPath={event.bannerPath} id={event._id} title={event.title} date={event.date} location={event.location} description={event.description} leftSeate={event.leftSeate} image={event.image} />
                 </div>
               )}
+              </div>
           </div>
         )}
       </section>

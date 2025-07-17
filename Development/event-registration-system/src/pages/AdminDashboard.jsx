@@ -1,20 +1,86 @@
 import React, { useEffect, useState } from 'react';
-import { Navigate, NavLink, useNavigate } from 'react-router-dom'
-
+import { NavLink, useNavigate } from 'react-router-dom';
 
 function AdminDashboard() {
   const [events, setEvents] = useState([]);
   const [registrations, setRegistrations] = useState([]);
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
   const token = localStorage.getItem('adminToken');
 
-  useEffect(() => {
-    const token = localStorage.getItem('adminToken');
-    if (!token) {
-      Navigate('/AdminLogin');
-    }
-  }, []);
+  // useEffect(() => {
+  //   // Fetch all events
+  //   fetch('http://localhost:5000/api/events', {
+  //     headers: {
+  //       Authorization: `Bearer ${token}`
+  //     }
+  //   })
+  //     .then(res => res.json())
+  //     .then(data => setEvents(data))
+  //     .catch(err => console.error("Failed to fetch events:", err));
 
+  //   // Fetch all registrations
+  //   fetch('http://localhost:5000/api/registrations', {
+  //     headers: {
+  //       Authorization: `Bearer ${token}`
+  //     }
+  //   })
+  //     .then(res => res.json())
+  //     .then(data => setRegistrations(data))
+  //     .catch(err => console.error("Failed to fetch registrations:", err));
+  // }, []);
+
+
+  const today = new Date().toISOString().split('T')[0]; // e.g. "2025-07-17"
+
+  const upcomingEvents = events.filter(event => event.date >= today);
+
+
+  const totalSeats = upcomingEvents.reduce((sum, event) => {
+    const seats = parseInt(event.totalSeats);
+    return sum + (isNaN(seats) ? 0 : seats);
+  }, 0);
+
+  const upcomingEventIds = upcomingEvents.map(event => event._id);
+
+const currentRegistrations = Array.isArray(registrations)
+  ? registrations.filter(reg => upcomingEventIds.includes(reg.eventId))
+  : [];
+
+  // const totalSeats = events.reduce((sum, event) => sum + (event.totalSeats || 0), 0);
+
+  const handleDelete = async (id) => {
+    const confirm = window.confirm("Are you sure you want to delete this event?");
+    if (!confirm) return;
+
+    try {
+      const res = await fetch(`http://localhost:5000/api/events/${id}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        alert("Event deleted successfully");
+        setEvents(prev => prev.filter(e => e._id !== id));
+      } else {
+        alert(data.error || "Failed to delete event");
+      }
+    } catch (err) {
+      console.error("Delete error:", err);
+      alert("Something went wrong");
+    }
+  };
+
+  // ✅ Redirect if not logged in
+  useEffect(() => {
+    if (!token) {
+      navigate('/Admin-Login');
+    }
+  }, [token, navigate]);
+
+  // ✅ Fetch events
   useEffect(() => {
     fetch('http://localhost:5000/api/events')
       .then(res => res.json())
@@ -22,55 +88,64 @@ function AdminDashboard() {
       .catch(err => console.error("Failed to fetch events:", err));
   }, []);
 
+  // ✅ Fetch registrations (protected)
   useEffect(() => {
-    fetch('http://localhost:5000/api/register')
+    fetch('http://localhost:5000/api/events/registrations', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
       .then(res => res.json())
       .then(data => setRegistrations(data))
       .catch(err => console.error("Failed to fetch registrations:", err));
-  }, []);
+  }, [token]);
 
-  fetch('http://localhost:5000/api/events/registrations', {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  })
-    .then(res => res.json())
-    .then(data => setRegistrations(data))
-    .catch(err => console.error("Failed to fetch:", err));
-    
-    let a= 1;
+  const handleEdit = (id) => {
+    navigate(`/Admin-Login/Dashboard/Edit-Event/${id}`);
+  };
 
 
   return (
     <>
+      {/* Header */}
       <div className='mt-25 flex w-screen flex-row items-center'>
-        <div className='w-1/2 max-md:w-full  ml-10'>
-          <h2 className='text-2xl max-md:text-xl font-bold '>Welcome, Admin Ram</h2>
+        <div className='w-1/2 max-md:w-full ml-10'>
+          <h2 className='text-2xl max-md:text-xl font-bold'>Welcome, Admin Ram</h2>
         </div>
         <div className='w-1/2 max-md:w-full flex justify-end mr-10'>
-          <NavLink to='Add-Event'><button className='max-md:text-sm bg-[#FEBA34] p-5 rounded-2xl'>+ Add New Event</button></NavLink>
+          <NavLink to='Add-Event'>
+            <button className='max-md:text-sm bg-[#FEBA34] p-5 rounded-2xl'>+ Add New Event</button>
+          </NavLink>
         </div>
       </div>
+
+      {/* Stats */}
       <div className='flex flex-row gap-5 m-10'>
         <div className='w-1/4 max-md:w-fit bg-amber-400 p-5 border-2 rounded-2xl'>
           <NavLink to='/Admin-Login/Dashboard/Resistrant'>
-            <h2>Total Resistrance :</h2><hr className='mb-5 w-full' />
-            <h2 className='p-2 text-3xl w-fit h-fit bg-amber-200 rounded-2xl'>
-              {registrations.length}/90
+            <h2>Total Registrants:</h2><hr className='mb-5 w-full' />
+            <h2 className='p-2 text-3xl bg-amber-200 rounded-2xl'>
+              {Array.isArray(currentRegistrations) && Array.isArray(upcomingEvents)
+                ? `${currentRegistrations.length} / ${totalSeats}`
+                : 'Loading...'}
             </h2>
           </NavLink>
         </div>
         <div className='w-1/4 max-md:w-fit bg-amber-400 p-5 border-2 rounded-2xl'>
-          <h2>Total Events :</h2><hr className='mb-5 w-full' />
-          <h2 className='p-2 text-3xl w-fit h-fit bg-amber-200 rounded-2xl'>50</h2>
+          <h2>Total Events:</h2><hr className='mb-5 w-full' />
+          <h2 className='p-2 text-3xl bg-amber-200 rounded-2xl'>
+            {events.length}
+          </h2>
         </div>
       </div>
 
+      {/* Event Table */}
       <div className='w-screen mt-40 mb-40'>
         <hr />
-        <h2 className='bg-amber-200 p-5 text-center font-bold text-3xl max-md:text-xl'>Added Event Details</h2><hr />
-        <div className='flex '>
-          <table className='w-screen text-center m-10 max-md:mt-10 max-md:m-0 text-wrap'>
+        <h2 className='bg-amber-200 p-5 text-center font-bold text-3xl max-md:text-xl'>Added Event Details</h2>
+        <hr />
+        <div className='flex'>
+          <table className='w-screen text-center m-10 max-md:mt-10 max-md:m-0'>
             <thead>
               <tr className='text-2xl max-md:text-sm font-black'>
                 <th>Event ID</th>
@@ -85,23 +160,28 @@ function AdminDashboard() {
               {events.map(event => (
                 <tr key={event._id}>
                   <td>{event._id}</td>
-                  <td>{event.title}</td>
+                  <NavLink to={`/Admin-Login/Dashboard/Resistrant/${event._id}`}>
+                    <td>{event.title}</td>
+                  </NavLink>
                   <td>{event.date}</td>
                   <td>{event.leftSeate}/{event.totalSeats}</td>
                   <td>{event.tags}</td>
                   <td className='flex flex-row gap-2 justify-center'>
-                    <img src="/pencil-solid.png" alt="Edit" className='w-10 h-10 max-md:size-8 bg-amber-300 rounded-2xl p-2' />
-                    <img src="/Delete.png" alt="Delete" className='w-10 h-10 max-md:size-8 bg-amber-300 rounded-2xl p-2' />
+                    <button onClick={() => handleEdit(event._id)}>
+                      <img src="/pencil-solid.png" alt="Edit" className='w-10 h-10 max-md:size-8 bg-amber-300 rounded-2xl p-2' />
+                    </button>
+                    <button onClick={() => handleDelete(event._id)}>
+                      <img src="/Delete.png" alt="Delete" className='w-10 h-10 max-md:size-8 bg-amber-300 rounded-2xl p-2' />
+                    </button>
                   </td>
                 </tr>
               ))}
             </tbody>
-
           </table>
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default AdminDashboard
+export default AdminDashboard;

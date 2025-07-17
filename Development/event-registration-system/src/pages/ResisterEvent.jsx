@@ -12,6 +12,7 @@ function ResisterEvent() {
         message: ''
     });
 
+
     useEffect(() => {
         fetch(`http://localhost:5000/api/events/${id}`)
             .then(res => res.json())
@@ -26,41 +27,54 @@ function ResisterEvent() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        console.log("📤 Sending registration:", formData);
         try {
             const res = await fetch(`http://localhost:5000/api/register/${id}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData)
+                body: JSON.stringify({
+                    name: formData.name,
+                    email: formData.email,
+                    mobile: formData.phone,
+                    message: formData.message
+                })
             });
 
+            const data = await res.json();
+            console.log("✅ Registration response:", data);
+
             if (!res.ok) {
-                const text = await res.text();
-                throw new Error(`Server error: ${text}`);
+                throw new Error(data.error || "Server error");
             }
 
-            const data = await res.json();
-            alert(data.message || "Registration successful");
+            const message = `
+  ✅ Registration Successful!
+
+  👤 Name: ${data.registration.name}
+  📧 Email: ${data.registration.email}
+  📞 Phone: ${data.registration.mobile}
+
+  📅 Event: ${data.updatedEvent.title}
+  📍 Location: ${data.updatedEvent.location}
+  🗓️ Date: ${data.updatedEvent.date}
+`;
+            // ✅ Show alert safely
+            window.alert(message);
+
+            // ✅ Reset form
+            setFormData({ name: '', email: '', phone: '', message: '' });
+
         } catch (err) {
-            console.error("Registration failed:", err);
-            alert("Something went wrong");
+            console.error("❌ Registration failed:", err);
+
+            // If using fetch, you won't get err.response like Axios
+            alert(err.message || "Something went wrong");
         }
+
     };
 
     if (!event) return <p>Loading event...</p>;
 
-
-    // const message = `
-    // ✅ Registration Successful!
-
-    //     👤 Name: ${formData.name}
-    //     📧 Email: ${formData.email}
-    //     📞 Phone: ${formData.phone}
-
-    //     📅 Event: ${event.title}
-    //     📍 Location: ${event.location}
-    //     🗓️ Date: ${event.date}
-    // `;
 
 
     return (

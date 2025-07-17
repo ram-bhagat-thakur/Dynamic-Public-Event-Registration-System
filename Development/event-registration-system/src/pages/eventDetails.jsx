@@ -7,22 +7,32 @@ function EventDetails() {
     const { id } = useParams();
     const [event, setEvent] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState('');
 
-    useEffect(() => {
-        fetch(`http://localhost:5000/api/events/${id}`)
-            .then(res => res.json())
-            .then(data => {
-                setEvent(data);
-                setLoading(false);
-            })
-            .catch(err => {
-                console.error("Failed to fetch event:", err);
-                setLoading(false);
-            });
-    }, [id]);
+useEffect(() => {
+  fetch(`http://localhost:5000/api/events/${id}`)
+    .then(async res => {
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || 'Failed to fetch event');
+      }
+      return res.json();
+    })
+    .then(data => {
+      setEvent(data);
+      setLoading(false);
+    })
+    .catch(err => {
+      console.error("Fetch error:", err);
+      setError(err.message);
+      setLoading(false);
+    });
+}, [id]);
 
-    if (loading) return <p className='mt-25 mb-25'>Loading event...</p>;
-    if (!event || !event.title) return <p className='mt-25 mb-25'>Event not found</p>;
+    if (loading) return <p>Loading event...</p>;
+    if (error) return <p className="text-red-500">Error: {error}</p>;
+    if (!event) return <p>No event data found.</p>;
+
 
     return (
         <>

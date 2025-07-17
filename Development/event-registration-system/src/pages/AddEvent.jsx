@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom'
+import { Navigate, NavLink } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 
 function AddEvent() {
+const navigate = useNavigate(); 
+
 
   const [formData, setFormData] = useState({
     id: '',
@@ -60,7 +63,12 @@ function AddEvent() {
       });
 
       const data = await res.json();
+      if (res.ok) {
       alert(data.message || "Event added successfully");
+      navigate('/Admin-Login/Dashboard');
+    }else {
+        alert("Failed to Add event");
+      }
     } catch (err) {
       console.error("❌ Error adding event:", err);
       alert("Failed to add event");

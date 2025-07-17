@@ -1,14 +1,13 @@
 const mongoose = require('mongoose');
 
 const registrationSchema = new mongoose.Schema({
-  eventId: String,
-  eventTitle: String,
   name: String,
   email: String,
-  phone: String,
+  mobile: String,
   message: String,
-  timestamp: { type: Date, default: Date.now }
+  eventId: String
+}, {
+  collection: 'registrations' // ✅ Must match exactly
 });
 
 module.exports = mongoose.model('Registration', registrationSchema);
-  
