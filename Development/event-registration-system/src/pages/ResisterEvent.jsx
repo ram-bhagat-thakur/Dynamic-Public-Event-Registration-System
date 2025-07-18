@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { NavLink, useParams } from 'react-router-dom'
+import { Navigate, NavLink, useParams } from 'react-router-dom'
 
 
 function ResisterEvent() {
@@ -63,7 +63,7 @@ function ResisterEvent() {
 
             // ✅ Reset form
             setFormData({ name: '', email: '', phone: '', message: '' });
-
+            // navigate('http://localhost:5173/Events');
         } catch (err) {
             console.error("❌ Registration failed:", err);
 

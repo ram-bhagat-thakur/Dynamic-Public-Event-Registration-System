@@ -7,47 +7,67 @@ function AdminDashboard() {
   const navigate = useNavigate();
   const token = localStorage.getItem('adminToken');
 
-  // useEffect(() => {
-  //   // Fetch all events
-  //   fetch('http://localhost:5000/api/events', {
-  //     headers: {
-  //       Authorization: `Bearer ${token}`
-  //     }
-  //   })
-  //     .then(res => res.json())
-  //     .then(data => setEvents(data))
-  //     .catch(err => console.error("Failed to fetch events:", err));
+  // ✅ Redirect if not logged in
+  useEffect(() => {
+    if (!token) {
+      navigate('/Admin-Login');
+    }
+  }, [token, navigate]);
 
-  //   // Fetch all registrations
-  //   fetch('http://localhost:5000/api/registrations', {
-  //     headers: {
-  //       Authorization: `Bearer ${token}`
-  //     }
-  //   })
-  //     .then(res => res.json())
-  //     .then(data => setRegistrations(data))
-  //     .catch(err => console.error("Failed to fetch registrations:", err));
-  // }, []);
+  // ✅ Fetch events
+  useEffect(() => {
+    fetch('http://localhost:5000/api/events', {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then(res => res.json())
+      .then(data => setEvents(Array.isArray(data) ? data : []))
+      .catch(err => console.error("Failed to fetch events:", err));
+  }, [token]);
 
+  // ✅ Fetch registrations
+  useEffect(() => {
+    fetch('http://localhost:5000/api/events/registrations', {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then(res => res.json())
+      .then(data => setRegistrations(Array.isArray(data) ? data : []))
+      .catch(err => console.error("Failed to fetch registrations:", err));
+  }, [token]);
 
-  const today = new Date().toISOString().split('T')[0]; // e.g. "2025-07-17"
+  // ✅ Filter upcoming events
+  const today = new Date().toISOString().split('T')[0];
+  const upcomingEvents = events.filter(event => {
+    if (!event.date) {
+      console.warn("⚠️ Missing date in event:", event.title);
+      return false;
+    }
 
-  const upcomingEvents = events.filter(event => event.date >= today);
+    const parsedDate = new Date(event.date);
+    if (isNaN(parsedDate.getTime())) {
+      console.warn("⚠️ Invalid date format:", event.date, "in event:", event.title);
+      return false;
+    }
 
+    const eventDate = parsedDate.toISOString().split('T')[0];
+    return true; // ✅ include all events for testing
+  });
+  console.log("🧾 All events:", events);
+  events.forEach(event => {
+    console.log(`📅 ${event.title} → ${event.date}`);
+  });
+  // ✅ Filter current registrations
+  const upcomingEventIds = upcomingEvents.map(event => event._id);
+  const currentRegistrations = registrations.filter(reg =>
+    upcomingEventIds.includes(reg.eventId)
+  );
 
+  // ✅ Total seats for first upcoming event
   const totalSeats = upcomingEvents.reduce((sum, event) => {
     const seats = parseInt(event.totalSeats);
     return sum + (isNaN(seats) ? 0 : seats);
   }, 0);
 
-  const upcomingEventIds = upcomingEvents.map(event => event._id);
-
-const currentRegistrations = Array.isArray(registrations)
-  ? registrations.filter(reg => upcomingEventIds.includes(reg.eventId))
-  : [];
-
-  // const totalSeats = events.reduce((sum, event) => sum + (event.totalSeats || 0), 0);
-
+  // ✅ Delete event
   const handleDelete = async (id) => {
     const confirm = window.confirm("Are you sure you want to delete this event?");
     if (!confirm) return;
@@ -55,9 +75,7 @@ const currentRegistrations = Array.isArray(registrations)
     try {
       const res = await fetch(`http://localhost:5000/api/events/${id}`, {
         method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
+        headers: { Authorization: `Bearer ${token}` }
       });
 
       const data = await res.json();
@@ -73,37 +91,11 @@ const currentRegistrations = Array.isArray(registrations)
     }
   };
 
-  // ✅ Redirect if not logged in
-  useEffect(() => {
-    if (!token) {
-      navigate('/Admin-Login');
-    }
-  }, [token, navigate]);
 
-  // ✅ Fetch events
-  useEffect(() => {
-    fetch('http://localhost:5000/api/events')
-      .then(res => res.json())
-      .then(data => setEvents(data))
-      .catch(err => console.error("Failed to fetch events:", err));
-  }, []);
-
-  // ✅ Fetch registrations (protected)
-  useEffect(() => {
-    fetch('http://localhost:5000/api/events/registrations', {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
-      .then(res => res.json())
-      .then(data => setRegistrations(data))
-      .catch(err => console.error("Failed to fetch registrations:", err));
-  }, [token]);
-
+  // ✅ Edit event
   const handleEdit = (id) => {
     navigate(`/Admin-Login/Dashboard/Edit-Event/${id}`);
   };
-
 
   return (
     <>
@@ -125,8 +117,8 @@ const currentRegistrations = Array.isArray(registrations)
           <NavLink to='/Admin-Login/Dashboard/Resistrant'>
             <h2>Total Registrants:</h2><hr className='mb-5 w-full' />
             <h2 className='p-2 text-3xl bg-amber-200 rounded-2xl'>
-              {Array.isArray(currentRegistrations) && Array.isArray(upcomingEvents)
-                ? `${currentRegistrations.length} / ${totalSeats}`
+              {events.length > -1
+                ? `${registrations.length} total registrants`
                 : 'Loading...'}
             </h2>
           </NavLink>
@@ -160,9 +152,11 @@ const currentRegistrations = Array.isArray(registrations)
               {events.map(event => (
                 <tr key={event._id}>
                   <td>{event._id}</td>
-                  <NavLink to={`/Admin-Login/Dashboard/Resistrant/${event._id}`}>
-                    <td>{event.title}</td>
-                  </NavLink>
+                  <td>
+                    <NavLink to={`/Admin-Login/Dashboard/Resistrant/${event._id}`}>
+                      {event.title}
+                    </NavLink>
+                  </td>
                   <td>{event.date}</td>
                   <td>{event.leftSeate}/{event.totalSeats}</td>
                   <td>{event.tags}</td>

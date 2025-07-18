@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Card from '../components/Card'
 import { NavLink } from 'react-router-dom'
-import TechData from '../components/DataComponents/TechData'
-import SportsData from '../components/DataComponents/SportsData'
-import CultureData from '../components/DataComponents/CultureData'
 
 function Home() {
   const [events, setEvents] = useState([]);

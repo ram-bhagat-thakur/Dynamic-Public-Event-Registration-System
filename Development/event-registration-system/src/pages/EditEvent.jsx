@@ -5,7 +5,6 @@ function EditEvent() {
     const { id } = useParams();
     const navigate = useNavigate();
     const token = localStorage.getItem('adminToken');
-    const [selectedBanner, setSelectedBanner] = useState(null);
 
     const [eventData, setEventData] = useState({
         id: '',
@@ -33,33 +32,41 @@ function EditEvent() {
             .catch(err => console.error("Failed to fetch event:", err));
     }, [id, token]);
 
+
+
     const handleChange = (e) => {
-        setEventData({ ...eventData, [e.target.name]: e.target.value });
+        const { name, value, type } = e.target;
+
+        setEventData(prev => ({
+            ...prev,
+            [name]: type === 'number' ? parseInt(value) : value
+        }));
     };
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const formData = new FormData();
-        formData.append('title', eventData.title);
-        formData.append('date', eventData.date);
-        formData.append('time', eventData.time);
-        formData.append('location', eventData.location);
-        formData.append('description', eventData.description);
-        formData.append('organizer', eventData.organizer);
-        formData.append('highlights', eventData.highlights);
-        formData.append('leftSeate', eventData.leftSeate);
-        formData.append('totalSeats', eventData.totalSeats);
-        formData.append('tags', eventData.tags);
+        const payload = {
+            title: eventData.title,
+            date: eventData.date,
+            time: eventData.time,
+            location: eventData.location,
+            description: eventData.description,
+            organizer: eventData.organizer,
+            highlights: eventData.highlights,
+            leftSeate: eventData.leftSeate,
+            totalSeats: parseInt(eventData.totalSeats),
+            tags: eventData.tags
+        };
         try {
             const res = await fetch(`http://localhost:5000/api/events/${id}`, {
                 method: 'PUT',
                 headers: {
+                    'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`
-                    // ❌ Don't set Content-Type manually for FormData
                 },
-                body: formData
+                body: JSON.stringify(payload)
             });
 
             const data = await res.json();

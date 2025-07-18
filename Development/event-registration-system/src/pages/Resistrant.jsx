@@ -7,24 +7,50 @@ function Resistrant() {
   const { eventId } = useParams();
   const [event, setEvent] = useState(null);
   const [registrations, setRegistrations] = useState([]);
-  const token = localStorage.getItem('adminToken'); // or userToken if needed
 
  useEffect(() => {
-  const url = eventId
-    ? `http://localhost:5000/api/events/${eventId}/registrations`
-    : `http://localhost:5000/api/events/registrations`;
+  const token = localStorage.getItem('adminToken');
 
-  fetch(url, {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  })
-    .then(res => res.json())
-    .then(data => {
-      console.log("✅ Registrations fetched:", data);
-      setRegistrations(data);
+  if (eventId) {
+    // ✅ Fetch event details
+    fetch(`http://localhost:5000/api/events/${eventId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
     })
-    .catch(err => console.error("❌ Failed to fetch registrations:", err));
+      .then(res => res.json())
+      .then(data => {
+        console.log("📦 Event fetched:", data);
+        setEvent(data);
+      })
+      .catch(err => console.error("❌ Failed to fetch event:", err));
+
+    // ✅ Fetch registrations for this event
+    fetch(`http://localhost:5000/api/events/${eventId}/registrations`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log("✅ Registrations fetched:", data);
+        setRegistrations(data);
+      })
+      .catch(err => console.error("❌ Failed to fetch registrations:", err));
+  } else {
+    // ✅ Fetch all registrations
+    fetch(`http://localhost:5000/api/events/registrations`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log("✅ All registrations fetched:", data);
+        setRegistrations(data);
+      })
+      .catch(err => console.error("❌ Failed to fetch registrations:", err));
+  }
 }, [eventId]);
 
   return (

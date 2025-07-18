@@ -178,13 +178,14 @@ router.put('/events/:id', verifyAdmin, async (req, res) => {
     if (!event) return res.status(404).json({ error: 'Event not found' });
 
     // Recalculate leftSeate
-    const leftSeate = event.totalSeats - registrationCount;
+    const totalSeats = parseInt(req.body.totalSeats || event.totalSeats);
+const leftSeate = totalSeats - registrationCount;
 
     // Merge into update payload
     const updatePayload = {
-      ...req.body,
-      leftSeate
-    };
+  ...req.body,
+  leftSeate
+};
 
     // Update event
     const updated = await Event.findByIdAndUpdate(req.params.id, updatePayload, { new: true });

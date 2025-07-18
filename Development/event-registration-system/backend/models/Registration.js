@@ -7,7 +7,7 @@ const registrationSchema = new mongoose.Schema({
   message: String,
   eventId: String
 }, {
-  collection: 'registrations' // ✅ Must match exactly
+  collection: 'registrations' 
 });
 
 module.exports = mongoose.model('Registration', registrationSchema);
