@@ -28,4 +28,33 @@ router.post('/login', async (req, res) => {
 });
 
 
+// ✅ Admin Registration (protected or seeded)
+router.post('/register', async (req, res) => {
+  try {
+    const { name, email, password, secretKey } = req.body;
+
+    if (secretKey !== process.env.ADMIN_REGISTRATION_KEY) {
+      return res.status(403).json({ error: 'Unauthorized registration attempt' });
+    }
+
+    const existing = await Admin.findOne({ email });
+    if (existing) return res.status(400).json({ error: 'Admin already exists' });
+
+    const newAdmin = new Admin({ name, email, password });
+    await newAdmin.save();
+
+    const token = jwt.sign(
+      { id: newAdmin._id, email: newAdmin.email, name: newAdmin.name, isAdmin: true },
+      process.env.JWT_SECRET,
+      { expiresIn: '1h' }
+    );
+
+    res.json({ message: 'Admin registered successfully', token });
+  } catch (err) {
+    console.error("❌ Admin registration error:", err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+
 module.exports = router;

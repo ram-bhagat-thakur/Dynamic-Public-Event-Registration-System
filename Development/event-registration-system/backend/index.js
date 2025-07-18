@@ -6,23 +6,23 @@ const registerRoute = require('./routes/register');
 const eventRoute = require('./routes/events.js');
 const transporter = require('./utils/mailer'); // adjust path if needed
 const registrationsRoutes = require('./routes/registrations');
-
+const contactRoutes = require('./routes/contact');
 
 require('dotenv').config(); // ✅ Load environment variables
 dotenv.config();
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // Parses form data
 //✅ These must come BEFORE any route
 app.use(cors());
 app.use('/api/registrations', registrationsRoutes);
-app.use(express.json()); // Parses JSON bodies
-app.use(express.urlencoded({ extended: true })); // Parses form data
 app.use('/api', require('./routes/events'));
 // ✅ Then mount your routes
+app.use('/api/contact', contactRoutes);
 app.use('/api/admin', require('./routes/admin'));
 app.use('/api/events', require('./routes/events'));
 app.use('/api', require('./routes/events'));
 app.use('/api/register', require('./routes/register'));
-app.use(express.json());
 app.use('/uploads', express.static('uploads'));
 const adminRoutes = require('./routes/admin');
 const router = require("./routes/register");

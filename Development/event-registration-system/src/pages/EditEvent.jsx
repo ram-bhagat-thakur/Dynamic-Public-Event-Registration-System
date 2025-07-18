@@ -83,80 +83,162 @@ function EditEvent() {
     };
 
     return (
-        <>
-            <div className='mt-20'>
-                <h1 className='text-center text-2xl max-md:text-xl font-bold mb-5'>Edit Event</h1>
-                <hr />
+        <div className="mt-24 px-4">
+            {/* Header */}
+            <div className="text-center mb-8">
+                <h1 className="text-3xl font-bold text-gray-800">✏️ Edit Event</h1>
+                <p className="text-gray-600 mt-2 text-sm">Update your event details below</p>
+                <hr className="mt-4 border-gray-300" />
             </div>
 
-            <form onSubmit={handleSubmit} className='mb-20 w-2/4 max-md:w-full max-md:pl-10 max-md:pr-10 m-auto flex flex-col gap-10 mt-15'>
+            {/* Form */}
+            <form
+                onSubmit={handleSubmit}
+                className="max-w-3xl mx-auto bg-white p-8 rounded-2xl shadow-md space-y-8"
+            >
+                {/* Title */}
                 <div>
-                    <h3 className='text-xl font-bold mb-0'>Event Title :</h3><br />
-                    <input type="text" placeholder='Enter your text..' name="title"
-                        value={eventData.title} onChange={handleChange}
-                        className='w-full border-2 rounded-xl p-3 -mt-10 text-xl' required />
+                    <label className="block text-xl font-semibold mb-2">Event Title</label>
+                    <input
+                        type="text"
+                        name="title"
+                        placeholder="Enter event title..."
+                        value={eventData.title}
+                        onChange={handleChange}
+                        required
+                        className="w-full border border-gray-300 rounded-xl p-3 text-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    />
                 </div>
-                <div className='flex flex-row gap-5 flex-wrap'>
+
+                {/* Date, Time, Seats */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div>
-                        <h3 className='text-xl font-bold mb-0'>Date :</h3><br />
-                        <input type="Date" name="date"
-                            value={eventData.date} onChange={handleChange}
-                            className="border-2 rounded-xl p-3 -mt-10 text-xl"
+                        <label className="block text-xl font-semibold mb-2">Date</label>
+                        <input
+                            type="date"
+                            name="date"
+                            value={eventData.date}
+                            onChange={handleChange}
                             required
+                            className="w-full border border-gray-300 rounded-xl p-3 text-lg"
                         />
                     </div>
                     <div>
-                        <h3 className='text-xl font-bold mb-0'>Time :</h3><br />
-                        <input type="time" name='time' value={eventData.time} onChange={handleChange} className='border-2 rounded-xl p-3 -mt-10 text-xl' required />
+                        <label className="block text-xl font-semibold mb-2">Time</label>
+                        <input
+                            type="time"
+                            name="time"
+                            value={eventData.time}
+                            onChange={handleChange}
+                            required
+                            className="w-full border border-gray-300 rounded-xl p-3 text-lg"
+                        />
                     </div>
                     <div>
-                        <h3 className='text-xl font-bold mb-0'>Total Seats :</h3><br />
-                        <input type="number"
+                        <label className="block text-xl font-semibold mb-2">Total Seats</label>
+                        <input
+                            type="number"
                             name="totalSeats"
-                            value={eventData.totalSeats} onChange={handleChange}
-                            className="border-2 rounded-xl p-3 -mt-10 text-xl"
+                            value={eventData.totalSeats}
+                            onChange={handleChange}
                             required
+                            className="w-full border border-gray-300 rounded-xl p-3 text-lg"
                         />
                     </div>
                 </div>
 
+                {/* Location */}
                 <div>
-                    <h3 className='text-xl font-bold mb-0'>Location :</h3><br />
-                    <input type="text" name='location' placeholder='Enter Event Location..' value={eventData.location} onChange={handleChange} className='w-full border-2 rounded-xl p-3 -mt-10 text-xl' required />
-                </div>
-                <div>
-                    <h3 className='text-xl font-bold -mb-4'>Category :</h3><br />
-                    <select type="text" name="tags" value={eventData.tags} onChange={handleChange}
-                        className="cursor-pointer p-3 text-2xl bg-amber-200 rounded-2xl"
+                    <label className="block text-xl font-semibold mb-2">Location</label>
+                    <input
+                        type="text"
+                        name="location"
+                        placeholder="Enter event location..."
+                        value={eventData.location}
+                        onChange={handleChange}
                         required
+                        className="w-full border border-gray-300 rounded-xl p-3 text-lg"
+                    />
+                </div>
+
+                {/* Category */}
+                <div>
+                    <label className="block text-xl font-semibold mb-2">Category</label>
+                    <select
+                        name="tags"
+                        value={eventData.tags}
+                        onChange={handleChange}
+                        required
+                        className="w-full bg-amber-100 border border-gray-300 rounded-xl p-3 text-lg cursor-pointer"
                     >
                         <option value="">Select Category</option>
                         <option value="Tech">Tech Event</option>
                         <option value="Cultural">Cultural Event</option>
                         <option value="Sports">Sports Event</option>
                     </select>
-
                 </div>
 
+                {/* Description */}
                 <div>
-                    <h3 className='text-xl font-bold mb-0'>Description :</h3>
-                    <textarea name="description" placeholder='Write in details about events...' value={eventData.description} onChange={handleChange} className='w-full border-2 rounded-2xl p-2' required></textarea>
-                </div>
-                <div>
-                    <h3 className='text-xl font-bold mb-0'>Highlights include :</h3>
-                    <textarea name="highlights" placeholder='Include Highlights so people will understand...' value={eventData.highlights} onChange={handleChange} className='w-full border-2 rounded-2xl p-2' required></textarea>
+                    <label className="block text-xl font-semibold mb-2">Description</label>
+                    <textarea
+                        name="description"
+                        placeholder="Write detailed information about the event..."
+                        value={eventData.description}
+                        onChange={handleChange}
+                        required
+                        className="w-full border border-gray-300 rounded-xl p-3 text-lg resize-none"
+                        rows={4}
+                    />
                 </div>
 
+                {/* Highlights */}
                 <div>
-                    <h3 className='text-xl font-bold mb-0'>Organized By :</h3><br />
-                    <input type="text" name='organizer' placeholder='Enter Organizer Details..' value={eventData.organizer} onChange={handleChange} className='w-full border-2 rounded-xl p-3 -mt-10 text-xl' required />
+                    <label className="block text-xl font-semibold mb-2">Highlights</label>
+                    <textarea
+                        name="highlights"
+                        placeholder="Include highlights to attract participants..."
+                        value={eventData.highlights}
+                        onChange={handleChange}
+                        required
+                        className="w-full border border-gray-300 rounded-xl p-3 text-lg resize-none"
+                        rows={3}
+                    />
                 </div>
-                <div className='flex gap-10 w-fit m-auto max-md:flex-col'>
-                    <button type='submit' className='bg-[#FEBA34] p-2.5 text-2xl rounded-2xl w-full max-md:text-xl'>Update Event</button>
-                    <NavLink to='/Admin-Login/Dashboard'><button className='border-2 p-2 pl-10 pr-10 rounded-2xl w-full text-2xl'>Cancel</button></NavLink>
+
+                {/* Organizer */}
+                <div>
+                    <label className="block text-xl font-semibold mb-2">Organized By</label>
+                    <input
+                        type="text"
+                        name="organizer"
+                        placeholder="Enter organizer details..."
+                        value={eventData.organizer}
+                        onChange={handleChange}
+                        required
+                        className="w-full border border-gray-300 rounded-xl p-3 text-lg"
+                    />
+                </div>
+
+                {/* Buttons */}
+                <div className="flex flex-col md:flex-row gap-6 justify-center mt-6">
+                    <button
+                        type="submit"
+                        className="bg-[#FEBA34] hover:bg-yellow-400 text-white font-semibold px-6 py-3 rounded-xl text-lg transition duration-300 w-full md:w-auto"
+                    >
+                        ✅ Update Event
+                    </button>
+                    <NavLink to="/Admin-Login/Dashboard">
+                        <button
+                            type="button"
+                            className="border-2 border-gray-400 hover:border-gray-600 text-gray-800 px-6 py-3 rounded-xl text-lg transition duration-300 w-full md:w-auto"
+                        >
+                            ❌ Cancel
+                        </button>
+                    </NavLink>
                 </div>
             </form>
-        </>
+        </div>
     );
 }
 

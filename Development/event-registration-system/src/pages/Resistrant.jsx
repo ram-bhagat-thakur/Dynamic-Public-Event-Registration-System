@@ -75,83 +75,103 @@ function Resistrant() {
 
   // ✅ Delete all registrants for event
   const handleDeleteAll = async () => {
-  const confirm = window.confirm("Delete all registrants for this event?");
-  if (!confirm || !eventId) return;
+    const confirm = window.confirm(
+      eventId
+        ? "Delete all registrants for this event?"
+        : "Delete all registrants across all events?"
+    );
+    if (!confirm) return;
 
-  try {
-    const res = await fetch(`http://localhost:5000/api/registrations/event/${eventId}`, {
-      method: 'DELETE',
-      headers: { Authorization: `Bearer ${token}` }
-    });
+    const url = eventId
+      ? `http://localhost:5000/api/registrations/event/${eventId}`
+      : `http://localhost:5000/api/registrations`;
 
-    const raw = await res.text();
-    console.log("🧾 Raw response:", raw);
-
-    let data;
     try {
-      data = JSON.parse(raw);
-    } catch (err) {
-      throw new Error("Server returned invalid JSON");
-    }
+      const res = await fetch(url, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}` }
+      });
 
-    if (res.ok) {
-      alert("All registrants deleted");
-      setRegistrations([]);
-    } else {
-      alert(data.error || "Failed to delete all");
+      const raw = await res.text();
+      console.log("🧾 Raw response:", raw);
+
+      let data;
+      try {
+        data = JSON.parse(raw);
+      } catch (err) {
+        throw new Error("Server returned invalid JSON");
+      }
+
+      if (res.ok) {
+        alert(data.message || "All registrants deleted");
+        setRegistrations([]);
+      } else {
+        alert(data.error || "Failed to delete all");
+      }
+    } catch (err) {
+      console.error("Delete all error:", err);
+      alert(err.message || "Something went wrong");
     }
-  } catch (err) {
-    console.error("Delete all error:", err);
-    alert(err.message || "Something went wrong");
-  }
-};
+  };
 
   return (
-    <div className='mt-20 max-md:mb-20'>
-      <h1 className='text-2xl text-center font-bold'>
-        Registrants list for: {event ? event.title : 'All Events'}
+    <div className="mt-24 pb-24 px-4 max-md:mb-20">
+      {/* Header */}
+      <h1 className="text-3xl font-bold text-center text-indigo-800 mb-2">
+        🧾 Registrants List for: {event ? event.title : 'All Events'}
       </h1>
-      <hr />
+      <hr className="border-gray-300 mb-4" />
+
+      {/* Event Info */}
       {event && (
-        <div className='text-center text-gray-600 mt-2'>
+        <div className="text-center text-gray-600 mb-6">
           <p>{event.date} at {event.location}</p>
           <p>Category: {event.tags}</p>
+        </div>
+      )}
+
+      {/* Bulk Delete Button */}
+      {registrations.length > 0 && (
+        <div className="text-center mb-6">
           <button
             onClick={handleDeleteAll}
-            className='mt-5 bg-red-500 text-white px-4 py-2 rounded-xl hover:bg-red-600'
+            className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-xl font-semibold transition"
           >
-            🗑️ Delete All Registrants
+            🗑️ Delete {eventId ? 'All for This Event' : 'All Registrants'}
           </button>
         </div>
       )}
 
-      <div className='flex max-md:w-screen'>
-        <table className='w-screen max-md:w-full text-center m-10 max-md:mt-10 max-md:m-0 text-wrap'>
-          <thead>
-            <tr className='text-2xl max-md:text-sm font-black'>
-              <th>S.I.No.</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Mobile</th>
-              <th>Message</th>
-              <th>Action</th>
+      {/* Table */}
+      <div className="overflow-x-auto">
+        <table className="w-full text-center border-collapse shadow-md rounded-xl">
+          <thead className="bg-gray-100">
+            <tr className="text-lg font-bold text-gray-800">
+              <th className="p-3">S.I.No.</th>
+              <th className="p-3">Name</th>
+              <th className="p-3">Email</th>
+              <th className="p-3">Mobile</th>
+              <th className="p-3">Message</th>
+              <th className="p-3">Action</th>
             </tr>
           </thead>
-          <tbody className='max-md:text-sm'>
+          <tbody className="text-gray-700">
             {registrations.length > 0 ? (
               registrations.map((reg, index) => (
-                <tr key={reg._id}>
-                  <td>{index + 1}</td>
-                  <td>{reg.name}</td>
-                  <td>{reg.email}</td>
-                  <td>{reg.mobile}</td>
-                  <td>{reg.message}</td>
-                  <td>
+                <tr key={reg._id} className="hover:bg-gray-50 transition">
+                  <td className="p-3">{index + 1}</td>
+                  <td className="p-3">{reg.name}</td>
+                  <td className="p-3">{reg.email}</td>
+                  <td className="p-3">{reg.mobile}</td>
+                  <td className="p-3">{reg.message}</td>
+                  <td className="p-3">
                     <button
                       title="Remove this registrant"
                       onClick={() => handleDeleteRegistrant(reg._id)}
                       disabled={deletingId === reg._id}
-                      className={`px-3 py-1 rounded-xl text-white ${deletingId === reg._id ? 'bg-gray-400' : 'bg-red-400 hover:bg-red-600'
+                      className={`px-4 py-2 rounded-xl font-semibold transition ${deletingId === reg._id
+                          ? 'bg-gray-400 text-white cursor-not-allowed'
+                          : 'bg-red-400 hover:bg-red-600 text-white'
                         }`}
                     >
                       {deletingId === reg._id ? 'Removing...' : 'Remove'}
@@ -161,7 +181,9 @@ function Resistrant() {
               ))
             ) : (
               <tr>
-                <td colSpan="6">No registrations found</td>
+                <td colSpan="6" className="p-6 text-gray-500 font-medium">
+                  No registrations found
+                </td>
               </tr>
             )}
           </tbody>

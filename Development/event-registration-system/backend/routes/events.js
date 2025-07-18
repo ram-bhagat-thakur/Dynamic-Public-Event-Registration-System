@@ -18,7 +18,7 @@ const { default: mongoose } = require('mongoose');
 
 function verifyAdmin(req, res, next) {
   const SECRET = process.env.JWT_SECRET;
-  console.log("🔐 JWT_SECRET in middleware:", SECRET); // ✅ Should now be defined
+  // console.log("🔐 JWT_SECRET in middleware:", SECRET); // ✅ Should now be defined
 
   if (!SECRET) {
     return res.status(500).json({ message: "JWT secret not configured" });

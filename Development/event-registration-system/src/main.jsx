@@ -15,7 +15,10 @@ import AddEvent from './pages/AddEvent';
 import Resistrant from './pages/Resistrant';
 import ProtectedRoute from './components/HOC/ProtectedRoute';
 import EditEvent from './pages/EditEvent';
-
+import Welcome from './pages/Welcome'; 
+import AdminRegister from './pages/AdminRegister';
+import Contact from './pages/Contact';
+import AdminMessages from './pages/AdminMessages';
 
 const router = createBrowserRouter([
   {
@@ -42,7 +45,16 @@ const router = createBrowserRouter([
       {
         path: '/Resister-Event/:id',
         element: <ResisterEvent />
+      },
+      {
+        path:'/welcome',
+         element:<Welcome />
+      },
+      {
+        path: 'Contact',
+        element : <Contact />
       }
+
     ]
   },
 
@@ -94,12 +106,24 @@ const router = createBrowserRouter([
           <Resistrant />
         </ProtectedRoute>
         )
-
+      },
+      {
+        path:'/Admin-Login/Dashboard/Messages',
+        
+        element:(
+        <ProtectedRoute>
+          <AdminMessages />
+        </ProtectedRoute>
+        )
       },
       {
         path: 'Events',
         element: <Events />
       },
+      {
+        path : 'Admin-Register',
+        element : <AdminRegister />
+      }
     ]
   }
 ])

@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Navigate, NavLink, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 
 
 function ResisterEvent() {
+    const [isProcessing, setIsProcessing] = useState(false);
+    const navigate = useNavigate();
     const { id } = useParams();
     const [event, setEvent] = useState();
     const [formData, setFormData] = useState({
@@ -26,6 +29,9 @@ function ResisterEvent() {
     };
 
     const handleSubmit = async (e) => {
+        e.preventDefault();
+        setIsProcessing(true); // ✅ Start loading
+
         e.preventDefault();
         console.log("📤 Sending registration:", formData);
         try {
@@ -63,7 +69,19 @@ function ResisterEvent() {
 
             // ✅ Reset form
             setFormData({ name: '', email: '', phone: '', message: '' });
-            // navigate('http://localhost:5173/Events');
+
+            // ✅ Navigate to Events page
+            navigate('/welcome', {
+                state: {
+                    name: formData.name,
+                    email: formData.email,
+                    event: {
+                        title: event.title,
+                        date: event.date,
+                        location: event.location
+                    }
+                }
+            });
         } catch (err) {
             console.error("❌ Registration failed:", err);
 
@@ -78,43 +96,108 @@ function ResisterEvent() {
 
 
     return (
-        <>
-            <h2 className='mt-20 text-2xl font-bold text-center'>Let’s Book Event</h2> <hr className='h-1 w-full' />
-            <h1 className='mt-5 text-3xl max-md:text-xl font-black text-center'>{event.title}</h1>
-            <form onSubmit={handleSubmit} className='pt-10 m-auto w-fit flex flex-col gap-10 pb-10 bg-[#D9D9D9] p-5 rounded-2xl mt-10 mb-10 max-md:ml-10 max-md:mr-10'>
+        <div className="mt-24 px-4 pb-24">
+            <h2 className="text-2xl font-bold text-center mb-2">🎟️ Let’s Book Your Spot</h2>
+            <hr className="h-1 w-full bg-gray-300 mb-6" />
+            <h1 className="text-3xl max-md:text-xl font-black text-center text-indigo-800">{event.title}</h1>
+
+            <form
+                onSubmit={handleSubmit}
+                className="max-w-xl mx-auto bg-[#D9D9D9] p-8 rounded-2xl shadow-md mt-10 space-y-8"
+            >
+                {/* Full Name */}
                 <div>
-                    <h3 className='text-xl font-bold mb-0'>👤 Full Name</h3><br />
-                    <input name='name' type="text" placeholder="Your Name" value={formData.name} onChange={handleChange} required className='b-2 bg-amber-300 rounded-xl p-3 w-120 max-md:w-full -mt-10 text-xl' />
-                </div>
-                <div>
-                    <h3 className='text-xl font-bold mb-0'>📧 Email Address</h3><br />
-                    <input type="Email" name="email" placeholder="Your Email" value={formData.email} onChange={handleChange} required className='b-2 bg-amber-300 rounded-xl p-3 w-120 max-md:w-full -mt-10 text-xl' />
-                </div>
-                <div>
-                    <h3 className='text-xl font-bold mb-0'>📞  Phone Number</h3><br />
-                    <input type="tel" name="phone" placeholder="Your Phone" value={formData.phone} onChange={handleChange} required className='b-2 bg-amber-300 rounded-xl p-3 w-120 max-md:w-full -mt-10 text-xl' />
-                </div>
-                <div className='w-120 max-md:w-full'>
-                    <h3 className='text-xl font-bold mb-0'>🧾 Additional Notes or Special Request</h3><br />
-                    <textarea name="message" placeholder='Enter your Message here..' value={formData.message} onChange={handleChange} className='b-2 bg-amber-300 rounded-xl p-3 w-120 max-md:w-full -mt-5 text-xl' /> <br />
-                    <i className='font-light text-small text-amber-700'>Your information will only be used to confirm registration. We never share your data</i>
+                    <label className="text-xl font-bold block mb-2">👤 Full Name</label>
+                    <input
+                        name="name"
+                        type="text"
+                        placeholder="Your Name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
+                        className="w-full bg-amber-300 rounded-xl p-3 text-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    />
                 </div>
 
-                {/* SoldOut text */}
+                {/* Email */}
+                <div>
+                    <label className="text-xl font-bold block mb-2">📧 Email Address</label>
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Your Email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                        className="w-full bg-amber-300 rounded-xl p-3 text-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    />
+                </div>
+
+                {/* Phone */}
+                <div>
+                    <label className="text-xl font-bold block mb-2">📞 Phone Number</label>
+                    <input
+                        type="tel"
+                        name="phone"
+                        placeholder="Your Phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        required
+                        className="w-full bg-amber-300 rounded-xl p-3 text-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    />
+                </div>
+
+                {/* Message */}
+                <div>
+                    <label className="text-xl font-bold block mb-2">🧾 Additional Notes or Special Request</label>
+                    <textarea
+                        name="message"
+                        placeholder="Enter your message here..."
+                        value={formData.message}
+                        onChange={handleChange}
+                        className="w-full bg-amber-300 rounded-xl p-3 text-lg resize-none"
+                        rows={3}
+                    />
+                    <p className="text-sm text-amber-700 mt-2">
+                        🔒 Your information will only be used to confirm registration. We never share your data.
+                    </p>
+                </div>
+
+                {/* Sold Out Message */}
                 {parseInt(event.leftSeate) === 0 && (
-                    <p className="text-red-600 font-medium mt-2">Sorry, this event is fully booked.</p>
+                    <p className="text-red-600 font-medium text-center">❌ Sorry, this event is fully booked.</p>
                 )}
 
-                <button type='submit'
-                    disabled={parseInt(event.leftSeate) === 0}
-                    className={`cursor-pointer w-120 max-md:w-full bg-[#FEBA34] p-5 rounded-2xl text-center ${parseInt(event.leftSeate) === 0 ? 'bg-gray-400 cursor-not-allowed w-120 max-md:w-full p-5 rounded-2xl text-center' : 'bg-blue-600 hover:bg-blue-700'
+                {/* Submit Button */}
+                <button
+                    type="submit"
+                    aria-busy={isProcessing}
+                    disabled={parseInt(event.leftSeate) === 0 || isProcessing}
+                    className={`w-full py-4 rounded-xl text-lg font-semibold transition duration-300 ${parseInt(event.leftSeate) === 0
+                            ? 'bg-gray-400 cursor-not-allowed'
+                            : isProcessing
+                                ? 'bg-blue-600 opacity-50 cursor-not-allowed'
+                                : 'bg-blue-600 hover:bg-blue-700 text-white'
                         }`}
                 >
-                    {parseInt(event.leftSeate) === 0 ? 'Sold Out' : 'Register'}
+                    {parseInt(event.leftSeate) === 0
+                        ? 'Sold Out'
+                        : isProcessing
+                            ? 'Submitting...'
+                            : 'Register'}
                 </button>
-                <NavLink to='/Events' className='border-1 p-5 rounded-2xl text-center'><button className='cursor-pointer'>Find More Events</button></NavLink>
+
+                {/* Navigation */}
+                <NavLink to="/Events" className="block text-center mt-6">
+                    <button
+                        type="button"
+                        className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-3 rounded-xl text-lg transition duration-300"
+                    >
+                        🔍 Find More Events
+                    </button>
+                </NavLink>
             </form>
-        </>
+        </div>
     )
 }
 

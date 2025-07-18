@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 
 function AdminDashboard() {
   const [events, setEvents] = useState([]);
   const [registrations, setRegistrations] = useState([]);
   const navigate = useNavigate();
   const token = localStorage.getItem('adminToken');
+  const decoded = token ? jwtDecode(token) : {};
+  const adminName = decoded.name || decoded.email;
+
 
   // ✅ Redirect if not logged in
   useEffect(() => {
@@ -98,75 +102,90 @@ function AdminDashboard() {
   };
 
   return (
-    <>
-      {/* Header */}
-      <div className='mt-25 flex w-screen flex-row items-center'>
-        <div className='w-1/2 max-md:w-full ml-10'>
-          <h2 className='text-2xl max-md:text-xl font-bold'>Welcome, Admin Ram</h2>
-        </div>
-        <div className='w-1/2 max-md:w-full flex justify-end mr-10'>
-          <NavLink to='Add-Event'>
-            <button className='max-md:text-sm bg-[#FEBA34] p-5 rounded-2xl'>+ Add New Event</button>
-          </NavLink>
-        </div>
+
+    <div className="min-h-screen bg-gray-100 pt-20 pb-24 px-6">
+      {/* Page Title */}
+      <div className="flex flex-col md:flex-row justify-between items-center p-6 rounded-2xl">
+      <div className="mb-6">
+        <h1 className="text-4xl font-bold text-gray-800">Admin Dashboard</h1>
+        <p className="text-lg text-gray-600 mt-2">
+          Welcome back, <span className="font-semibold text-indigo-600">{adminName}</span>!
+        </p>
+      </div>
+      <NavLink to="/Admin-Login/Dashboard/Messages">
+        <button className="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 rounded-xl transition">
+          View Contact Messages
+        </button>
+      </NavLink>
       </div>
 
-      {/* Stats */}
-      <div className='flex flex-row gap-5 m-10'>
-        <div className='w-1/4 max-md:w-fit bg-amber-400 p-5 border-2 rounded-2xl'>
-          <NavLink to='/Admin-Login/Dashboard/Resistrant'>
-            <h2>Total Registrants:</h2><hr className='mb-5 w-full' />
-            <h2 className='p-2 text-3xl bg-amber-200 rounded-2xl'>
-              {events.length > -1
-                ? `${registrations.length} total registrants`
-                : 'Loading...'}
-            </h2>
-          </NavLink>
-        </div>
-        <div className='w-1/4 max-md:w-fit bg-amber-400 p-5 border-2 rounded-2xl'>
-          <h2>Total Events:</h2><hr className='mb-5 w-full' />
-          <h2 className='p-2 text-3xl bg-amber-200 rounded-2xl'>
+      {/* Header Actions */}
+      <div className="flex flex-col md:flex-row justify-between items-center bg-white p-6 rounded-2xl shadow-md mb-10">
+        <h2 className="text-2xl font-bold text-gray-800">Welcome, Admin {adminName}</h2>
+        <NavLink to="Add-Event">
+          <button className="mt-4 md:mt-0 bg-[#FEBA34] hover:bg-yellow-400 text-white font-semibold px-6 py-3 rounded-xl transition duration-300">
+            + Add New Event
+          </button>
+        </NavLink>
+      </div>
+
+      {/* Stats Section */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+        <NavLink to="/Admin-Login/Dashboard/Resistrant">
+          <div className="bg-yellow-300 hover:bg-yellow-400 transition duration-300 p-6 rounded-2xl shadow-md">
+            <h3 className="text-xl font-bold text-gray-800 mb-2">Total Registrants</h3>
+            <hr className="mb-4" />
+            <p className="text-3xl font-semibold bg-yellow-100 p-3 rounded-xl text-center">
+              {events.length > 0 ? `${registrations.length}` : 'Loading...'}
+            </p>
+          </div>
+        </NavLink>
+
+        <div className="bg-yellow-300 hover:bg-yellow-400 transition duration-300 p-6 rounded-2xl shadow-md">
+          <h3 className="text-xl font-bold text-gray-800 mb-2">Total Events</h3>
+          <hr className="mb-4" />
+          <p className="text-3xl font-semibold bg-yellow-100 p-3 rounded-xl text-center">
             {events.length}
-          </h2>
+          </p>
         </div>
       </div>
 
       {/* Event Table */}
-      <div className='w-screen mt-40 mb-40'>
-        <hr />
-        <h2 className='bg-amber-200 p-5 text-center font-bold text-3xl max-md:text-xl'>Added Event Details</h2>
-        <hr />
-        <div className='flex'>
-          <table className='w-screen text-center m-10 max-md:mt-10 max-md:m-0'>
+      <div className="bg-white rounded-2xl shadow-md p-6">
+        <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">📋 Added Event Details</h2>
+        <div className="overflow-x-auto">
+          <table className="w-full text-center border-collapse">
             <thead>
-              <tr className='text-2xl max-md:text-sm font-black'>
-                <th>Event ID</th>
-                <th>Title</th>
-                <th>Date</th>
-                <th>Seat Left</th>
-                <th>Tags</th>
-                <th>Action</th>
+              <tr className="bg-gray-200 text-gray-800 text-lg font-semibold">
+                <th className="p-3">Event ID</th>
+                <th className="p-3">Title</th>
+                <th className="p-3">Date</th>
+                <th className="p-3">Seats Left</th>
+                <th className="p-3">Tags</th>
+                <th className="p-3">Action</th>
               </tr>
             </thead>
-            <tbody className='max-md:text-sm'>
-              {events.map(event => (
-                <tr key={event._id}>
-                  <td>{event._id}</td>
-                  <td>
-                    <NavLink to={`/Admin-Login/Dashboard/Resistrant/${event._id}`}>
+            <tbody className="text-gray-700">
+              {events.map((event) => (
+                <tr key={event._id} className="hover:bg-gray-100 transition duration-200">
+                  <td className="p-3">{event._id}</td>
+                  <td className="p-3">
+                    <NavLink to={`/Admin-Login/Dashboard/Resistrant/${event._id}`} className="text-indigo-600 hover:underline">
                       {event.title}
                     </NavLink>
                   </td>
-                  <td>{event.date}</td>
-                  <td>{event.leftSeate}/{event.totalSeats}</td>
-                  <td>{event.tags}</td>
-                  <td className='flex flex-row gap-2 justify-center'>
-                    <button onClick={() => handleEdit(event._id)}>
-                      <img src="/pencil-solid.png" alt="Edit" className='w-10 h-10 max-md:size-8 bg-amber-300 rounded-2xl p-2' />
-                    </button>
-                    <button onClick={() => handleDelete(event._id)}>
-                      <img src="/Delete.png" alt="Delete" className='w-10 h-10 max-md:size-8 bg-amber-300 rounded-2xl p-2' />
-                    </button>
+                  <td className="p-3">{event.date}</td>
+                  <td className="p-3">{event.leftSeate}/{event.totalSeats}</td>
+                  <td className="p-3">{event.tags}</td>
+                  <td className="p-3">
+                    <div className="flex justify-center gap-2">
+                      <button onClick={() => handleEdit(event._id)} title="Edit">
+                        <img src="/pencil-solid.png" alt="Edit" className="w-8 h-8 bg-yellow-200 rounded-xl p-1 hover:bg-yellow-300 transition" />
+                      </button>
+                      <button onClick={() => handleDelete(event._id)} title="Delete">
+                        <img src="/Delete.png" alt="Delete" className="w-8 h-8 bg-red-200 rounded-xl p-1 hover:bg-red-300 transition" />
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -174,7 +193,7 @@ function AdminDashboard() {
           </table>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

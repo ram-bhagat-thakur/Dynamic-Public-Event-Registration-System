@@ -1,36 +1,70 @@
-import React from 'react'
-import { useNavigate , NavLink } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import { useNavigate, NavLink } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode'; // ✅ correct
 
 function AdminNav() {
   const navigate = useNavigate();
+  const [adminName, setAdminName] = useState('');
+
+  useEffect(() => {
+    const token = localStorage.getItem('adminToken');
+    if (token) {
+      try {
+        const decoded = jwtDecode(token);
+        setAdminName(decoded.name || decoded.email); // fallback to email
+      } catch (err) {
+        console.error('❌ Token decode error:', err);
+      }
+    }
+  }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem('adminToken'); // ✅ Clear JWT
-    navigate('/'); // ✅ Redirect to login page
+    localStorage.removeItem('adminToken');
+    navigate('/');
   };
 
-
   return (
-    <>
+    <div className="fixed top-0 left-0 right-0 z-50 bg-[#DCBEFD] shadow-md">
+      <div className="flex items-center justify-between px-6 py-3 text-[#1F2937]">
+        {/* Logo */}
+        <NavLink to="/" className="flex items-center gap-2">
+          <img src="/logo.png" alt="Event Registration System" className="h-10 w-auto" />
+        </NavLink>
 
-      <div className='fixed top-0 right-0 left-0 z-10'>
-        <div className='h-15 flex items-center flex-row text-2xl max-md:text-sm w-full bg-[#DCBEFD] text-[#1F2937]'>
-          <div className="basis-40 ml-5"><NavLink to='/'><img src="/logo.png" alt="Event Registration System" className='w-30 h-12' /></NavLink></div>
-          <div className="basis-1/1 mr-5">
-            <ul className='flex gap-6 float-end items-center font-bold'>
-              <li className='max-md:hidden'><NavLink to='/'>User-Space</NavLink> </li>
-              <li><NavLink to='Events'>Events</NavLink> </li>
-              <li><NavLink to='/Admin-Login/Dashboard'>Dashboard</NavLink> </li>
-              <li><button onClick={handleLogout} className="font-bold">
-                Log-Out
-              </button>
-              </li>
-            </ul>
-          </div>
-        </div>
+        {/* Navigation Links */}
+        <ul className="flex gap-6 items-center font-semibold text-lg max-md:text-sm">
+          <li className="max-md:hidden">
+            <NavLink to="/" className="hover:text-indigo-700 transition duration-200">
+              User-Space
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/Events" className="hover:text-indigo-700 transition duration-200">
+              Events
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/Admin-Login/Dashboard" className="hover:text-indigo-700 transition duration-200">
+              Dashboard
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="Admin-Register" className="hover:text-indigo-700 transition duration-200">
+              Register Admin
+            </NavLink>
+          </li>
+          <li>
+            <button
+              onClick={handleLogout}
+              className="bg-red-500 hover:bg-red-600 text-white px-4 py-1 rounded-lg transition duration-200"
+            >
+              Log Out
+            </button>
+          </li>
+        </ul>
       </div>
-    </>
-  )
+    </div>
+  );
 }
 
-export default AdminNav
+export default AdminNav;

@@ -27,90 +27,125 @@ function Events() {
 
   return (
     <>
-      <section className='mt-15 bg-[#F3F4F6]'>
-        <div className="pl-5 pr-5 text-center py-15 pb-30 bg-gradient-to-r from-indigo-100 to-purple-100">
-          <h1 className="text-7xl max-md:text-3xl font-bold text-indigo-900">Explore Events</h1>
-          {/* Line */}
-          <div className="w-50 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto my-8 rounded-full"></div>
-          <p className="pl-10 pr-10 m-auto text-xl max-md:text-xl text-indigo-700 mt-2">
-            Browse a wide range of exciting events including hands-on workshops, cutting-edge tech talks, vibrant cultural festivals, and more—all curated to match your interests and happening right around you.
-          </p>
+    <section className="mt-15 bg-[#F3F4F6]">
+      {/* Hero Section */}
+      <div className="px-6 text-center py-16 bg-gradient-to-r from-indigo-100 to-purple-100">
+        <h1 className="text-6xl max-md:text-3xl font-bold text-indigo-900">Explore Events</h1>
 
-          <div className='flex justify-center mt-10'>
-            <div className='flex flex-row gap-15 max-md:gap-10 max-md:flex-col'>
-              <div>
-                <input type="search" placeholder='Search Events...' value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className='outline-none text-xl p-2 border-1 rounded-xl' />
-                <span className='relative -ml-12 bg-amber-300 p-3.5 rounded-r-xl'>🔍</span>
-              </div>
-              <select value={category}
-                onChange={(e) => setCategory(e.target.value)} className="border p-3 rounded-xl cursor-pointer outline-none">
-                <option value="All">All Categories</option>
-                <option value="Tech">Tech</option>
-                <option value="Cultural">Cultural</option>
-                <option value="Sports">Sports</option>
-              </select>
+        {/* Decorative Line */}
+        <div className="w-48 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto my-6 rounded-full"></div>
+
+        <p className="max-w-3xl mx-auto text-lg max-md:text-base text-indigo-700 mt-4">
+          Browse a wide range of exciting events including hands-on workshops, cutting-edge tech talks,
+          vibrant cultural festivals, and more—all curated to match your interests and happening right around you.
+        </p>
+
+        {/* Search & Filter */}
+        <div className="flex justify-center mt-10">
+          <div className="flex flex-col md:flex-row gap-6 items-center">
+            {/* Search Input */}
+            <div className="relative">
+              <input
+                type="search"
+                placeholder="Search Events..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="text-lg p-3 pr-12 border border-gray-300 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+              <span className="absolute right-3 top-2.5 text-xl">🔍</span>
             </div>
+
+            {/* Category Filter */}
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="border border-gray-300 p-3 rounded-xl text-lg cursor-pointer outline-none focus:ring-2 focus:ring-indigo-500"
+            >
+              <option value="All">All Categories</option>
+              <option value="Tech">Tech</option>
+              <option value="Cultural">Cultural</option>
+              <option value="Sports">Sports</option>
+            </select>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section className='mt-20'>
-        {(category === 'All' || category === 'Tech') && (
+{/* Event Sections */ }
+  <section className="mt-20 px-6">
+    {/* Tech Events */}
+    {(category === 'All' || category === 'Tech') && (
+      <div>
+        <hr />
+        <h2 className="text-3xl text-center mt-6 mb-4 font-bold text-indigo-800">💻 Tech Events</h2>
+        <hr />
+        <div className="flex flex-wrap gap-10 justify-center mt-10 mb-16">
+          {filteredEvents.filter(ev => ev.tags === 'Tech').map(event => (
+            <Card
+              key={event._id}
+              bannerPath={event.bannerPath}
+              id={event._id}
+              title={event.title}
+              date={event.date}
+              location={event.location}
+              description={event.description}
+              leftSeate={event.leftSeate}
+              image={event.image}
+            />
+          ))}
+        </div>
+      </div>
+    )}
 
-          <div>
-            <hr />
-            <h1 className='text-3xl text-center mt-5 mb-5 font-bold'>💻 Tech Eventt</h1>
-            <hr />
-            <div  className='flex flex-row gap-10 justify-center flex-wrap mb-10 mt-12'>
-            {filteredEvents.filter(ev => ev.tags === 'Tech').map(event =>
-                <div key={event._id}>
+    {/* Cultural Events */}
+    {(category === 'All' || category === 'Cultural') && (
+      <div>
+        <hr />
+        <h2 className="text-3xl text-center mt-6 mb-4 font-bold text-purple-800">🎭 Cultural Events</h2>
+        <hr />
+        <div className="flex flex-wrap gap-10 justify-center mt-10 mb-16">
+          {filteredEvents.filter(ev => ev.tags === 'Cultural').map(event => (
+            <Card
+              key={event._id}
+              bannerPath={event.bannerPath}
+              id={event._id}
+              title={event.title}
+              date={event.date}
+              location={event.location}
+              description={event.description}
+              leftSeate={event.leftSeate}
+              image={event.image}
+            />
+          ))}
+        </div>
+      </div>
+    )}
 
-
-                  <Card bannerPath={event.bannerPath} id={event._id} title={event.title} date={event.date} location={event.location} description={event.description} leftSeate={event.leftSeate} image={event.image} />
-                </div>
-              )}
-              </div>
-          </div>
-        )}
-
-        {(category === 'All' || category === 'Cultural') && (
-          <div>
-            <hr />
-            <h1 className='text-3xl text-center mt-5 mb-5 font-bold'>🎭 Cultural Event</h1>
-            <hr />
-            <div  className='flex flex-row gap-10 justify-center flex-wrap mb-10 mt-12'>
-            {filteredEvents.filter(ev => ev.tags === 'Cultural').map(event =>
-                <div key={event._id}>
-
-
-                  <Card bannerPath={event.bannerPath} id={event._id} title={event.title} date={event.date} location={event.location} description={event.description} leftSeate={event.leftSeate} image={event.image} />
-                </div>
-              )}
-              </div>
-          </div>
-        )}
-        
-        {(category === 'All' || category === 'Sports') && (
-
-          <div>
-            <hr />
-            <h1 className='text-3xl text-center mt-5 mb-5 font-bold'>🏅 Sports Events</h1>
-            <hr />
-            <div  className='flex flex-row gap-10 justify-center flex-wrap mb-10 mt-12'>
-            {filteredEvents.filter(ev => ev.tags === 'Sports').map(event =>
-                <div key={event._id}>
-
-
-                  <Card bannerPath={event.bannerPath} id={event._id} title={event.title} date={event.date} location={event.location} description={event.description} leftSeate={event.leftSeate} image={event.image} />
-                </div>
-              )}
-              </div>
-          </div>
-        )}
-      </section>
-    </>
+    {/* Sports Events */}
+    {(category === 'All' || category === 'Sports') && (
+      <div>
+        <hr />
+        <h2 className="text-3xl text-center mt-6 mb-4 font-bold text-yellow-800">🏅 Sports Events</h2>
+        <hr />
+        <div className="flex flex-wrap gap-10 justify-center mt-10 mb-16">
+          {filteredEvents.filter(ev => ev.tags === 'Sports').map(event => (
+            <Card
+              key={event._id}
+              bannerPath={event.bannerPath}
+              id={event._id}
+              title={event.title}
+              date={event.date}
+              location={event.location}
+              description={event.description}
+              leftSeate={event.leftSeate}
+              image={event.image}
+            />
+          ))}
+        </div>
+      </div>
+    )}
+  </section>
+</>
   )
 }
 
