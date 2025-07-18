@@ -104,7 +104,7 @@ router.post('/', upload.single('banner'), async (req, res) => {
 router.get('/events/registrations', verifyAdmin, async (req, res) => {
   try {
     const raw = await mongoose.connection.db.collection('registrations').find({}).toArray();
-    console.log("📦 Raw MongoDB query result:", raw);
+    // console.log("📦 Raw MongoDB query result:", raw);
     res.json(raw);
   } catch (err) {
     console.error("❌ Error in raw query:", err);
@@ -196,5 +196,18 @@ const leftSeate = totalSeats - registrationCount;
   }
 });
 
+
+router.delete('/api/registrations/:id', verifyAdmin, async (req, res) => {
+  console.log("🧹 DELETE request received:", req.params);
+  const deleted = await Registration.findByIdAndDelete(req.params.id);
+  if (!deleted) return res.status(404).json({ error: 'Registrant not found' });
+  res.json({ message: 'Registrant deleted' });
+});
+
+router.delete('/api/events/:eventId/registrations', verifyAdmin, async (req, res) => {
+  console.log("🧹 DELETE request received:", req.params);
+  const result = await Registration.deleteMany({ eventId: req.params.eventId });
+  res.json({ message: 'All registrants deleted', count: result.deletedCount });
+});
 
 module.exports = router;

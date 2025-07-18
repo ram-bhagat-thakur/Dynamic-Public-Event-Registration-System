@@ -5,6 +5,7 @@ const  dotenv= require("dotenv")
 const registerRoute = require('./routes/register');
 const eventRoute = require('./routes/events.js');
 const transporter = require('./utils/mailer'); // adjust path if needed
+const registrationsRoutes = require('./routes/registrations');
 
 
 require('dotenv').config(); // ✅ Load environment variables
@@ -12,6 +13,7 @@ dotenv.config();
 const app = express();
 //✅ These must come BEFORE any route
 app.use(cors());
+app.use('/api/registrations', registrationsRoutes);
 app.use(express.json()); // Parses JSON bodies
 app.use(express.urlencoded({ extended: true })); // Parses form data
 app.use('/api', require('./routes/events'));

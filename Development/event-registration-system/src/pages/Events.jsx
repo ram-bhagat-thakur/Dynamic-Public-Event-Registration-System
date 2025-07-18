@@ -11,7 +11,7 @@ function Events() {
     fetch('http://localhost:5000/api/events')
       .then(res => res.json())
       .then(data => {
-        console.log("Fetched events:", data); // ✅ Add this
+        // console.log("Fetched events:", data);
         setEvents(data);
       })
       .catch(err => console.error("Failed to fetch events:", err));

@@ -51,10 +51,10 @@ function AdminDashboard() {
     const eventDate = parsedDate.toISOString().split('T')[0];
     return true; // ✅ include all events for testing
   });
-  console.log("🧾 All events:", events);
-  events.forEach(event => {
-    console.log(`📅 ${event.title} → ${event.date}`);
-  });
+  // console.log("🧾 All events:", events);
+  // events.forEach(event => {
+  //   console.log(`📅 ${event.title} → ${event.date}`);
+  // });
   // ✅ Filter current registrations
   const upcomingEventIds = upcomingEvents.map(event => event._id);
   const currentRegistrations = registrations.filter(reg =>
