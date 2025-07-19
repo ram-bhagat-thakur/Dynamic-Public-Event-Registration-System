@@ -136,7 +136,7 @@ function AdminDashboard() {
             <h3 className="text-xl font-bold text-gray-800 mb-2">Total Registrants</h3>
             <hr className="mb-4 border-gray-400" />
             <p className="text-3xl font-semibold bg-yellow-100 p-4 rounded-xl text-center">
-              {events.length > 0 ? `${registrations.length}` : 'Loading...'}
+              {events.length > 0 ? `${registrations.length}` : 'No event created'}
             </p>
           </div>
         </NavLink>

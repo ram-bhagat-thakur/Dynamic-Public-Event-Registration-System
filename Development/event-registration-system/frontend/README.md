@@ -1,8 +1,8 @@
 # 📦 Dynamic Event Registration System
 
-### Project Folder: SECT-Internship-Project/Development/event-registration-system
+**Project Folder:** SECT-Internship-Project/Development/event-registration-system
 
-### Tech Stack: MERN Stack (MongoDB, Express, React, Node.js), Vite, TailwindCSS, JWT, Cookies, Express Middleware
+**Tech Stack:** MERN Stack (MongoDB, Express, React, Node.js), Vite, TailwindCSS, JWT, Cookies, Express Middleware
 
 ---
 
@@ -14,7 +14,7 @@
 
 ## 📌 Overview
 
-### This is a robust, full-stack event registration platform designed and developed during my internship at SECT. **It offers seamless admin control, real-time user registration, email notifications, and a visually appealing responsive UI** — all integrated in a modular, scalable architecture. It supports:
+This is a robust, full-stack event registration platform designed and developed during my internship at SECT. **It offers seamless admin control, real-time user registration, email notifications, and a visually appealing responsive UI** — all integrated in a modular, scalable architecture. It supports:
 
 - **🔐 Admin** authentication and session management
 - **🧑‍💼 Event** creation, editing, and deletion by admins
@@ -22,9 +22,9 @@
 - **🎨 Visually expressive** UI/UX optimized for responsiveness
 - **📁 Modular code** structure for scalability and readability
 
+---
 
-
-# 🗂️ File & Folder Structure
+## 🗂️ File & Folder Structure
 
 SECT-Internship-Project/
 │
@@ -62,26 +62,26 @@ SECT-Internship-Project/
 │
 └── README.md               # Main repo overview (see separate file later)
 
-
+---
 
 ## 🧰 Core Features
 
-### - Authentication:
+- **Authentication:**
 Protected admin routes with jwt, custom middleware, and cookies. Backend logic lives in middleware/auth.js with secure route wrappers like ProtectedRoute.jsx.
 
-### - Event CRUD Operations:
+- **Event CRUD Operations:**
 Admins manage events through intuitive UIs powered by AddEvent, EditEvent, and AdminDashboard.jsx. Data handled via RESTful APIs (routes/events.js).
 
-### - User Registration Flow:
+- **User Registration Flow:**
 Public users can browse events (Events.jsx), see details (eventDetails.jsx), and register with confirmation sent via utils/mailer.js.
 
-### - Dynamic Media:
+- **Dynamic Media:**
 Images, videos, and banners rendered from Public and uploads folders to deliver a high-impact, visually compelling interface.
 
-### - Error Handling & Fallbacks:
+- **Error Handling & Fallbacks:**
 WrongUrl.jsx and server-side middleware handle invalid paths and unexpected behavior gracefully.
 
-
+---
 
 ## 🧪 Tech Breakdown
 
@@ -94,24 +94,25 @@ WrongUrl.jsx and server-side middleware handle invalid paths and unexpected beha
 | Misc.     | Email confirmation (Nodemailer), ESLint               | 
 
 
+---
 
 ## 🛠️ Setup & Run
 
-# Clone repo
+**Clone repo**
 git clone https://github.com/ram-bhagat-thakur/Dynamic-Public-Event-Registration-System.git
 
-# Backend setup
-**cd event-registration-system/Backend**
+**Backend setup**
+*cd event-registration-system/Backend*
 npm install
 npm run dev      # or nodemon index.js if configured
 
-# Frontend setup
+**Frontend setup**
 cd ../
 npm install
 npm run dev      # Launches on Vite dev server
 
 
-### Ensure your .env file includes:
+**Ensure your .env file includes:**
 
 MONGO_URI=your_mongodb_connection
 JWT_SECRET=your_jwt_key
@@ -120,21 +121,7 @@ ADMIN_REGISTRATION_KEY=A_SECRET_KEY_FOR_REGISTERING_ADMIN
 
 
 
-## 🧭 Developer Notes
-- **Folder modularity keeps logic contained and easy to maintain.**
-- Reusable layouts & components are encouraged through HOC and styled wrappers.
-- Doc folder acts as internal wiki with UI plans and starter code (ideal for contributor onboarding).
-- Secure routes are enforced server-side AND client-side with middleware and React wrappers.
-
-
-
-## 👥 Contribution Guidelines (Optional for internal teams or open-source)
-- Fork the repo and create your branch (feature/xyz)
-- Use clear commit messages (feat: added event sorting logic)
-- Document all major changes in /Documentation/Coding
-- Submit a PR with relevant screenshots or usage notes
-
-
+---
 
 ## 📢 Acknowledgements
 *Special thanks to SECT for the internship opportunity and guidance.*
@@ -150,9 +137,5 @@ GitHub: [@RamBhagatThakur](https://github.com/ram-bhagat-thakur)
 LinkedIn: [Ram Bhagat Thakur](https://www.linkedin.com/in/ram-bhagat-thakur)
 
 ---
-
-# 📜 License
-This project is built solely for **educational and demonstration** purposes.
-Feel free to fork and customize for personal use or further learning.
 
 
