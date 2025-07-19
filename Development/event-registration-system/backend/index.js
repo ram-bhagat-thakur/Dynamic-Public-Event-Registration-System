@@ -1,52 +1,49 @@
-const express = require("express")
-const mongoose = require("mongoose")
-const cors = require("cors")
-const  dotenv= require("dotenv")
-const registerRoute = require('./routes/register');
-const eventRoute = require('./routes/events.js');
-const transporter = require('./utils/mailer'); // adjust path if needed
-const registrationsRoutes = require('./routes/registrations');
-const contactRoutes = require('./routes/contact');
-const path = require("path");
+import express from "express";
+import mongoose from "mongoose";
+import cors from "cors";
+import dotenv from "dotenv";
+import path from "path";
+import { fileURLToPath } from 'url';
 
+import registerRoute from './routes/register.js';
+import eventRoute from './routes/events.js';
+import adminRoutes from './routes/admin.js';
+import contactRoutes from './routes/contact.js';
+import registrationsRoutes from './routes/registrations.js';
+import transporter from './utils/mailer.js';
 
-
-
-require('dotenv').config(); // ✅ Load environment variables
 dotenv.config();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const app = express();
+
+// Middleware
 app.use(express.json());
-app.use(express.urlencoded({ extended: true })); // Parses form data
-//✅ These must come BEFORE any route
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
-app.use('/api/registrations', registrationsRoutes);
-app.use('/api', require('./routes/events'));
-const __dirname = path.resolve();
 
+// Serve static frontend
 app.use(express.static(path.join(__dirname, 'dist')));
-
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
-// ✅ Then mount your routes
+
+// Routes
+app.use('/api/events', eventRoute);
+app.use('/api/register', registerRoute);
+app.use('/api/admin', adminRoutes);
 app.use('/api/contact', contactRoutes);
-app.use('/api/admin', require('./routes/admin'));
-app.use('/api/events', require('./routes/events'));
-app.use('/api', require('./routes/events'));
-app.use('/api/register', require('./routes/register'));
-app.use('/uploads', express.static('uploads'));
-const adminRoutes = require('./routes/admin');
-const router = require("./routes/register");
-app.use('/api/admin', adminRoutes); // ✅ This works only if adminRoutes is a router
+app.use('/api/registrations', registrationsRoutes);
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-console.log("adminRoutes type:", typeof adminRoutes);
-
-// Test route
+// Test Route
 app.get('/', (req, res) => {
-  res.send('Server is running');
+  res.send('✅ Server is running');
 });
 
-
+// Nodemailer test
 app.get('/test-email', async (req, res) => {
   try {
     await transporter.sendMail({
@@ -55,18 +52,23 @@ app.get('/test-email', async (req, res) => {
       subject: 'Test Email',
       text: 'This is a test email from Nodemailer'
     });
-    res.send("✅ Email sent");
+    res.send('✅ Email sent');
   } catch (err) {
-    console.error("❌ Test email error:", err.message);
-    res.status(500).send("Email failed");
+    console.error("❌ Email error:", err.message);
+    res.status(500).send('Email failed');
   }
 });
+
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
-}).then(() => console.log("✅ MongoDB connected"))
-  .catch(err => console.log("❌ MongoDB error:", err));
+}).then(() => {
+  console.log("✅ MongoDB connected");
+}).catch((err) => {
+  console.error("❌ MongoDB connection error:", err);
+});
 
+// Start Server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
