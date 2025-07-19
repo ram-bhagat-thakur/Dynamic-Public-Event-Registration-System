@@ -13,8 +13,8 @@ function AdminLog() {
     };
 
     const handleSubmit = async (e) => {
-        setIsLoading(true);
         e.preventDefault();
+        setIsLoading(true);
         try {
             const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/login`, {
                 method: 'POST',
@@ -39,6 +39,8 @@ function AdminLog() {
         } catch (err) {
             console.error("Login error:", err);
             alert("Something went wrong");
+        } finally {
+            setIsLoading(false);
         }
     };
 
