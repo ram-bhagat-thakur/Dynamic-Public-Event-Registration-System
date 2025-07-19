@@ -6,6 +6,13 @@
 
 ---
 
+Please review the live version of the project here:  
+🔗 [Dynamic Public Event Registration System](https://dynamic-public-event-registration-system.onrender.com)
+
+---
+
+---
+
 ## 📷 Screenshots
 
 > Coming soon: UI previews of registration form, admin dashboard, and event creation page.
@@ -27,40 +34,34 @@ This is a robust, full-stack event registration platform designed and developed 
 ## 🗂️ File & Folder Structure
 
 SECT-Internship-Project/
-│
-├── Development/
-│   └── event-registration-system/
-│       ├── Backend/
-│       │   ├── middleware/auth.js
-│       │   ├── models/{admin.js, Contact.js, Event.js, Registration.js}
-│       │   ├── routes/{admin.js, contact.js, events.js, register.js, registratins.js}
-│       │   ├── utils/{mailer.js, sendConfirmationEmail.js}
-│       │   ├── uploads/        # Banner image storage
-│       │   ├── .env
-│       │   └── package.json
-│       │
-│       ├── Public/
-│       │   └── images/, videos/       # Used for styling UI
-│       │
-│       ├── src/
-│       │   ├── components/
-│       │   │   ├── HOC/{AdminLayout, Layout, ProtectedRoute, WrongUrl}.jsx
-│       │   │   ├── styles/index.css
-│       │   │   └── {AdminNav, Card, Footer, Nav}.jsx
-│       │   ├── pages/
-│       │   │   └── {AddEvent, EditEvent, AdminDashboard, Home, Contact, ...}.jsx
-│       │   └── main.jsx
-│       │
-│       ├── .gitignore
-│       ├── vite.config.js
-│       ├── index.html
-│       └── README.md
-│
-├── Documentation/
-│   ├── Coding/             # Starter components and notes
-│   └── UI Ideas/           # Page-wise design breakdown (.docx files)
-│
-└── README.md               # Main repo overview (see separate file later)
+• Development/
+• event-registration-system/
+• Backend/
+• middleware/auth.js
+• models/ (admin.js, Contact.js, Event.js, Registration.js)
+• routes/ (admin.js, contact.js, events.js, register.js, registratins.js)
+• utils/ (mailer.js, sendConfirmationEmail.js)
+• uploads/ — banner image storage
+• .env
+• package.json
+• Public/
+• images/, videos/ — used for styling UI
+• src/
+• components/
+• HOC/ (AdminLayout, Layout, ProtectedRoute, WrongUrl.jsx)
+• styles/index.css
+• components/ (AdminNav.jsx, Card.jsx, Footer.jsx, Nav.jsx)
+• pages/ (AddEvent.jsx, EditEvent.jsx, AdminDashboard.jsx, Home.jsx, Contact.jsx, ...)
+• main.jsx
+• .gitignore
+• vite.config.js
+• index.html
+• README.md
+• Documentation/
+• Coding/ — starter components and notes
+• UI Ideas/ — page-wise design breakdown (.docx files)
+• README.md — main repo overview
+
 
 ---
 
@@ -83,15 +84,28 @@ WrongUrl.jsx and server-side middleware handle invalid paths and unexpected beha
 
 ---
 
+
 ## 🧪 Tech Breakdown
 
-| Layer     | Stack & Tools                                       | 
-| Frontend  | React (Vite), TailwindCSS, HOC, ProtectedRoute      | 
-| Backend   | Node.js, Express.js, MongoDB, JWT, Cookies          | 
-| UI/UX     | Figma-inspired layouts, dynamic banner support      | 
-| Deployment| Render (planned), GitHub Integration, .env security | 
-| Styling   | Custom CSS, responsive layout from styles/index.css | 
-| Misc.     | Email confirmation (Nodemailer), ESLint               | 
+**📦 Project Architecture Overview**
+Frontend
+- React (Vite), TailwindCSS, HOC patterns, ProtectedRoute components
+
+Backend
+- Node.js, Express.js, MongoDB, JWT authentication, Cookie-based sessions
+
+UI/UX
+- Figma-inspired layouts with dynamic banner integration for event pages
+
+Deployment
+- Hosted on Render with GitHub integration and secure environment variable setup
+
+Styling
+- Custom CSS with responsive design powered by styles/index.css
+
+- Miscellaneous
+Email confirmation via Nodemailer, ESLint for code linting and quality enforcement
+
 
 
 ---
