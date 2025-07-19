@@ -57,4 +57,5 @@ router.delete('/', async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 });
-module.exports = router;
+
+export default router
