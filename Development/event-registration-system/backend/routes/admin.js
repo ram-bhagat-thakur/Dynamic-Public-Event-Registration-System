@@ -3,7 +3,6 @@ const router = express.Router();
 const Admin = require('../models/Admin'); // ✅ This must point to your Admin model
 const jwt = require('jsonwebtoken');
 import express from 'express';
-const router = express.Router();
 
 
 const SECRET = process.env.JWT_SECRET;
