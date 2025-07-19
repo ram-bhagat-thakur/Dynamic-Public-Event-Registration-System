@@ -7,7 +7,10 @@ const eventRoute = require('./routes/events.js');
 const transporter = require('./utils/mailer'); // adjust path if needed
 const registrationsRoutes = require('./routes/registrations');
 const contactRoutes = require('./routes/contact');
-const path =require('path');
+
+import path from 'path';
+import express from 'express';
+
 
 
 require('dotenv').config(); // ✅ Load environment variables
