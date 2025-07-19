@@ -103,27 +103,27 @@ function AdminDashboard() {
 
   return (
 
-    <div className="min-h-screen bg-gray-100 pt-20 pb-24 px-6">
+    <div className="min-h-screen bg-gray-100 pt-20 pb-24 px-4 md:px-6">
       {/* Page Title */}
-      <div className="flex flex-col md:flex-row justify-between items-center p-6 rounded-2xl">
-      <div className="mb-6">
-        <h1 className="text-4xl font-bold text-gray-800">Admin Dashboard</h1>
-        <p className="text-lg text-gray-600 mt-2">
-          Welcome back, <span className="font-semibold text-indigo-600">{adminName}</span>!
-        </p>
-      </div>
-      <NavLink to="/Admin-Login/Dashboard/Messages">
-        <button className="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 rounded-xl transition">
-          View Contact Messages
-        </button>
-      </NavLink>
+      <div className="flex flex-col md:flex-row justify-between items-center bg-white p-6 rounded-2xl shadow-sm mb-8">
+        <div>
+          <h1 className="text-4xl font-bold text-gray-800 tracking-tight">Admin Dashboard</h1>
+          <p className="text-lg text-gray-600 mt-2">
+            Welcome back, <span className="font-semibold text-indigo-600">{adminName}</span>!
+          </p>
+        </div>
+        <NavLink to="/Admin-Login/Dashboard/Messages">
+          <button className="mt-4 md:mt-0 bg-indigo-500 hover:bg-indigo-600 text-white px-5 py-2 rounded-xl shadow-sm transition duration-200 font-medium">
+            View Contact Messages
+          </button>
+        </NavLink>
       </div>
 
       {/* Header Actions */}
       <div className="flex flex-col md:flex-row justify-between items-center bg-white p-6 rounded-2xl shadow-md mb-10">
-        <h2 className="text-2xl font-bold text-gray-800">Welcome, Admin {adminName}</h2>
+        <h2 className="text-2xl font-bold text-gray-800 tracking-tight">Welcome, Admin {adminName}</h2>
         <NavLink to="Add-Event">
-          <button className="mt-4 md:mt-0 bg-[#FEBA34] hover:bg-yellow-400 text-white font-semibold px-6 py-3 rounded-xl transition duration-300">
+          <button className="mt-4 md:mt-0 bg-[#FEBA34] hover:bg-yellow-400 text-white font-semibold px-6 py-3 rounded-xl shadow-sm transition duration-200">
             + Add New Event
           </button>
         </NavLink>
@@ -132,19 +132,19 @@ function AdminDashboard() {
       {/* Stats Section */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
         <NavLink to="/Admin-Login/Dashboard/Resistrant">
-          <div className="bg-yellow-300 hover:bg-yellow-400 transition duration-300 p-6 rounded-2xl shadow-md">
+          <div className="bg-yellow-300 hover:bg-yellow-400 transition duration-200 p-6 rounded-2xl shadow-md">
             <h3 className="text-xl font-bold text-gray-800 mb-2">Total Registrants</h3>
-            <hr className="mb-4" />
-            <p className="text-3xl font-semibold bg-yellow-100 p-3 rounded-xl text-center">
+            <hr className="mb-4 border-gray-400" />
+            <p className="text-3xl font-semibold bg-yellow-100 p-4 rounded-xl text-center">
               {events.length > 0 ? `${registrations.length}` : 'Loading...'}
             </p>
           </div>
         </NavLink>
 
-        <div className="bg-yellow-300 hover:bg-yellow-400 transition duration-300 p-6 rounded-2xl shadow-md">
+        <div className="bg-yellow-300 hover:bg-yellow-400 transition duration-200 p-6 rounded-2xl shadow-md">
           <h3 className="text-xl font-bold text-gray-800 mb-2">Total Events</h3>
-          <hr className="mb-4" />
-          <p className="text-3xl font-semibold bg-yellow-100 p-3 rounded-xl text-center">
+          <hr className="mb-4 border-gray-400" />
+          <p className="text-3xl font-semibold bg-yellow-100 p-4 rounded-xl text-center">
             {events.length}
           </p>
         </div>
@@ -156,7 +156,7 @@ function AdminDashboard() {
         <div className="overflow-x-auto">
           <table className="w-full text-center border-collapse">
             <thead>
-              <tr className="bg-gray-200 text-gray-800 text-lg font-semibold">
+              <tr className="bg-gray-200 text-gray-800 text-base font-semibold">
                 <th className="p-3">Event ID</th>
                 <th className="p-3">Title</th>
                 <th className="p-3">Date</th>
@@ -167,10 +167,10 @@ function AdminDashboard() {
             </thead>
             <tbody className="text-gray-700">
               {events.map((event) => (
-                <tr key={event._id} className="hover:bg-gray-100 transition duration-200">
+                <tr key={event._id} className="hover:bg-gray-100 transition duration-150">
                   <td className="p-3">{event._id}</td>
                   <td className="p-3">
-                    <NavLink to={`/Admin-Login/Dashboard/Resistrant/${event._id}`} className="text-indigo-600 hover:underline">
+                    <NavLink to={`/Admin-Login/Dashboard/Resistrant/${event._id}`} className="text-indigo-600 hover:underline font-medium">
                       {event.title}
                     </NavLink>
                   </td>

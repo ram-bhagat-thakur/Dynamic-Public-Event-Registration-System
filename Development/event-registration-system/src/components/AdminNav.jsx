@@ -34,22 +34,46 @@ function AdminNav() {
         {/* Navigation Links */}
         <ul className="flex gap-6 items-center font-semibold text-lg max-md:text-sm">
           <li className="max-md:hidden">
-            <NavLink to="/" className="hover:text-indigo-700 transition duration-200">
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                `transition duration-200 ${isActive ? 'text-indigo-700 underline underline-offset-4' : 'hover:text-indigo-700'
+                }`
+              }
+            >
               User-Space
             </NavLink>
           </li>
           <li>
-            <NavLink to="/Events" className="hover:text-indigo-700 transition duration-200">
+            <NavLink
+              to="/Events"
+              className={({ isActive }) =>
+                `transition duration-200 ${isActive ? 'text-indigo-700 underline underline-offset-4' : 'hover:text-indigo-700'
+                }`
+              }
+            >
               Events
             </NavLink>
           </li>
           <li>
-            <NavLink to="/Admin-Login/Dashboard" className="hover:text-indigo-700 transition duration-200">
+            <NavLink
+              to="/Admin-Login/Dashboard"
+              className={({ isActive }) =>
+                `transition duration-200 ${isActive ? 'text-indigo-700 underline underline-offset-4' : 'hover:text-indigo-700'
+                }`
+              }
+            >
               Dashboard
             </NavLink>
           </li>
           <li>
-            <NavLink to="Admin-Register" className="hover:text-indigo-700 transition duration-200">
+            <NavLink
+              to="Admin-Register"
+              className={({ isActive }) =>
+                `transition duration-200 ${isActive ? 'text-indigo-700 underline underline-offset-4' : 'hover:text-indigo-700'
+                }`
+              }
+            >
               Register Admin
             </NavLink>
           </li>

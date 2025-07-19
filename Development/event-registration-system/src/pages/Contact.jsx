@@ -41,6 +41,7 @@ const Contact = () => {
     <div className="min-h-screen pt-24 bg-gradient-to-br from-indigo-100 to-purple-100 px-6 py-16">
       <div className="text-center mb-10">
         <h1 className="text-4xl font-bold text-indigo-800">Contact Us</h1>
+        <hr />
         <p className="text-lg text-gray-700 mt-2">We’d love to hear from you!</p>
       </div>
 

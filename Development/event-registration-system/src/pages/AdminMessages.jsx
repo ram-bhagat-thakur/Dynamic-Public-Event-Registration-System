@@ -50,7 +50,7 @@ const AdminMessages = () => {
 
     return (
         <div className="min-h-screen bg-gray-100 pt-24 px-6">
-                <h1 className="text-3xl font-bold text-center text-indigo-800 mb-2">Contact Messages</h1>
+                <h1 className="text-3xl font-bold text-center text-indigo-800 mb-2">👋 Contact Messages</h1>
                  <hr className="border-gray-300 mb-4" />
                 {/* Delete All Messages Button */}
                 {messages.length > 0 && (
@@ -68,7 +68,7 @@ const AdminMessages = () => {
             {loading ? (
                 <p>Loading messages...</p>
             ) : messages.length === 0 ? (
-                <p>No messages found.</p>
+                <p>All is good we have no contact message yet let's take a breath...</p>
             ) : (
                 <div className="space-y-4">
                     {messages.map((msg) => (

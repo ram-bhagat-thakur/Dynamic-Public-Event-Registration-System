@@ -83,7 +83,7 @@ function EditEvent() {
     };
 
     return (
-        <div className="mt-24 px-4">
+        <div className="pt-24 px-4 pb-24">
             {/* Header */}
             <div className="text-center mb-8">
                 <h1 className="text-3xl font-bold text-gray-800">✏️ Edit Event</h1>

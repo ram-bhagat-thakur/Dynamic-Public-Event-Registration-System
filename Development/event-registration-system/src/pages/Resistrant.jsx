@@ -182,7 +182,8 @@ function Resistrant() {
             ) : (
               <tr>
                 <td colSpan="6" className="p-6 text-gray-500 font-medium">
-                  No registrations found
+                  No registrations found <br />
+                  Please try to login again (Your time may be expired!)
                 </td>
               </tr>
             )}
