@@ -15,21 +15,21 @@ function Resistrant() {
     if (!token) return;
 
     if (eventId) {
-      fetch(`http://localhost:5000/api/events/${eventId}`, {
+      fetch(`${import.meta.env.VITE_API_BASE_URL}/api/events/${eventId}`, {
         headers: { Authorization: `Bearer ${token}` }
       })
         .then(res => res.json())
         .then(data => setEvent(data))
         .catch(err => console.error("❌ Failed to fetch event:", err));
 
-      fetch(`http://localhost:5000/api/events/${eventId}/registrations`, {
+      fetch(`${import.meta.env.VITE_API_BASE_URL}/api/events/${eventId}/registrations`, {
         headers: { Authorization: `Bearer ${token}` }
       })
         .then(res => res.json())
         .then(data => setRegistrations(Array.isArray(data) ? data : []))
         .catch(err => console.error("❌ Failed to fetch registrations:", err));
     } else {
-      fetch(`http://localhost:5000/api/events/registrations`, {
+      fetch(`${import.meta.env.VITE_API_BASE_URL}/api/events/registrations`, {
         headers: { Authorization: `Bearer ${token}` }
       })
         .then(res => res.json())
@@ -46,7 +46,7 @@ function Resistrant() {
     setDeletingId(id); // ✅ Start loading
 
     try {
-      const res = await fetch(`http://localhost:5000/api/registrations/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/registrations/${id}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -83,8 +83,8 @@ function Resistrant() {
     if (!confirm) return;
 
     const url = eventId
-      ? `http://localhost:5000/api/registrations/event/${eventId}`
-      : `http://localhost:5000/api/registrations`;
+      ? `${import.meta.env.VITE_API_BASE_URL}/api/registrations/event/${eventId}`
+      : `${import.meta.env.VITE_API_BASE_URL}/api/registrations`;
 
     try {
       const res = await fetch(url, {

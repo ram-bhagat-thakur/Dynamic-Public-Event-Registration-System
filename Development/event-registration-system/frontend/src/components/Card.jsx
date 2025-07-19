@@ -7,7 +7,7 @@ function Card(props) {
         <div className="bg-[#DCBEFD] shadow-xl rounded-2xl p-5 text-[#1F2937] w-full max-w-sm mx-auto transition hover:scale-[1.02] duration-300">
             {/* Banner */}
             <img
-                src={`http://localhost:5000/${props.bannerPath}`}
+                src={`${import.meta.env.VITE_API_BASE_URL}/${props.bannerPath}`}
                 alt="Event Poster"
                 className="w-full h-48 object-cover rounded-xl mb-4"
             />

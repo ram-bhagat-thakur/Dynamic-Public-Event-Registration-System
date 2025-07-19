@@ -22,7 +22,7 @@ function EditEvent() {
     });
 
     useEffect(() => {
-        fetch(`http://localhost:5000/api/events/${id}`, {
+        fetch(`${import.meta.env.VITE_API_BASE_URL}/api/events/${id}`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -60,7 +60,7 @@ function EditEvent() {
             tags: eventData.tags
         };
         try {
-            const res = await fetch(`http://localhost:5000/api/events/${id}`, {
+            const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/events/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

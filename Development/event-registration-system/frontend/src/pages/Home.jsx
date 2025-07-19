@@ -6,7 +6,7 @@ function Home() {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/events')
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/api/events`)
       .then(res => res.json())
       .then(data => setEvents(data))
       .catch(err => console.error("Failed to fetch events:", err));

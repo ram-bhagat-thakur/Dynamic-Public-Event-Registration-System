@@ -17,7 +17,7 @@ function ResisterEvent() {
 
 
     useEffect(() => {
-        fetch(`http://localhost:5000/api/events/${id}`)
+        fetch(`${import.meta.env.VITE_API_BASE_URL}/api/events/${id}`)
             .then(res => res.json())
             .then(data => setEvent(data))
             .catch(err => console.error("Failed to fetch event:", err));
@@ -35,7 +35,7 @@ function ResisterEvent() {
         e.preventDefault();
         console.log("📤 Sending registration:", formData);
         try {
-            const res = await fetch(`http://localhost:5000/api/register/${id}`, {
+            const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/register/${id}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

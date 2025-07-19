@@ -8,7 +8,7 @@ const AdminMessages = () => {
     const handleDeleteMessage = async (id) => {
         setDeletingId(id);
         try {
-            const res = await fetch(`http://localhost:5000/api/contact/${id}`, { method: 'DELETE' });
+            const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/contact/${id}`, { method: 'DELETE' });
             if (res.ok) {
                 setMessages(messages.filter(m => m._id !== id));
             }
@@ -24,7 +24,7 @@ const AdminMessages = () => {
         if (!confirm) return;
 
         try {
-            const res = await fetch('http://localhost:5000/api/contact', { method: 'DELETE' });
+            const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/contact`, { method: 'DELETE' });
             if (res.ok) {
                 setMessages([]);
             }
@@ -36,7 +36,7 @@ const AdminMessages = () => {
     useEffect(() => {
         const fetchMessages = async () => {
             try {
-                const res = await fetch('http://localhost:5000/api/contact/all');
+                const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/contact/all`);
                 const data = await res.json();
                 setMessages(data);
             } catch (err) {

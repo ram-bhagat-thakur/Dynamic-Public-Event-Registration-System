@@ -20,7 +20,7 @@ function AdminDashboard() {
 
   // ✅ Fetch events
   useEffect(() => {
-    fetch('http://localhost:5000/api/events', {
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/api/events`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(res => res.json())
@@ -30,7 +30,7 @@ function AdminDashboard() {
 
   // ✅ Fetch registrations
   useEffect(() => {
-    fetch('http://localhost:5000/api/events/registrations', {
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/api/events/registrations`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(res => res.json())
@@ -77,7 +77,7 @@ function AdminDashboard() {
     if (!confirm) return;
 
     try {
-      const res = await fetch(`http://localhost:5000/api/events/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/events/${id}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` }
       });

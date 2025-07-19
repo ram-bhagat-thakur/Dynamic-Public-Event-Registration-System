@@ -10,7 +10,7 @@ function EventDetails() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/events/${id}`)
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/api/events/${id}`)
       .then(async res => {
         if (!res.ok) {
           const err = await res.json();
@@ -39,7 +39,7 @@ function EventDetails() {
       {/* Left Section: Banner + Description */}
       <div className="md:w-1/2 w-full overflow-y-auto">
         <img
-          src={`http://localhost:5000/${event.bannerPath}`}
+          src={`${import.meta.env.VITE_API_BASE_URL}/${event.bannerPath}`}
           alt="Event Banner"
           className="w-full rounded-2xl shadow-md"
         />
