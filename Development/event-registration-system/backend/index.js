@@ -39,9 +39,7 @@ app.use('/api/registrations', registrationsRoutes);
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Test Route
-app.get('/', (req, res) => {
-  res.send('✅ Server is running');
-});
+router.get('/:id', handler); // ✅ Correct
 
 // Nodemailer test
 app.get('/test-email', async (req, res) => {
