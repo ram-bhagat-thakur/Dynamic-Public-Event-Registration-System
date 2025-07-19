@@ -79,7 +79,7 @@ function Events() {
         <hr />
         <h2 className="text-3xl text-center mt-6 mb-4 font-bold text-indigo-800">💻 Tech Events</h2>
         <hr />
-        <div className="flex flex-wrap gap-10 justify-center mt-10 mb-16">
+        <div className="flex flex-wrap gap-5 justify-center mt-10 mb-16">
           {filteredEvents.filter(ev => ev.tags === 'Tech').map(event => (
             <Card
               key={event._id}
