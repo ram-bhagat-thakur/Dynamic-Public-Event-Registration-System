@@ -8,6 +8,11 @@ const transporter = require('./utils/mailer'); // adjust path if needed
 const registrationsRoutes = require('./routes/registrations');
 const contactRoutes = require('./routes/contact');
 
+const path =require('path');
+const express = require('express');
+
+
+
 require('dotenv').config(); // ✅ Load environment variables
 dotenv.config();
 const app = express();
@@ -17,6 +22,13 @@ app.use(express.urlencoded({ extended: true })); // Parses form data
 app.use(cors());
 app.use('/api/registrations', registrationsRoutes);
 app.use('/api', require('./routes/events'));
+const __dirname = path.resolve();
+
+app.use(express.static(path.join(__dirname, 'dist')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
 // ✅ Then mount your routes
 app.use('/api/contact', contactRoutes);
 app.use('/api/admin', require('./routes/admin'));
