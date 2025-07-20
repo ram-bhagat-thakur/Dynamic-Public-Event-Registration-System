@@ -2,13 +2,13 @@ const express = require("express")
 const mongoose = require("mongoose")
 const cors = require("cors")
 const  dotenv= require("dotenv")
-const registerRoute = require('./routes/register');
-const eventRoute = require('./routes/events.js');
+// const registerRoute = require('./routes/register');
+// const eventRoute = require('./routes/events.js');
 const transporter = require('./utils/mailer'); // adjust path if needed
 const registrationsRoutes = require('./routes/registrations');
 const contactRoutes = require('./routes/contact');
 
-require('dotenv').config(); // ✅ Load environment variables
+// require('dotenv').config(); // ✅ Load environment variables
 dotenv.config();
 const app = express();
 app.use(express.json());

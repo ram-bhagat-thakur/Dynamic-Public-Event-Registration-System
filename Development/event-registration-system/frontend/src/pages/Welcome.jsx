@@ -12,7 +12,7 @@ const Welcome = () => {
 
 
     return (
-        <div className="relative min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-purple-600 to-indigo-700 text-white px-6">
+        <div className="mt-24 mb-24 relative min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-purple-600 to-indigo-700 text-white px-6">
             <Confetti width={width} height={height} />
             <div className="min-h-screen mt-15 flex flex-col items-center justify-center bg-gradient-to-br from-purple-600 to-indigo-700 text-white px-6">
                 <div className="bg-white text-gray-800 rounded-xl shadow-lg p-8 max-w-md w-full text-center">

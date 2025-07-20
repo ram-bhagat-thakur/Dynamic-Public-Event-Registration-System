@@ -24,9 +24,9 @@ function Card(props) {
 
             {/* Title & Description */}
             <div>
-                <h2 className="text-lg font-bold mb-2">{props.title}</h2>
+                <h2 className="text-lg font-bold mb-2 text-center">{props.title}</h2>
                 <hr className="border-amber-500 mb-3" />
-                <p className="text-base text-gray-800 line-clamp-3 text-justify">
+                <p className="text-base text-gray-800 line-clamp-3 text-center ">
                     {props.description}
                 </p>
             </div>
