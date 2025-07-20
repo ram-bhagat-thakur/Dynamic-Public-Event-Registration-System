@@ -41,7 +41,7 @@ function Home() {
             </NavLink>
           </div>
           <div className="md:w-1/2 h-3/4 md:block flex items-center ">
-            <img src="/Resister-Event-Easily.png" alt="Event Preview" className="h-[100%] pb-4 max-md:hidden m-auto mx-auto" />
+            <img src="/Resister-Event-Easily.png" alt="Event Preview" className="h-[100%] pb-15 max-md:hidden m-auto mx-auto" />
           </div>
         </section>
       </div>

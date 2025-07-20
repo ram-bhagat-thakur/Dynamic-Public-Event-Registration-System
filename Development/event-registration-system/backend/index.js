@@ -4,12 +4,11 @@ const cors = require("cors")
 const  dotenv= require("dotenv")
 // const registerRoute = require('./routes/register');
 // const eventRoute = require('./routes/events.js');
-const transporter = require('./utils/mailer'); // adjust path if needed
+// const transporter = require('./utils/mailer'); // adjust path if needed
 const registrationsRoutes = require('./routes/registrations');
 const contactRoutes = require('./routes/contact');
 const adminRoutes = require('./routes/admin');
-const router = require("./routes/register");
-const path = require('path');
+// const router = require("./routes/register");
 
 require('dotenv').config(); // ✅ Load environment variables
 dotenv.config();
@@ -19,7 +18,7 @@ app.use(express.urlencoded({ extended: true })); // Parses form data
 //✅ These must come BEFORE any route
 app.use(cors());
 app.use('/api/registrations', registrationsRoutes);
-app.use('/api', require('./routes/events'));
+// app.use('/api', require('./routes/events'));
 // ✅ Then mount your routes
 app.use('/api/contact', contactRoutes);
 // app.use('/api/admin', require('./routes/admin'));
@@ -54,11 +53,12 @@ app.get('/', (req, res) => {
 // });
 
 
+const path = require('path');
 // Serve frontend static files
 app.use(express.static(path.join(__dirname, 'dist')));
 
 // Fallback route: send index.html for all unmatched frontend paths
-app.get('*', (req, res) => {
+app.get('*path', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
@@ -70,5 +70,5 @@ mongoose.connect(process.env.MONGO_URI, {
 }).then(() => console.log("✅ MongoDB connected"))
   .catch(err => console.log("❌ MongoDB error:", err));
 
-  
-app.listen(5000, () => console.log(`🚀 Server running on port ${PORT}`));
+const PORT = 5000;
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
