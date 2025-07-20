@@ -1,32 +1,26 @@
-# Logs
-logs
+# 🌐 Vite + React (frontend)
+frontend/dist/
+frontend/node_modules/
+frontend/.env
+frontend/.DS_Store
+
+# 🔙 Node.js backend
+node_modules/
+.env
+.DS_Store
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+# ⚙️ OS & IDE
+*.swp
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-
-
-# Extra #
-.vite/
-.env
-.env.local
-.env.development
-.env.production
+# 🚀 Builds & Temp
+build/
+temp/
+*.tmp

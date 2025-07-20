@@ -50,6 +50,18 @@ app.get('/test-email', async (req, res) => {
     res.status(500).send("Email failed");
   }
 });
+
+const path = require('path');
+
+// Serve frontend static files
+app.use(express.static(path.join(__dirname, 'dist')));
+
+// Fallback route: send index.html for all unmatched frontend paths
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
+
+
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
