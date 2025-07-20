@@ -7,6 +7,9 @@ const  dotenv= require("dotenv")
 const transporter = require('./utils/mailer'); // adjust path if needed
 const registrationsRoutes = require('./routes/registrations');
 const contactRoutes = require('./routes/contact');
+const adminRoutes = require('./routes/admin');
+const router = require("./routes/register");
+const path = require('path');
 
 require('dotenv').config(); // ✅ Load environment variables
 dotenv.config();
@@ -19,13 +22,12 @@ app.use('/api/registrations', registrationsRoutes);
 app.use('/api', require('./routes/events'));
 // ✅ Then mount your routes
 app.use('/api/contact', contactRoutes);
-app.use('/api/admin', require('./routes/admin'));
+// app.use('/api/admin', require('./routes/admin'));
 app.use('/api/events', require('./routes/events'));
-app.use('/api', require('./routes/events'));
+// app.use('/api', require('./routes/events'));
 app.use('/api/register', require('./routes/register'));
 app.use('/uploads', express.static('uploads'));
-const adminRoutes = require('./routes/admin');
-const router = require("./routes/register");
+
 app.use('/api/admin', adminRoutes); // ✅ This works only if adminRoutes is a router
 
 console.log("adminRoutes type:", typeof adminRoutes);
@@ -36,22 +38,21 @@ app.get('/', (req, res) => {
 });
 
 
-app.get('/test-email', async (req, res) => {
-  try {
-    await transporter.sendMail({
-      from: process.env.SMTP_USER,
-      to: 'yourtestemail@gmail.com',
-      subject: 'Test Email',
-      text: 'This is a test email from Nodemailer'
-    });
-    res.send("✅ Email sent");
-  } catch (err) {
-    console.error("❌ Test email error:", err.message);
-    res.status(500).send("Email failed");
-  }
-});
+// app.get('/test-email', async (req, res) => {
+//   try {
+//     await transporter.sendMail({
+//       from: process.env.SMTP_USER,
+//       to: 'yourtestemail@gmail.com',
+//       subject: 'Test Email',
+//       text: 'This is a test email from Nodemailer'
+//     });
+//     res.send("✅ Email sent");
+//   } catch (err) {
+//     console.error("❌ Test email error:", err.message);
+//     res.status(500).send("Email failed");
+//   }
+// });
 
-const path = require('path');
 
 // Serve frontend static files
 app.use(express.static(path.join(__dirname, 'dist')));
@@ -69,5 +70,5 @@ mongoose.connect(process.env.MONGO_URI, {
 }).then(() => console.log("✅ MongoDB connected"))
   .catch(err => console.log("❌ MongoDB error:", err));
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+  
+app.listen(5000, () => console.log(`🚀 Server running on port ${PORT}`));
