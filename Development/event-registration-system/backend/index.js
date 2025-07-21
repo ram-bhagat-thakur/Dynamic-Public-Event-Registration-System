@@ -1,10 +1,8 @@
 const express = require("express")
 const mongoose = require("mongoose")
+const path = require("path");
 const cors = require("cors")
 const  dotenv= require("dotenv")
-// const registerRoute = require('./routes/register');
-// const eventRoute = require('./routes/events.js');
-const transporter = require('./utils/mailer'); // adjust path if needed
 const registrationsRoutes = require('./routes/registrations');
 const contactRoutes = require('./routes/contact');
 
@@ -13,11 +11,11 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // Parses form data
-//✅ These must come BEFORE any route
+//✅ BEFORE any route
 app.use(cors());
 app.use('/api/registrations', registrationsRoutes);
 app.use('/api', require('./routes/events'));
-// ✅ Then mount your routes
+// ✅ mounted routes
 app.use('/api/contact', contactRoutes);
 app.use('/api/admin', require('./routes/admin'));
 app.use('/api/events', require('./routes/events'));
@@ -25,36 +23,18 @@ app.use('/api', require('./routes/events'));
 app.use('/api/register', require('./routes/register'));
 app.use('/uploads', express.static('uploads'));
 const adminRoutes = require('./routes/admin');
-const router = require("./routes/register");
-app.use('/api/admin', adminRoutes); // ✅ This works only if adminRoutes is a router
-
-console.log("adminRoutes type:", typeof adminRoutes);
+app.use('/api/admin', adminRoutes);
+app.use(express.static(path.join(__dirname, "dist")));
 
 // Test route
 app.get('/', (req, res) => {
   res.send('Server is running');
 });
 
-app.use((req, res, next) => {
-  console.log("📥 Incoming request:", req.method, req.url);
-  next();
+app.get("/{*any}", (req, res) => {
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 
-// app.get('/test-email', async (req, res) => {
-//   try {
-//     await transporter.sendMail({
-//       from: process.env.SMTP_USER,
-//       to: 'yourtestemail@gmail.com',
-//       subject: 'Test Email',
-//       text: 'This is a test email from Nodemailer'
-//     });
-//     res.send("✅ Email sent");
-//   } catch (err) {
-//     console.error("❌ Test email error:", err.message);
-//     res.status(500).send("Email failed");
-//   }
-// });
-// Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
