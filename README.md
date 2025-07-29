@@ -35,7 +35,7 @@ We welcome contributions of all kinds — from bug fixes and accessibility impro
 
 ## 🗂️ Project Roadmap
 
-Explore our Open Source [Open Source Roadmap](https://github.com/ram-bhagat-thakur/Dynamic-Public-Event-Registration-System/projects/3/views/5) to see what's planned, in progress, and done.  
+Explore our Open Source [Open Source Roadmap](https://github.com/users/ram-bhagat-thakur/projects/3) to see what's planned, in progress, and done.  
 💡 Contributions welcome — feel free to pick a task or suggest your own!
 
 ---
