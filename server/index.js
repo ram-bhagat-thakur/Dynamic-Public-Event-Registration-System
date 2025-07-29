@@ -39,14 +39,13 @@ app.get('/', (req, res) => {
   res.send('API is running...');
 });
 
-// ✅ Serve frontend build
-app.use(express.static(path.join(__dirname, 'client', 'dist')));
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '..', 'client', 'dist')));
 
-// ✅ Fallback route for SPA
-app.get('/{*any}', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
-});
-
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'client', 'dist', 'index.html'));
+  });
+}
 // Connect to MongoDB
 
 mongoose.connect(process.env.MONGO_URI, {
