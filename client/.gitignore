@@ -37,7 +37,6 @@ Thumbs.db
 
 # 📦 Yarn / npm / pnpm Lockfiles (only keep one)
 yarn.lock
-package-lock.json
 pnpm-lock.yaml
 
 # 🗃️ System Files
