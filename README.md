@@ -29,13 +29,13 @@ Make sure to review the **Prerequisites** and configure your `.env` files proper
 ## 🤝 Contributing
 
 We welcome contributions of all kinds — from bug fixes and accessibility improvements to new features and documentation polish.  
-📘 Please read our `[CONTRIBUTING.md](./CONTRIBUTING.md)` for guidelines on how to get started.
+📘 Please read our [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines on how to get started.
 
 ---
 
 ## 🗂️ Project Roadmap
 
-Explore our Open Source `[Open Source Roadmap](https://github.com/ram-bhagat-thakur/Dynamic-Public-Event-Registration-System//projects/3/views/5)` to see what's planned, in progress, and done.  
+Explore our Open Source [Open Source Roadmap](https://github.com/ram-bhagat-thakur/Dynamic-Public-Event-Registration-System/projects/3/views/5) to see what's planned, in progress, and done.  
 💡 Contributions welcome — feel free to pick a task or suggest your own!
 
 ---
@@ -502,8 +502,6 @@ npm run test
 ---
 
 # 📊 Sample Test Output & Coverage
-
-You can showcase your testing rigor with terminal snippets like:
 
 ## ✅ Frontend Test Output
 

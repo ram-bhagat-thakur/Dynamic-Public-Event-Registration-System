@@ -73,7 +73,7 @@ Robust testing ensures frontend stability and performance:
 
 ```bash
 npm run test
-
+```
 ---
 
 ## 👨‍💻 Maintainer

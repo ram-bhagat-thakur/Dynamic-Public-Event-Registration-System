@@ -70,7 +70,7 @@ Run tests via:
 
 ```bash
 npm run test
-
+```
 ---
 
 ## 🔗 Related Documentation
@@ -93,9 +93,9 @@ Explore connected resources to understand the full stack:
 
 ### 🔗 Profiles
 
-- 💼 GitHub: [@RamBhagatThakur](https://github.com/ram-bhagat-thakur/)  
-- 💼 LinkedIn: [Ram Bhagat Thakur](https://www.linkedin.com/in/ram-bhagat-thakur/)
+- 💼 GitHub: [@RamBhagatThakur](https://github.com/ram-bhagat-thakur)
+- 💼 LinkedIn: [Ram Bhagat Thakur](https://www.linkedin.com/in/ram-bhagat-thakur)
 
 ---
 
-> 🎓 _Built as part of the **Internship Program** with [SECT](https://www.linkedin.com/company/sect-india/ ) and [Civora Nexus](https://www.linkedin.com/company/civoranexus/), empowering student developers to build real-world apps._
+> 🎓 _Built as part of the **Internship Program** with [SECT](https://www.linkedin.com/company/sect-india) and [Civora Nexus](https://www.linkedin.com/company/civoranexus/), empowering student developers to build real-world apps._
