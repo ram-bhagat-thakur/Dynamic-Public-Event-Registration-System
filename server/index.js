@@ -2,6 +2,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
+const path = require('path');
+
+
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -34,6 +37,14 @@ app.use('/api/feedback', feedbackRoutes);
 // Routes placeholder
 app.get('/', (req, res) => {
   res.send('API is running...');
+});
+
+// ✅ Serve frontend build
+app.use(express.static(path.join(__dirname, 'client', 'dist')));
+
+// ✅ Fallback route for SPA
+app.get('/{*any}', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
 });
 
 // Connect to MongoDB
