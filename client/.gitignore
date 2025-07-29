@@ -1,7 +1,5 @@
 # 🚫 Node Modules & Build Artifacts
 node_modules/
-dist/
-build/
 .vite/
 
 # 📁 Vite Cache
@@ -11,7 +9,6 @@ build/
 .env
 .env.local
 .env.test
-.env.production
 
 # 🧪 Test Coverage & Logs
 coverage/
@@ -34,10 +31,6 @@ Thumbs.db
 # 🔄 Auto-generated Files
 *.tsbuildinfo
 *.eslintcache
-
-# 📦 Yarn / npm / pnpm Lockfiles (only keep one)
-yarn.lock
-pnpm-lock.yaml
 
 # 🗃️ System Files
 *.log
