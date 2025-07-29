@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { exportToCSV } from '../services/csvService';
+import axiosInstance from '../utils/axiosInstance';
 
 export default function AdminFeedback() {
   const [feedbacks, setFeedbacks] = useState([]);
@@ -10,7 +11,7 @@ export default function AdminFeedback() {
   const [loading, setLoading] = useState(true);
 
   const fetchFeedbacks = () => {
-    axios.get('/api/feedback/admin')
+    axiosInstance.get('/api/feedback/admin')
       .then(res => setFeedbacks(res.data))
       .catch(() => toast.error('Failed to fetch feedback'))
       .finally(() => setLoading(false));
@@ -20,7 +21,7 @@ export default function AdminFeedback() {
 
   const handleVerify = async (id) => {
     try {
-      await axios.patch(`/api/feedback/verify/${id}`);
+      await axiosInstance.patch(`/api/feedback/verify/${id}`);
       toast.success('Feedback verified');
       fetchFeedbacks();
     } catch {
@@ -31,7 +32,7 @@ export default function AdminFeedback() {
   const handleDelete = async (id) => {
     if (!confirm('Are you sure you want to delete this feedback?')) return;
     try {
-      await axios.delete(`/api/feedback/${id}`);
+      await axiosInstance.delete(`/api/feedback/${id}`);
       toast.success('Feedback deleted');
       fetchFeedbacks();
     } catch {

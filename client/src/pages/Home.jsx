@@ -14,7 +14,7 @@ import {
   FiStar,
   FiGrid,
 } from 'react-icons/fi';
-
+import axiosInstance from '../utils/axiosInstance';
 
 const MAX_WORDS = 30;
 
@@ -28,7 +28,7 @@ function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('/api/feedback/verified')
+    axiosInstance.get('/api/feedback/verified')
       .then(res => {
         console.log('Feedback response:', res.data);
         setFeedbacks(Array.isArray(res.data) ? res.data : []);
@@ -48,7 +48,7 @@ function Home() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('/api/feedback', form);
+      await axiosInstance.post('/api/feedback', form);
       toast.success('✅Thanks for your Feedback submitted ☺️! Awaiting admin approval.');
       setForm({ name: '', rating: 5, comment: '' });
     } catch (err) {

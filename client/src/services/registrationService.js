@@ -9,16 +9,16 @@ const authHeaders = (token) => ({
 });
 
 export const getAllRegistrants = (token) =>
-  axios.get('/api/registrations', authHeaders(token));
+  axiosInstance.get('/api/registrations', authHeaders(token));
 
 export const getRegistrantsByEvent = (eventId, token) =>
-  axios.get(`/api/registrations/event/${eventId}`, authHeaders(token));
+  axiosInstance.get(`/api/registrations/event/${eventId}`, authHeaders(token));
 
 export const deleteAllRegistrants = (eventId, token) =>
-  axios.delete(`/api/registrations/event/${eventId}`, authHeaders(token));
+  axiosInstance.delete(`/api/registrations/event/${eventId}`, authHeaders(token));
 
 export const deleteSingleRegistrant = (id, token) =>
-  axios.delete(`/api/registrations/${id}`, authHeaders(token));
+  axiosInstance.delete(`/api/registrations/${id}`, authHeaders(token));
 
 export const getRegistrations = (eventId, token) =>
-  axios.get(`/api/registrations/event/${eventId}`, authHeaders(token));
+  axiosInstance.get(`/api/registrations/event/${eventId}`, authHeaders(token));

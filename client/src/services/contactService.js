@@ -2,7 +2,7 @@ import axios from 'axios';
 import axiosInstance from '../utils/axiosInstance';
 
 export const submitContactForm = (data) =>
-  axios.post('/api/contact', data);
+  axiosInstance.post('/api/contact', data);
 
 const config = {
   headers: {
@@ -11,10 +11,10 @@ const config = {
 };
 
 export const getMessages = () =>
-  axios.get('/api/contact', config);
+  axiosInstance.get('/api/contact', config);
 
 export const markMessageAsRead = (id) =>
-  axios.patch(`/api/contact/${id}/read`, {}, config);
+  axiosInstance.patch(`/api/contact/${id}/read`, {}, config);
 
 export const deleteMessage = (id) =>
-  axios.delete(`/api/contact/${id}`, config);
+  axiosInstance.delete(`/api/contact/${id}`, config);
