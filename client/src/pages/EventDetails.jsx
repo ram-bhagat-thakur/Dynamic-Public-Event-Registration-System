@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import { getEventById } from '../services/eventService';
+import axiosInstance from '../utils/axiosInstance';
 
 function EventDetails() {
   const { id } = useParams();

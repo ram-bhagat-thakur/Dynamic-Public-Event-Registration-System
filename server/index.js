@@ -29,6 +29,8 @@ app.use('/api/admin', adminRoutes);
 
 app.use('/uploads', express.static('uploads'));
 
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 app.use('/api/registrations', require('./routes/registration'));
 
 const feedbackRoutes = require('./routes/feedbackRoutes');
