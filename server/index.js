@@ -38,6 +38,10 @@ app.get('/', (req, res) => {
   res.send('Server is running');
 });
 
+app.get("/health", (req, res) => {
+  res.status(200).send("OK");
+});
+
 // Routes placeholder
 // if (process.env.NODE_ENV === 'production') {
 //   app.use(express.static(path.join(__dirname, '..', 'client', 'dist')));
@@ -54,7 +58,7 @@ mongoose.connect(process.env.MONGO_URI, {
 })
 .then(() => {
   console.log('MongoDB connected');
-  app.listen(PORT, () => {
+  app.listen(PORT,"0.0.0.0", () => {
     console.log(`Server running on ${PORT}`);
   });
 })
