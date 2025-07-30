@@ -36,7 +36,7 @@ function AdminDashboard() {
         setTotalLeftSeats(totalLeft);
       })
       .catch((err) => {
-        console.error('Error fetching events:', err);
+        // console.error('Error fetching events:', err);
         toast.error('Failed to load events');
       });
   }, []);
@@ -50,7 +50,7 @@ function AdminDashboard() {
       setEvents((prev) => prev.filter((event) => event._id !== id));
       toast.success('Event deleted successfully');
     } catch (err) {
-      console.error('Delete error:', err);
+      // console.error('Delete error:', err);
       toast.error('Failed to delete event');
     } finally {
       setLoadingIds((prev) => ({ ...prev, [id]: false }));
@@ -65,7 +65,7 @@ function AdminDashboard() {
       exportToCSV(`registrations_${eventId}.csv`, headers, rows);
       toast.success('Registrants exported successfully');
     } catch (err) {
-      console.error('Export error:', err);
+      // console.error('Export error:', err);
       toast.error('Failed to export registrations');
     }
   };

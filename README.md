@@ -1,6 +1,6 @@
 # 🏷️ Project Overview :
 
-## Dynamic Public Event Registration System
+## [Dynamic Public Event Registration System](https://dynamic-public-event-registration-system.onrender.com/)
 
 A full-stack web application that streamlines public event registration and management.
 
@@ -144,6 +144,15 @@ This project leverages a modern full-stack architecture with robust tooling for 
 - **Testing**:  
   `Vitest`, `Supertest`, custom test environment setup
 
+- **Image Management**:  
+  Integrated via `cloudinary` package for seamless image uploads, optimization, and deletion.
+
+- **Environment Variables** (`.env`):
+  ```env
+  CLOUDINARY_CLOUD_NAME=your-cloud-name
+  CLOUDINARY_API_KEY=your-api-key
+  CLOUDINARY_API_SECRET=your-api-secret
+  ```
 ---
 
 ### 🚀 Deployment
@@ -158,7 +167,7 @@ This project leverages a modern full-stack architecture with robust tooling for 
 
 ### 🔗 Live Demo
 
-*Link to be added once deployed*
+*https://dynamic-public-event-registration-system.onrender.com/*
 
 ---
 
@@ -222,18 +231,132 @@ EMAIL_PASS=your_email_app_password
 VITE_API_BASE_URL=http://localhost:5000
 ```
 
+
+---
+
+# 🌄 Image Uploads with Cloudinary Integration
+
+Your app now supports robust, production-grade image handling via [Cloudinary](https://cloudinary.com), enabling persistent storage, secure delivery, and seamless deletion for uploaded images.
+
+---
+
+## ⚙️ How It's Implemented
+
+- **Cloudinary Setup:**  
+  A Cloudinary account was created and credentials added to `.env`:
+  ```env
+  CLOUDINARY_CLOUD_NAME=your-cloud-name
+  CLOUDINARY_API_KEY=your-api-key
+  CLOUDINARY_API_SECRET=your-api-secret
+  ```
+ 
+# 🌩️ Middleware Configuration
+
+The backend includes a `cloudinary.js` config file and a **Multer + Cloudinary middleware** for handling image uploads.
+
+---
+
+## 📦 Dependencies Used
+
+```js
+import { v2 as cloudinary } from 'cloudinary';
+import { CloudinaryStorage } from 'multer-storage-cloudinary';
+import multer from 'multer';
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: '', //set automatically uploads in this repo
+    allowed_formats: ['jpg', 'jpeg', 'png'],
+  },
+});
+
+export const upload = multer({ storage });
+```
+
+# 🔗 Route Integration: Image Upload with Cloudinary
+
+During **event creation**, image files are uploaded via Multer and stored as secure **Cloudinary URLs**.
+
+---
+
+## 📤 Upload Route Setup
+
+```js
+router.post('/create', upload.single('image'), async (req, res) => {
+  const imageUrl = req.file.path;
+  // Save imageUrl to MongoDB along with other event data
+});
+```
+# 🗑️ Secure Deletion: Cloudinary Image Removal
+
+When an event is deleted, its associated image is removed from Cloudinary using the stored `public_id`.
+
+---
+
+## 🔧 Cloudinary Deletion Method
+
+```js
+// Handle banner removal
+    if (req.body.removeBanner === 'true' && event.bannerPath) {
+      const imagePath = path.join(__dirname, '..', 'uploads', event.bannerPath);
+      fs.unlink(imagePath, (err) => {
+        if (err) console.warn('Failed to delete banner:', err.message);
+      });
+      updatedData.bannerPath = '';
+    }
+```
+
+
+
+# 🛡️ Benefits of Using Cloudinary for Image Management
+
+---
+
+## 📈 Advantages
+
+- 🗂️ **Persistent Image Hosting**  
+  Hosted images remain accessible long-term via secure URLs  
+  with built-in **CDN caching** for global performance.
+
+- ✨ **Automatic Optimization**  
+  Cloudinary resizes and formats images automatically  
+  based on device, viewport, and delivery context.
+
+- 🧹 **Secure Image Deletion**  
+  Removal is handled via `cloudinary.uploader.destroy(publicId)`  
+  for precise and authenticated cleanup.
+
+- 📦 **Simplified Deployment**  
+  No need for manual uploads folder —  
+  images are stored externally and accessed via Cloudinary URLs.
+
+---
+
+## 💡 Tip
+
+> [!TIP]
+> Make sure to **validate image inputs** on both the **frontend and backend**:
+> - 🔍 Check **file type** (e.g., JPG, PNG)
+> - 📏 Enforce **file size limits**
+> - 🚫 Handle **upload errors gracefully**
+
 ---
 
 ## 🚀 Installation & Setup
 
 Follow these steps to run the project locally:
 
----
-
 ### 1️⃣ Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/event-registration-system.git
+git clone https://github.com/ram-bhagat-thakur/Dynamic-Public-Event-Registration-System.git
 cd event-registration-system
 ```
 
@@ -405,6 +528,105 @@ server/
 ├── app.js                   # Test entry point
 └── package.json
 ```
+
+### 📁 Full Folder Structure
+
+```txt
+sect-project/
+├── client/                  # Frontend (React + Vite)
+│   ├── node_modules/
+│   ├── public/              # Static assets
+│   │   ├── images/          # Logos and icons
+│   │   ├── videos/          # Background video for homepage
+│   │   └── _redirects       # SPA routing support (e.g. Render)
+│   ├── src/                 # Application source code
+│   │   ├── components/      # Reusable UI components
+│   │   │   ├── Card.jsx
+│   │   │   ├── Footer.jsx
+│   │   │   ├── Navbar.jsx
+│   │   │   ├── ProtectedRoute.jsx
+│   │   │   └── ScrollToTop.jsx
+│   │   ├── pages/           # Route-based pages
+│   │   │   ├── AdminDashboard.jsx
+│   │   │   ├── AddEvent.jsx
+│   │   │   ├── AdminLogin.jsx
+│   │   │   ├── AdminRegister.jsx
+│   │   │   ├── AllRegistrant.jsx
+│   │   │   ├── Contact.jsx
+│   │   │   ├── EditEvent.jsx
+│   │   │   ├── EventDetails.jsx
+│   │   │   ├── EventRegistrants.jsx
+│   │   │   ├── Events.jsx
+│   │   │   ├── Home.jsx
+│   │   │   ├── MessageList.jsx
+│   │   │   ├── RegisterEvent.jsx
+│   │   │   └── Welcome.jsx
+│   │   ├── services/        # API service modules
+│   │   │   ├── authService.js
+│   │   │   ├── contactService.js
+│   │   │   ├── csvService.js
+│   │   │   ├── eventService.js
+│   │   │   └── registrationService.js
+│   │   ├── styles/          # Global styles
+│   │   │   └── index.css
+│   │   ├── utils/           # Utility functions
+│   │   │   └── axiosInstance.js
+│   │   ├── __test__/        # Frontend test suites
+│   │   │   ├── components/
+│   │   │   ├── pages/
+│   │   │   ├── services/
+│   │   │   └── utils/
+│   │   ├── App.jsx
+│   │   ├── main.jsx
+│   │   └── setupTests.js    # Vitest setup
+│   ├── .env                 # Frontend environment variables
+│   ├── .gitignore
+│   ├── eslint.config.js
+│   ├── index.html
+│   ├── package.json
+│   ├── package-lock.json
+│   ├── tailwind.config.js
+│   └── vite.config.js
+│
+├── server/                  # Backend (Express + MongoDB)
+│   ├── controller/          # Route controllers
+│   │   ├── authController.js
+│   │   ├── feedbackController.js
+│   │   ├── contactController.js
+│   │   ├── eventController.js
+│   │   └── registrationController.js
+│   ├── middleware/          # Custom middleware
+│   │   ├── authMiddleware.js
+│   │   └── uploadMiddleware.js
+│   ├── models/              # Mongoose schemas
+│   │   ├── Feedback.js
+│   │   ├── Admin.js
+│   │   ├── Contact.js
+│   │   ├── Event.js
+│   │   └── Registration.js
+│   ├── routes/              # Express route definitions
+│   │   ├── feedbackRoutes.js
+│   │   ├── admin.js
+│   │   ├── contact.js
+│   │   ├── event.js
+│   │   ├── register.js
+│   │   └── registration.js
+│   ├── upload/              # Uploaded event banners
+│   ├── utils/               # Utility functions
+│   │   └── sendConfirmationEmail.js
+│   ├── __tests__/           # Backend test suites
+│   │   ├── routes/
+│   │   └── setupTestEnv.js
+│   ├── .env
+│   ├── .env.example
+│   ├── .gitignore
+│   ├── app.js               # Test entry point
+│   ├── index.js             # Main server entry point
+│   ├── package.json
+│   ├── package-lock.json
+│   └── vitest.config.js
+```
+
 
 ---
 
@@ -587,7 +809,7 @@ This section reflects backend reliability and realistic payloads logged during a
 ---
 
 
-## 📦 Deployment Instructions
+## 📦 Deployment Instructions (To Deploy Frontend and Backend with different different url)
 
 This project is deployed using **Render**, which supports both static frontend hosting and backend services with environment variables.
 
@@ -639,6 +861,83 @@ Publish Directory: dist
 VITE_API_BASE_URL=https://your-backend.onrender.com
 ```
 
+---
+
+# 📦 Deployment Instructions (Unified Frontend & Backend on a Single URL)
+
+This approach merges your **React (Vite)** frontend with your **Express + MongoDB** backend, hosted together under one Render service.  
+Ideal for seamless SPA routing, simplified API access, and persistent cloud image storage.
+
+---
+
+## 🔧 Pre-Deployment Setup
+
+Before deploying to Render, build your frontend locally and prepare it for server-side serving:
+
+### 1. Build the frontend
+
+```bash
+cd client
+npm run build
+```
+
+- After successful build, move the dist folder to the backend directory:
+
+```bash
+mv dist ../server/
+```
+
+- Confirm that your Express server is configured to serve static assets:
+
+```bash
+// server/index.js
+import path from 'path';
+import express from 'express';
+
+const app = express();
+
+app.use(express.static(path.resolve(__dirname, 'dist')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
+});
+```
+
+
+# 🚀 Deployment on Render
+
+- Go to the Render Dashboard  
+- Click “New Web Service”  
+- Select the `server/` directory as your root deploy folder  
+- Configure deployment settings:  
+  ```bash
+  Build Command: npm install
+  Start Command: npm run dev
+  ```
+
+- Add the following environment variables:
+
+```env
+MONGO_URI=your-mongodb-uri
+JWT_SECRET=your-jwt-secret
+EMAIL_USER=your-email-username
+EMAIL_PASS=your-email-password
+PORT=10000
+```
+- Choose a plan (free or paid) and deploy!  
+✅ Render will automatically redeploy your service on each push to the connected branch.
+
+---
+
+# 🧠 Notes
+
+- No need for `VITE_API_BASE_URL` in this setup, as your frontend and backend share the same domain. But adding this will be easy. 
+- Ensure your server uses fallback routing to support SPA navigation via direct links.  
+- You can customize the deployment port with the `PORT` environment variable, commonly set to `10000` or Render’s default.
+
+---
+
+
 - Deploy and test
 
 ---
@@ -655,129 +954,60 @@ VITE_API_BASE_URL=https://your-backend.onrender.com
 
 ## 🛠 Deployment Status
 
-### 🔖 Render Deployment Badges
-
-[![Backend Deploy](https://img.shields.io/badge/Render-Backend-blue)](https://event-api-ij2d.onrender.com/)
-
-[![Frontend Deploy](https://img.shields.io/badge/Render-Frontend-green)](https://render.com/)
-
----
-
 ### 📊 Render Dashboard Preview
 
-### 🔍 Render Dashboard
-
-```md
-![Render Dashboard Screenshot](./assets/render-dashboard.png)
-```
+![Render Dashboard Screenshot](assets/render-dashboard.png)
 
 ---
 
-## 📄 Deployment Log 
-
-### For Backend Deployment :
+## 📄 Deployment Log (Unified Frontend & Backend on a Single URL)
 
 ```
-2025-07-29T12:53:53.153765669Z ==> Cloning from https://github.com/ram-bhagat-thakur/Dynamic-Public-Event-Registration-System
-2025-07-29T12:53:55.480370943Z ==> Checking out commit 88577c640c95b0ab5802f148e7175c8dc4e1feef in branch Development
-2025-07-29T12:53:57.244649964Z ==> Using Node.js version 22.16.0 (default)
-2025-07-29T12:53:57.27239972Z ==> Docs on specifying a Node.js version: https://render.com/docs/node-version
-2025-07-29T12:53:59.261532674Z ==> Using Bun version 1.1.0 (default)
-2025-07-29T12:53:59.261552145Z ==> Docs on specifying a Bun version: https://render.com/docs/bun-version
-2025-07-29T12:53:59.321990033Z ==> Running build command 'npm install'...
-2025-07-29T12:54:05.145954519Z 
-2025-07-29T12:54:05.14598037Z added 310 packages, and audited 311 packages in 6s
-2025-07-29T12:54:05.1459942Z 
-2025-07-29T12:54:05.14600209Z 60 packages are looking for funding
-2025-07-29T12:54:05.146056861Z   run `npm fund` for details
-2025-07-29T12:54:05.147065143Z 
-2025-07-29T12:54:05.147078054Z found 0 vulnerabilities
-2025-07-29T12:54:06.282749638Z ==> Uploading build...
-2025-07-29T12:54:13.477194149Z ==> Uploaded in 5.6s. Compression took 1.6s
-2025-07-29T12:54:13.51164547Z ==> **Build successful 🎉
-2025-07-29T12:54:16.640219435Z ==> Deploying...
-2025-07-29T12:54:33.359411073Z ==> Running 'npm run dev'
-2025-07-29T12:54:34.558195841Z 
-2025-07-29T12:54:34.558240422Z > server@1.0.0 dev
-2025-07-29T12:54:34.558243651Z > nodemon index.js
-2025-07-29T12:54:34.558246171Z 
-2025-07-29T12:54:35.461391624Z [nodemon] 3.1.10
-2025-07-29T12:54:35.465705574Z [nodemon] to restart at any time, enter `rs`
-2025-07-29T12:54:35.465731114Z [nodemon] watching path(s): *.*
-2025-07-29T12:54:35.465734334Z [nodemon] watching extensions: js,mjs,cjs,json
-2025-07-29T12:54:35.465737124Z [nodemon] starting `node index.js`
-2025-07-29T12:54:39.159459699Z [dotenv@17.2.0] injecting env (0) from .env (tip: ⚙️  override existing env vars with { override: true })
-2025-07-29T12:54:40.163859673Z (node:144) [MONGODB DRIVER] Warning: useNewUrlParser is a deprecated option: useNewUrlParser has no effect since Node.js Driver version 4.0.0 and will be removed in the next major version
-2025-07-29T12:54:40.163886043Z (Use `node --trace-warnings ...` to show where the warning was created)
-2025-07-29T12:54:40.163908984Z (node:144) [MONGODB DRIVER] Warning: useUnifiedTopology is a deprecated option: useUnifiedTopology has no effect since Node.js Driver version 4.0.0 and will be removed in the next major version
-2025-07-29T12:54:41.199515895Z MongoDB connected
-2025-07-29T12:54:41.201343183Z Server running on PORT 5000
-2025-07-29T12:54:47.452397166Z ==> Your service is live 🎉
-2025-07-29T12:54:47.63576541Z ==> 
-2025-07-29T12:54:47.814852273Z ==> ///////////////////////////////////////////////////////////
-2025-07-29T12:54:48.004537626Z ==> 
-2025-07-29T12:54:48.186917719Z ==> Available at your primary URL https://event-api-ij2d.onrender.com
-2025-07-29T12:54:48.362094163Z ==> 
-2025-07-29T12:54:48.863988048Z ==> ///////////////////////////////////////////////////////////
-2025-07-29T12:59:48.577605108Z ==> Detected service running on port 5000
-2025-07-29T12:59:49.000474438Z ==> Docs on specifying a port: https://render.com/docs/web-services#port-binding
+2025-07-30T21:30:45.693019843Z ==> Cloning from https://github.com/ram-bhagat-thakur/Dynamic-Public-Event-Registration-System
+2025-07-30T21:30:46.613369586Z ==> Checking out commit ee4dd315c6fb7676a3f0448a9206f2d7b9820133 in branch Development
+2025-07-30T21:30:47.876313543Z ==> Downloading cache...
+2025-07-30T21:31:04.357607419Z ==> Transferred 133MB in 8s. Extraction took 7s.
+2025-07-30T21:31:34.466416214Z ==> Using Node.js version 22.16.0 (default)
+2025-07-30T21:31:34.492802003Z ==> Docs on specifying a Node.js version: https://render.com/docs/node-version
+2025-07-30T21:31:34.671541503Z ==> Using Bun version 1.1.0 (default)
+2025-07-30T21:31:34.671556713Z ==> Docs on specifying a Bun version: https://render.com/docs/bun-version
+2025-07-30T21:31:34.737867294Z ==> Running build command 'npm install'...
+2025-07-30T21:31:35.803232053Z 
+2025-07-30T21:31:35.803261854Z up to date, audited 323 packages in 986ms
+2025-07-30T21:31:35.803286125Z 
+2025-07-30T21:31:35.803324366Z 62 packages are looking for funding
+2025-07-30T21:31:35.803331186Z   run `npm fund` for details
+2025-07-30T21:31:35.804914006Z 
+2025-07-30T21:31:35.804926876Z found 0 vulnerabilities
+2025-07-30T21:31:38.899508371Z ==> Uploading build...
+2025-07-30T21:31:48.363960553Z ==> Uploaded in 6.8s. Compression took 2.6s
+2025-07-30T21:31:48.413233561Z ==> Build successful 🎉
+2025-07-30T21:32:30.63052316Z ==> Deploying...
+2025-07-30T21:32:52.310988356Z ==> Running 'npm run dev'
+2025-07-30T21:32:53.516317683Z 
+2025-07-30T21:32:53.519888384Z > server@1.0.0 dev
+2025-07-30T21:32:53.519896094Z > nodemon index.js
+2025-07-30T21:32:53.519898514Z 
+2025-07-30T21:32:54.417392739Z [nodemon] 3.1.10
+2025-07-30T21:32:54.419341954Z [nodemon] to restart at any time, enter `rs`
+2025-07-30T21:32:54.41957021Z [nodemon] watching path(s): *.*
+2025-07-30T21:32:54.419656803Z [nodemon] watching extensions: js,mjs,cjs,json
+2025-07-30T21:32:54.420163497Z [nodemon] starting `node index.js`
+2025-07-30T21:32:58.407244336Z [dotenv@17.2.0] injecting env (0) from .env (tip: ⚙️  enable debug logging with { debug: true })
+2025-07-30T21:32:59.606346258Z [dotenv@17.2.0] injecting env (0) from .env (tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit)
+2025-07-30T21:33:00.009066516Z (node:142) [MONGODB DRIVER] Warning: useNewUrlParser is a deprecated option: useNewUrlParser has no effect since Node.js Driver version 4.0.0 and will be removed in the next major version
+2025-07-30T21:33:00.009088697Z (Use `node --trace-warnings ...` to show where the warning was created)
+2025-07-30T21:33:00.009091837Z (node:142) [MONGODB DRIVER] Warning: useUnifiedTopology is a deprecated option: useUnifiedTopology has no effect since Node.js Driver version 4.0.0 and will be removed in the next major version
+2025-07-30T21:33:03.032692459Z MongoDB connected
+2025-07-30T21:33:03.034392447Z Server running on 5000
+2025-07-30T21:33:11.442445034Z ==> Your service is live 🎉
+2025-07-30T21:33:11.471477492Z ==> 
+2025-07-30T21:33:11.498418859Z ==> ///////////////////////////////////////////////////////////
+2025-07-30T21:33:11.524453637Z ==> 
+2025-07-30T21:33:11.551231144Z ==> Available at your primary URL https://dynamic-public-event-registration-system.onrender.com
+2025-07-30T21:33:11.577871992Z ==> 
+2025-07-30T21:33:11.60408074Z ==> ///////////////////////////////////////////////////////////
 ```
-
-### For Frontend Deployment :
-
-```
-2025-07-29T13:44:06.860476544Z ==> Cloning from https://github.com/ram-bhagat-thakur/Dynamic-Public-Event-Registration-System
-2025-07-29T13:44:07.79233517Z ==> Checking out commit 88577c640c95b0ab5802f148e7175c8dc4e1feef in branch Development
-2025-07-29T13:44:10.144862156Z ==> Installing dependencies with npm...
-2025-07-29T13:44:10.333525456Z ==> Using Node.js version 22.16.0 (default)
-2025-07-29T13:44:10.381133643Z ==> Docs on specifying a Node.js version: https://render.com/docs/node-version
-2025-07-29T13:44:13.105025166Z ==> Using Bun version 1.1.0 (default)
-2025-07-29T13:44:13.105058476Z ==> Docs on specifying a Bun version: https://render.com/docs/bun-version
-2025-07-29T13:44:26.697086773Z 
-2025-07-29T13:44:26.697128994Z added 693 packages, and audited 694 packages in 13s
-2025-07-29T13:44:26.697148554Z 
-2025-07-29T13:44:26.697179425Z 165 packages are looking for funding
-2025-07-29T13:44:26.697192435Z   run `npm fund` for details
-2025-07-29T13:44:26.699343689Z 
-2025-07-29T13:44:26.69936046Z found 0 vulnerabilities
-2025-07-29T13:44:28.759063583Z 
-2025-07-29T13:44:28.759100343Z up to date, audited 694 packages in 2s
-2025-07-29T13:44:28.759105963Z 
-2025-07-29T13:44:28.759111163Z 165 packages are looking for funding
-2025-07-29T13:44:28.759133884Z   run `npm fund` for details
-2025-07-29T13:44:28.761122115Z 
-2025-07-29T13:44:28.761137716Z found 0 vulnerabilities
-2025-07-29T13:44:28.798852725Z ==> Running build command 'npm install && npm run build'...
-2025-07-29T13:44:30.662165366Z 
-2025-07-29T13:44:30.662199076Z up to date, audited 694 packages in 2s
-2025-07-29T13:44:30.662204316Z 
-2025-07-29T13:44:30.662216107Z 165 packages are looking for funding
-2025-07-29T13:44:30.662221947Z   run `npm fund` for details
-2025-07-29T13:44:30.664192838Z 
-2025-07-29T13:44:30.664224418Z found 0 vulnerabilities
-2025-07-29T13:44:30.915012598Z 
-2025-07-29T13:44:30.915069889Z > client@0.0.0 build
-2025-07-29T13:44:30.915076289Z > vite build
-2025-07-29T13:44:30.915081299Z 
-2025-07-29T13:44:31.808276208Z [dotenv@17.2.1] injecting env (0) from .env -- tip: ⚙️  enable debug logging with { debug: true }
-2025-07-29T13:44:31.863328864Z vite v7.0.5 building for production...
-2025-07-29T13:44:31.973706179Z transforming...
-2025-07-29T13:44:36.19655036Z ✓ 992 modules transformed.
-2025-07-29T13:44:36.781313203Z rendering chunks...
-2025-07-29T13:44:36.795918325Z computing gzip size...
-2025-07-29T13:44:36.822251024Z dist/index.html                   0.50 kB │ gzip:   0.32 kB
-2025-07-29T13:44:36.822407757Z dist/assets/index-C-Rjpu-d.css   65.66 kB │ gzip:  10.98 kB
-2025-07-29T13:44:36.822417237Z dist/assets/index-BLY01QYO.js   530.79 kB │ gzip: 165.94 kB
-2025-07-29T13:44:36.822755252Z 
-2025-07-29T13:44:36.822767323Z (!) Some chunks are larger than 500 kB after minification. Consider:
-2025-07-29T13:44:36.822772693Z - Using dynamic import() to code-split the application
-2025-07-29T13:44:36.822778183Z - Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
-2025-07-29T13:44:36.822783333Z - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
-2025-07-29T13:44:36.823181419Z ✓ built in 4.91s
-2025-07-29T13:44:39.134623894Z ==> Uploading build...
-2025-07-29T13:44:46.914504086Z ==> Your site is live 🎉
-```
-
 ---
 
 # 🔮 Future Improvements

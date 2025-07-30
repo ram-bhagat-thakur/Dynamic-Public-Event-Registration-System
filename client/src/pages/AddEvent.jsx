@@ -20,7 +20,7 @@ function AddEvent() {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [status, setStatus] = useState('');
+  // const [status, setStatus] = useState('');
   const [errors, setErrors] = useState({});
   const [bannerFile, setBannerFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState('');
@@ -75,12 +75,11 @@ function AddEvent() {
     try {
       await createEvent(form, localStorage.getItem('adminToken'));
       toast.success('Event created successfully!');
-
-      setStatus('Event created successfully!');
+      // setStatus('Event created successfully!');
       navigate('/admin');
     } catch (err) {
       toast.error('Failed to create event');
-      setStatus('Failed to create event.');
+      // setStatus('Failed to create event.');
     } finally {
       setIsSubmitting(false);
     }
@@ -221,7 +220,7 @@ function AddEvent() {
           </button>
         </form>
         {/* Status Message */}
-        {status && (
+        {/* {status && (
           <p
             id="form-status"
             className={`mt-6 text-center font-medium ${status.includes('success') ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'
@@ -230,7 +229,7 @@ function AddEvent() {
           >
             {status}
           </p>
-        )}
+        )} */}
       </div>
     </main>
   );
