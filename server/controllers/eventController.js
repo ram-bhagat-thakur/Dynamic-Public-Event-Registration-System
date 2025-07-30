@@ -3,21 +3,6 @@ const Registration = require('../models/Registration'); // ✅ Added
 const fs = require('fs');
 const path = require('path');
 
-/**
- * Event Controller
- * Handles CRUD operations for events including banner upload and seat tracking.
- * 
- * Banner images are stored in /uploads and cleaned up on update/delete.
- * leftSeats is auto-calculated based on totalSeats and registration count.
- * 
- * Expected req.body fields:
- * - title: String
- * - description: String
- * - date: ISO String
- * - totalSeats: Number
- * - removeBanner: 'true' (optional)
- */
-
 // DELETE /api/events/:id
 exports.deleteEvent = async (req, res) => {
   try {

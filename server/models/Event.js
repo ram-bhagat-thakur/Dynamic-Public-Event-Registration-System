@@ -1,5 +1,3 @@
-const mongoose = require('mongoose');
-
 /**
  * Event Schema
  * Represents a public event with seat tracking and optional banner image.
@@ -12,6 +10,7 @@ const mongoose = require('mongoose');
  * - createdAt
  */
 
+const mongoose = require('mongoose');
 
 const eventSchema = new mongoose.Schema({
   title: { type: String, required: true },
