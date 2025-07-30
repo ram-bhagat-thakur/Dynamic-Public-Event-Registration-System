@@ -62,7 +62,7 @@ function MessageList() {
     <main
       role="main"
       aria-label="Admin message inbox"
-      className="min-h-screen w-screen px-6 pb-24 pt-26 bg-gradient-to-br from-[#F0F4FF] to-white dark:from-[#0F172A] dark:to-[#1E293B] font-sans text-gray-800 dark:text-gray-200"
+      className="min-h-screen w-full px-6 pb-24 pt-26 bg-gradient-to-br from-[#F0F4FF] to-white dark:from-[#0F172A] dark:to-[#1E293B] font-sans text-gray-800 dark:text-gray-200"
     >
       <div className="max-w-4xl mx-auto">
         {/* Header + Delete All */}

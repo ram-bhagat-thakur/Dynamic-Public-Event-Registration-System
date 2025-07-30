@@ -75,7 +75,7 @@ function AdminDashboard() {
       id="main-content"
       role="main"
       aria-label="Admin Dashboard"
-      className="min-h-screen pt-24 w-screen bg-gradient-to-br from-indigo-50 to-white dark:from-gray-900 dark:to-gray-800 text-gray-800 dark:text-gray-200 p-6"
+      className="min-h-screen pt-24 w-full bg-gradient-to-br from-indigo-50 to-white dark:from-gray-900 dark:to-gray-800 text-gray-800 dark:text-gray-200 p-6"
     >
       <ToastContainer aria-live="polite" />
 

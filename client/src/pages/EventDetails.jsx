@@ -41,7 +41,7 @@ function EventDetails() {
     );
 
   return (
-    <main role="main" aria-label="Event details page">
+    <main role="main" aria-label="Event details page" className='w-full'>
       <section className="flex flex-col-reverse md:flex-row gap-10 pt-24 px-6 pb-24 bg-white dark:bg-gray-900 dark:text-gray-200">
         {/* Left Section: Banner + Description */}
         <article className="md:w-1/2 w-full overflow-y-auto">

@@ -69,7 +69,7 @@ END:VCALENDAR
         <main
             role="main"
             aria-label="Event registration confirmation"
-            className="min-h-screen w-screen pt-26 pb-24 flex items-center justify-center bg-gradient-to-br from-[#F0F4FF] to-white dark:from-[#0F172A] dark:to-[#1E293B] text-gray-800 dark:text-gray-200 px-6 rounded-2xl"
+            className="min-h-screen w-full pt-26 pb-24 flex items-center justify-center bg-gradient-to-br from-[#F0F4FF] to-white dark:from-[#0F172A] dark:to-[#1E293B] text-gray-800 dark:text-gray-200 px-6 rounded-2xl"
         >{showConfetti && <Confetti width={width} height={height} />}
 
             <div className="p-[2px] max-w-xl w-full rounded-3xl bg-gradient-to-r from-green-400 via-blue-500 to-yellow-400 animate-fade-in">

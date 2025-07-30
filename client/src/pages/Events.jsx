@@ -41,7 +41,7 @@ function Events() {
     <main
       role="main"
       aria-label="Browse events"
-      className="w-screen pt-24 pb-24 min-h-screen bg-gray-50 dark:bg-gray-900 px-6 py-16 text-gray-800 dark:text-gray-200"
+      className="w-full pt-24 pb-24 min-h-screen bg-gray-50 dark:bg-gray-900 px-6 py-16 text-gray-800 dark:text-gray-200"
     >
       {/* Header Section */}
       <section className="mb-16">

@@ -90,7 +90,7 @@ function AddEvent() {
     <main
       role="main"
       aria-label="Create new event form"
-      className="min-h-screen w-screen px-6 pb-24 pt-24 bg-gradient-to-br from-[#E0ECFF] via-[#F0F4FF] to-white dark:from-[#0F172A] dark:via-[#1E293B] dark:to-[#111827] font-sans text-gray-800 dark:text-gray-200"
+      className="min-h-screen w-full px-6 pb-24 pt-24 bg-gradient-to-br from-[#E0ECFF] via-[#F0F4FF] to-white dark:from-[#0F172A] dark:via-[#1E293B] dark:to-[#111827] font-sans text-gray-800 dark:text-gray-200"
     >
       <div className="max-w-screen-sm mx-auto p-8 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-xl bg-white dark:bg-[#1E293B] text-gray-800 dark:text-gray-200">
         <h1 className="text-3xl max-md:text-2xl text-center font-extrabold mb-6 text-indigo-700 dark:text-yellow-300 flex items-center justify-center gap-2">

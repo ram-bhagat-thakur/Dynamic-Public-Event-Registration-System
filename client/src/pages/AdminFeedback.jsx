@@ -65,7 +65,7 @@ export default function AdminFeedback() {
 
   return (
     <main
-      className=" w-screen pt-28 pb-24 min-h-screen bg-gradient-to-br from-indigo-100 to-purple-100 dark:from-gray-900 dark:to-gray-800 text-gray-800 dark:text-gray-200 p-6"
+      className=" w-full pt-28 pb-24 min-h-screen bg-gradient-to-br from-indigo-100 to-purple-100 dark:from-gray-900 dark:to-gray-800 text-gray-800 dark:text-gray-200 p-6"
       aria-label="Admin Feedback Panel"
     >
       <section className="max-w-6xl mx-auto">

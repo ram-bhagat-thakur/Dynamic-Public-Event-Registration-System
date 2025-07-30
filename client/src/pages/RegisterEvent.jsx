@@ -79,7 +79,7 @@ function RegisterEvent() {
     <main
       role="main"
       aria-label="Event registration form"
-      className="min-h-screen w-screen pt-24 px-6 py-16 bg-gradient-to-br from-[#F0F4FF] to-white dark:from-[#0F172A] dark:to-[#1E293B] text-gray-800 dark:text-gray-200"
+      className="min-h-screen w-full pt-24 px-6 py-16 bg-gradient-to-br from-[#F0F4FF] to-white dark:from-[#0F172A] dark:to-[#1E293B] text-gray-800 dark:text-gray-200"
     >
       <div className="max-w-xl mx-auto border rounded-xl shadow-lg p-8 bg-white dark:bg-[#1E293B]">
         <h2 className="text-3xl font-bold mb-6 text-indigo-700 dark:text-yellow-300 text-center">

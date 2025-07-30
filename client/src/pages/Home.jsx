@@ -327,7 +327,7 @@ function Home() {
               id="rating"
               role="radiogroup"
               aria-label="Emoji rating"
-              className="flex justify-center gap-2 text-xl"
+              className="flex flex-wrap justify-center gap-2 text-xl"
             >
               {[
                 { value: 1, emoji: '😠', label: 'Very Bad' },
@@ -380,7 +380,7 @@ function Home() {
             />
 
             {/* Emoji Buttons */}
-            <div className="flex gap-1" role="group" aria-label="Insert emoji into comment">
+            <div className="flex flex-wrap gap-1" role="group" aria-label="Insert emoji into comment">
               {['😊', '😐', '😞', '🔥', '💯', '👍', '👎'].map((emoji) => (
                 <motion.button
                   key={emoji}

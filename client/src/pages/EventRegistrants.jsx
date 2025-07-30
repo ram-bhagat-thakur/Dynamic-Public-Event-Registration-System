@@ -87,7 +87,7 @@ function EventRegistrants() {
     <main
       role="main"
       aria-label="Event registrants dashboard"
-      className="min-h-screen w-screen px-6 pb-24 pt-24 bg-gradient-to-br from-[#E0ECFF] via-[#F0F4FF] to-white dark:from-[#0F172A] dark:via-[#1E293B] dark:to-[#111827] font-sans text-gray-800 dark:text-gray-200"
+      className="min-h-screen w-full px-6 pb-24 pt-24 bg-gradient-to-br from-[#E0ECFF] via-[#F0F4FF] to-white dark:from-[#0F172A] dark:via-[#1E293B] dark:to-[#111827] font-sans text-gray-800 dark:text-gray-200"
     >
       <div className="max-w-5xl mx-auto">
         {/* Header Section */}

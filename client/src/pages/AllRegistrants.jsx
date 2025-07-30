@@ -75,7 +75,7 @@ function AllRegistrants() {
     <main
       role="main"
       aria-label="All registrants dashboard"
-      className="min-h-screen w-screen px-6 pb-24 pt-24 bg-gradient-to-br from-[#E0ECFF] via-[#F0F4FF] to-white dark:from-[#0F172A] dark:via-[#1E293B] dark:to-[#111827] font-sans text-gray-800 dark:text-gray-200"
+      className="min-h-screen w-full px-6 pb-24 pt-24 bg-gradient-to-br from-[#E0ECFF] via-[#F0F4FF] to-white dark:from-[#0F172A] dark:via-[#1E293B] dark:to-[#111827] font-sans text-gray-800 dark:text-gray-200"
     >
       <section className="max-w-5xl mx-auto p-6 bg-gradient-to-br from-white to-[#F0F4FF] dark:from-[#0F172A] dark:to-[#1E293B] rounded-2xl shadow-xl">
         <header className="mb-6">

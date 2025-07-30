@@ -80,7 +80,7 @@ function AdminRegister() {
     <main
       role="main"
       aria-label="Admin registration form"
-      className="pt-20 pb-24 w-screen bg-gradient-to-br from-gray-800 to-gray-900"
+      className="pt-20 pb-24 w-full bg-gradient-to-br from-gray-800 to-gray-900"
     >
       <div className="max-w-md mx-auto p-8 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-xl bg-white dark:bg-[#1E293B] text-gray-800 dark:text-gray-200">
         <h2 className="text-3xl font-extrabold mb-6 text-indigo-700 dark:text-yellow-300 text-center flex items-center justify-center gap-2">

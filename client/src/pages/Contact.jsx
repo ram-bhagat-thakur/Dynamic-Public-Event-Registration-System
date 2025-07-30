@@ -50,7 +50,7 @@ function ContactForm() {
     <main
       role="main"
       aria-label="Contact form section"
-      className="pt-24 min-h-screen w-screen bg-gradient-to-br from-indigo-50 to-white dark:from-gray-900 dark:to-gray-800 text-gray-800 dark:text-gray-200 flex items-center justify-center px-4 py-12 relative overflow-hidden"
+      className="pt-24 min-h-screen w-full bg-gradient-to-br from-indigo-50 to-white dark:from-gray-900 dark:to-gray-800 text-gray-800 dark:text-gray-200 flex items-center justify-center px-4 py-12 relative overflow-hidden"
     >
       <ToastContainer />
 
