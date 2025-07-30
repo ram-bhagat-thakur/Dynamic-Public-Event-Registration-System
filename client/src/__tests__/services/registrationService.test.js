@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import axios from 'axios';
+import axiosInstance from '../../utils/axiosInstance';
 import {
   getAllRegistrants,
   getRegistrantsByEvent,
@@ -8,7 +9,14 @@ import {
   getRegistrations,
 } from '../../services/registrationService';
 
-vi.mock('axios');
+vi.mock('../../utils/axiosInstance', () => ({
+  default: {
+    get: vi.fn(),
+    post: vi.fn(),
+    put: vi.fn(),
+    delete: vi.fn(),
+  },
+}));
 
 const token = 'mock-token';
 const eventId = 'event123';
@@ -20,55 +28,55 @@ describe('registrationService', () => {
   });
 
   it('calls getAllRegistrants with correct headers', async () => {
-    axios.get.mockResolvedValue({ data: [] });
+    axiosInstance.get.mockResolvedValue({ data: [] });
 
     await getAllRegistrants(token);
 
-    expect(axios.get).toHaveBeenCalledWith(
+    expect(axiosInstance.get).toHaveBeenCalledWith(
       '/api/registrations',
       { headers: { Authorization: `Bearer ${token}` } }
     );
   });
 
   it('calls getRegistrantsByEvent with correct URL and headers', async () => {
-    axios.get.mockResolvedValue({ data: [] });
+    axiosInstance.get.mockResolvedValue({ data: [] });
 
     await getRegistrantsByEvent(eventId, token);
 
-    expect(axios.get).toHaveBeenCalledWith(
+    expect(axiosInstance.get).toHaveBeenCalledWith(
       `/api/registrations/event/${eventId}`,
       { headers: { Authorization: `Bearer ${token}` } }
     );
   });
 
   it('calls deleteAllRegistrants with correct URL and headers', async () => {
-    axios.delete.mockResolvedValue({});
+    axiosInstance.delete.mockResolvedValue({});
 
     await deleteAllRegistrants(eventId, token);
 
-    expect(axios.delete).toHaveBeenCalledWith(
+    expect(axiosInstance.delete).toHaveBeenCalledWith(
       `/api/registrations/event/${eventId}`,
       { headers: { Authorization: `Bearer ${token}` } }
     );
   });
 
   it('calls deleteSingleRegistrant with correct URL and headers', async () => {
-    axios.delete.mockResolvedValue({});
+    axiosInstance.delete.mockResolvedValue({});
 
     await deleteSingleRegistrant(registrantId, token);
 
-    expect(axios.delete).toHaveBeenCalledWith(
+    expect(axiosInstance.delete).toHaveBeenCalledWith(
       `/api/registrations/${registrantId}`,
       { headers: { Authorization: `Bearer ${token}` } }
     );
   });
 
   it('calls getRegistrations with correct URL and headers', async () => {
-    axios.get.mockResolvedValue({ data: [] });
+    axiosInstance.get.mockResolvedValue({ data: [] });
 
     await getRegistrations(eventId, token);
 
-    expect(axios.get).toHaveBeenCalledWith(
+    expect(axiosInstance.get).toHaveBeenCalledWith(
       `/api/registrations/event/${eventId}`,
       { headers: { Authorization: `Bearer ${token}` } }
     );

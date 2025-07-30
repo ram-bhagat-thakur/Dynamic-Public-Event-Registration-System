@@ -60,8 +60,17 @@ describe('Welcome Page', () => {
     });
 
     test('shows days left message', () => {
-        render(<MemoryRouter><Welcome /></MemoryRouter>);
-        expect(screen.getByText(/Only \d+ days left/i)).toBeInTheDocument();
+        render(
+            <MemoryRouter>
+                <Welcome />
+            </MemoryRouter>
+        );
+
+        const messages = screen.getAllByText((_, element) =>
+            element?.textContent?.match(/Only \d+ day(s)? left — get excited!/i)
+        );
+
+        expect(messages.length).toBeGreaterThan(0);
     });
 
     test('copies share link to clipboard and shows confirmation', async () => {

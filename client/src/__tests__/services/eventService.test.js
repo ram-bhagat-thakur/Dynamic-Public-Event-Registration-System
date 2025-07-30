@@ -1,5 +1,7 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import axios from 'axios';
+import axiosInstance from '../../utils/axiosInstance';
+
 import {
   registerForEvent,
   getEvents,
@@ -10,7 +12,14 @@ import {
   getRegistrations,
 } from '../../services/eventService';
 
-vi.mock('axios');
+vi.mock('../../utils/axiosInstance', () => ({
+  default: {
+    get: vi.fn(),
+    post: vi.fn(),
+    put: vi.fn(),
+    delete: vi.fn(),
+  },
+}));
 
 describe('eventService', () => {
   const mockToken = 'test-token';
@@ -22,11 +31,11 @@ describe('eventService', () => {
   });
 
   it('registers for event', async () => {
-    axios.post.mockResolvedValueOnce({ data: 'registered' });
+    axiosInstance.post.mockResolvedValueOnce({ data: 'registered' });
 
     const res = await registerForEvent(mockFormData);
 
-    expect(axios.post).toHaveBeenCalledWith(
+    expect(axiosInstance.post).toHaveBeenCalledWith(
       '/api/register',
       mockFormData
     );
@@ -34,29 +43,29 @@ describe('eventService', () => {
   });
 
   it('fetches all events', async () => {
-    axios.get.mockResolvedValueOnce({ data: ['event1', 'event2'] });
+    axiosInstance.get.mockResolvedValueOnce({ data: ['event1', 'event2'] });
 
     const res = await getEvents();
 
-    expect(axios.get).toHaveBeenCalledWith('/api/events');
+    expect(axiosInstance.get).toHaveBeenCalledWith('/api/events');
     expect(res.data).toEqual(['event1', 'event2']);
   });
 
   it('fetches event by ID', async () => {
-    axios.get.mockResolvedValueOnce({ data: { id: mockId } });
+    axiosInstance.get.mockResolvedValueOnce({ data: { id: mockId } });
 
     const res = await getEventById(mockId);
 
-    expect(axios.get).toHaveBeenCalledWith(`/api/events/${mockId}`);
+    expect(axiosInstance.get).toHaveBeenCalledWith(`/api/events/${mockId}`);
     expect(res.data.id).toBe(mockId);
   });
 
   it('creates event with token and formData', async () => {
-    axios.post.mockResolvedValueOnce({ data: 'created' });
+    axiosInstance.post.mockResolvedValueOnce({ data: 'created' });
 
     const res = await createEvent(mockFormData, mockToken);
 
-    expect(axios.post).toHaveBeenCalledWith(
+    expect(axiosInstance.post).toHaveBeenCalledWith(
       '/api/events',
       mockFormData,
       {
@@ -70,11 +79,11 @@ describe('eventService', () => {
   });
 
   it('updates event with token and formData', async () => {
-    axios.put.mockResolvedValueOnce({ data: 'updated' });
+    axiosInstance.put.mockResolvedValueOnce({ data: 'updated' });
 
     const res = await updateEvent(mockId, mockFormData, mockToken);
 
-    expect(axios.put).toHaveBeenCalledWith(
+    expect(axiosInstance.put).toHaveBeenCalledWith(
       `/api/events/${mockId}`,
       mockFormData,
       {
@@ -88,11 +97,11 @@ describe('eventService', () => {
   });
 
   it('deletes event with token', async () => {
-    axios.delete.mockResolvedValueOnce({ data: 'deleted' });
+    axiosInstance.delete.mockResolvedValueOnce({ data: 'deleted' });
 
     const res = await deleteEvent(mockId, mockToken);
 
-    expect(axios.delete).toHaveBeenCalledWith(
+    expect(axiosInstance.delete).toHaveBeenCalledWith(
       `/api/events/${mockId}`,
       {
         headers: { Authorization: `Bearer ${mockToken}` },
@@ -102,11 +111,11 @@ describe('eventService', () => {
   });
 
   it('fetches registrations with token', async () => {
-    axios.get.mockResolvedValueOnce({ data: ['reg1', 'reg2'] });
+    axiosInstance.get.mockResolvedValueOnce({ data: ['reg1', 'reg2'] });
 
     const res = await getRegistrations(mockId, mockToken);
 
-    expect(axios.get).toHaveBeenCalledWith(
+    expect(axiosInstance.get).toHaveBeenCalledWith(
       `/api/events/${mockId}/registrations`,
       {
         headers: { Authorization: `Bearer ${mockToken}` },
