@@ -33,6 +33,10 @@ app.use('/api/registrations', require('./routes/registration'));
 const feedbackRoutes = require('./routes/feedbackRoutes');
 app.use('/api/feedback', feedbackRoutes);
 
+// Test route
+app.get('/', (req, res) => {
+  res.send('Server is running');
+});
 
 // Routes placeholder
 // if (process.env.NODE_ENV === 'production') {
