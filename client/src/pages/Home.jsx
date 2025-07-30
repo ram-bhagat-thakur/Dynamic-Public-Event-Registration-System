@@ -30,7 +30,7 @@ function Home() {
   useEffect(() => {
     axiosInstance.get('/api/feedback/verified')
       .then(res => {
-        console.log('Feedback response:', res.data);
+        // console.log('Feedback response:', res.data);
         setFeedbacks(Array.isArray(res.data) ? res.data : []);
       })
       .catch(err => console.error('Error fetching feedback:', err))
