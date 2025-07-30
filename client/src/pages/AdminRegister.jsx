@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { registerAdmin } from '../services/authService';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function AdminRegister() {
   const [formData, setFormData] = useState({
@@ -56,17 +58,21 @@ function AdminRegister() {
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
+      toast.error('⚠️ Please fix the errors in the form');
       return;
     }
 
+     const registeringToast = toast.loading('🔄 Registering admin...');
     try {
       await registerAdmin(formData);
       setStatus('Admin registered successfully!');
       setFormData({ name: '', username: '', email: '', password: '' });
       setErrors({});
+      toast.success('🎉 Admin registered successfully!', { id: registeringToast });
       navigate('/admin/login');
     } catch (err) {
       setStatus('Registration failed. Username or email may already exist.');
+      toast.error('❌ Registration failed. Email or username may exist.', { id: registeringToast });
     }
   };
 

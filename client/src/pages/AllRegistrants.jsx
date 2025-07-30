@@ -5,6 +5,8 @@ import {
   deleteAllRegistrants,
 } from '../services/registrationService';
 import { exportToCSV } from '../services/csvService';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function AllRegistrants() {
   const [registrants, setRegistrants] = useState([]);
@@ -30,31 +32,43 @@ function AllRegistrants() {
     try {
       await deleteSingleRegistrant(regId, token);
       setRegistrants((prev) => prev.filter((r) => r._id !== regId));
+      toast.success('👤 Registrant removed successfully!');
     } catch {
-      alert('Failed to remove registrant');
+      // alert('Failed to remove registrant');
+       toast.error('❌ Failed to remove registrant');
     }
   };
 
   const handleDeleteAll = async () => {
     if (!window.confirm('Remove all registrants?')) return;
     try {
+    const deletToast = toast.loading('🗑️ Deleting All registrants...');
       await deleteAllRegistrants(token);
       setRegistrants([]);
+      toast.success('🗑️ All registrants deleted!', { id: deletToast });
     } catch {
-      alert('Failed to remove all registrants');
+      // alert('Failed to remove all registrants');
+      toast.error('❌ Failed to delete registrants', { id: deletToast });
     }
   };
 
   const handleExportCSV = () => {
-    const headers = ['Name', 'Email', 'Mobile', 'Message', 'Event Title'];
-    const rows = filteredRegistrants.map((reg) => [
-      reg.name,
-      reg.email,
-      reg.mobile,
-      reg.message || '',
-      reg.eventId?.title || 'Unknown',
-    ]);
-    exportToCSV(`all_registrants.csv`, headers, rows);
+    const exportToast = toast.loading('📤 Exporting CSV...');
+    try {
+      const headers = ['Name', 'Email', 'Mobile', 'Message', 'Event Title'];
+      const rows = filteredRegistrants.map((reg) => [
+        reg.name,
+        reg.email,
+        reg.mobile,
+        reg.message || '',
+        reg.eventId?.title || 'Unknown',
+      ]);
+      exportToCSV(`all_registrants.csv`, headers, rows);
+
+      toast.success('✅ CSV exported!', { id: exportToast });
+    } catch (error) {
+      toast.error('❌ Export failed.', { id: exportToast });
+    }
   };
 
   return (

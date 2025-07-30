@@ -1,11 +1,22 @@
 import { useEffect, useState } from 'react';
 import { getEvents } from '../services/eventService';
 import Card from '../components/Card';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Events() {
   const [events, setEvents] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedTag, setSelectedTag] = useState('');
+
+  useEffect(() => {
+    const visitedEventList = localStorage.getItem('visitedEventList');
+
+    if (!visitedEventList) {
+      toast('🎉 Here are upcoming events! Find your vibe.');
+      localStorage.setItem('visitedEventList', 'true');
+    }
+  }, []);
 
   useEffect(() => {
     getEvents()

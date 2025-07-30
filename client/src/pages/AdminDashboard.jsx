@@ -15,6 +15,17 @@ function AdminDashboard() {
   const adminName = localStorage.getItem('adminName');
   const token = localStorage.getItem('adminToken');
 
+
+  useEffect(() => {
+    const hasVisitedAdmin = localStorage.getItem('visitedAdminDashboard');
+
+    if (!hasVisitedAdmin) {
+      toast.success('👋 Welcome, Admin! Ready to manage some magic?');
+      localStorage.setItem('visitedAdminDashboard', 'true');
+    }
+  }, []);
+
+
   useEffect(() => {
     getEvents()
       .then((res) => {
@@ -206,8 +217,8 @@ function AdminDashboard() {
                         disabled={loadingIds[event._id]}
                         aria-label={`Delete event titled ${event.title}`}
                         className={`px-3 py-1 rounded text-white ${loadingIds[event._id]
-                            ? 'bg-gray-400 cursor-not-allowed'
-                            : 'bg-red-500 hover:bg-red-600'
+                          ? 'bg-gray-400 cursor-not-allowed'
+                          : 'bg-red-500 hover:bg-red-600'
                           }`}
                       >
                         {loadingIds[event._id] ? 'Deleting...' : '🗑️ Delete'}

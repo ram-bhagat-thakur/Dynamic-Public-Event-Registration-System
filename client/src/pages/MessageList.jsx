@@ -4,6 +4,8 @@ import {
   markMessageAsRead,
   deleteMessage
 } from '../services/contactService';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function MessageList() {
   const [messages, setMessages] = useState([]);
@@ -26,8 +28,10 @@ function MessageList() {
     try {
       await markMessageAsRead(id);
       fetchMessages();
+      toast.success('✉️ Message marked as read');
     } catch (err) {
-      console.error('Mark as read failed:', err);
+      // console.error('Mark as read failed:', err);
+      toast.error('❌ Failed to mark as read');
     }
   };
 
@@ -35,17 +39,22 @@ function MessageList() {
     try {
       await deleteMessage(id);
       fetchMessages();
+      toast.success('🗑️ Message deleted');
     } catch (err) {
-      console.error('Delete failed:', err);
+      // console.error('Delete failed:', err);
+      toast.error('❌ Failed to delete message');
     }
   };
 
   const handleDeleteAll = async () => {
     try {
+       const loadingToast = toast.loading('🔄 Deleting all messages...');
       await Promise.all(messages.map((msg) => deleteMessage(msg._id)));
       fetchMessages();
+      toast.success('✅ All messages deleted', { id: loadingToast });
     } catch (err) {
-      console.error('Delete all failed:', err);
+      // console.error('Delete all failed:', err);
+      toast.error('❌ Failed to delete all messages', { id: loadingToast });
     }
   };
 

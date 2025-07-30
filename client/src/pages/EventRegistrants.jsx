@@ -7,6 +7,8 @@ import {
 } from '../services/registrationService';
 import { getEventById } from '../services/eventService';
 import { exportToCSV } from '../services/csvService';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function EventRegistrants() {
   const { eventId } = useParams();
@@ -24,30 +26,43 @@ function EventRegistrants() {
   useEffect(() => {
     getEventById(eventId)
       .then((res) => setEvent(res.data))
-      .catch(() => setError('Failed to load event details'));
+      .catch(() => {
+        setError('Failed to load event details');
+        toast.error('❌ Couldn’t load event details');
+      });
 
     getRegistrations(eventId, token)
       .then((res) => setRegistrants(res.data))
-      .catch(() => setError('Failed to load registrants'));
+      .catch(() => {
+        setError('Failed to load registrants');
+        toast.error('❌ Couldn’t load registrants');
+      });
   }, [eventId]);
+
 
   const handledeleteSingleRegistrant = async (regId) => {
     if (!window.confirm('Remove this registrant?')) return;
+    const toastId = toast.loading('🔄 Removing registrant...');
     try {
       await deleteSingleRegistrant(regId, token);
       setRegistrants((prev) => prev.filter((r) => r._id !== regId));
+      toast.success('👤 Registrant removed', { id: toastId });
     } catch {
-      alert('Failed to remove registrant');
+      // alert('Failed to remove registrant');
+      toast.error('❌ Failed to remove registrant', { id: toastId });
     }
   };
 
   const handleDeleteAll = async () => {
     if (!window.confirm('Remove all registrants for this event?')) return;
+    const toastId = toast.loading('🔄 Deleting all registrants...');
     try {
       await deleteAllRegistrants(eventId, token);
       setRegistrants([]);
+      toast.success('✅ All registrants removed', { id: toastId });
     } catch {
-      alert('Failed to remove all registrants');
+      // alert('Failed to remove all registrants');
+      toast.error('❌ Couldn’t delete registrants', { id: toastId });
     }
   };
 
@@ -59,7 +74,13 @@ function EventRegistrants() {
       reg.mobile,
       reg.message || '',
     ]);
-    exportToCSV(`registrants_${eventId}.csv`, headers, rows);
+    const toastId = toast.loading('📤 Exporting CSV...');
+    try {
+      exportToCSV(`registrants_${eventId}.csv`, headers, rows);
+      toast.success('✅ CSV exported', { id: toastId });
+    } catch {
+      toast.error('❌ Failed to export CSV', { id: toastId });
+    }
   };
 
   return (

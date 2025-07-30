@@ -16,6 +16,7 @@ import {
 } from 'react-icons/fi';
 import axiosInstance from '../utils/axiosInstance';
 
+
 const MAX_WORDS = 30;
 
 function Home() {
@@ -26,6 +27,15 @@ function Home() {
   const [form, setForm] = useState({ name: '', rating: 5, comment: '' });
   const [feedbacks, setFeedbacks] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const hasVisited = localStorage.getItem('hasVisitedHome');
+
+    if (!hasVisited) {
+      toast.success('👋 Welcome to the Event Platform!');
+      localStorage.setItem('hasVisitedHome', 'true');
+    }
+  }, []);
 
   useEffect(() => {
     axiosInstance.get('/api/feedback/verified')

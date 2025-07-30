@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import Confetti from 'react-confetti';
 import { useWindowSize } from 'react-use';
 import { format, differenceInDays } from 'date-fns';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Welcome() {
     const location = useLocation();
@@ -13,6 +15,11 @@ function Welcome() {
     const [showConfetti, setShowConfetti] = useState(true);
     const [copied, setCopied] = useState(false);
     const [daysLeft, setDaysLeft] = useState(null);
+
+
+    useEffect(() => {
+        toast.success('🎉 You’re officially registered! See you at the event.');
+    }, []);
 
     useEffect(() => {
         if (!name || !email || !event) {
