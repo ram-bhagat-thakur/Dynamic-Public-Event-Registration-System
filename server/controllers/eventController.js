@@ -3,23 +3,24 @@ const Registration = require('../models/Registration'); // ✅ Added
 const fs = require('fs');
 const path = require('path');
 
+const cloudinary = require('cloudinary').v2;
+
 // DELETE /api/events/:id
 exports.deleteEvent = async (req, res) => {
   try {
     const event = await Event.findById(req.params.id);
     if (!event) return res.status(404).json({ message: 'Event not found' });
 
-    // Delete banner image if it exists
+    // 🔥 Delete banner image from Cloudinary if it exists
     if (event.bannerPath) {
-      const imagePath = path.join(__dirname, '..', 'uploads', event.bannerPath);
-      fs.unlink(imagePath, (err) => {
-        if (err) console.warn('Image deletion failed:', err.message);
-      });
+      await cloudinary.uploader.destroy(event.bannerPath); // bannerPath should be public_id
     }
 
+    // 🗑 Delete event from DB
     await Event.findByIdAndDelete(req.params.id);
-    res.json({ message: 'Event deleted successfully' });
+    res.json({ message: 'Event and banner deleted successfully' });
   } catch (error) {
+    console.error('Deletion error:', error);
     res.status(500).json({ message: 'Failed to delete event', error });
   }
 };

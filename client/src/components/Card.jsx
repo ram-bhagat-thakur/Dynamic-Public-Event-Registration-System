@@ -9,7 +9,7 @@ function Card({ id, title, date, location, description, bannerPath, leftSeate, t
       className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm rounded-2xl overflow-hidden w-full max-w-sm mx-auto transition-transform hover:scale-[1.02] duration-300"
     >
       <img
-        src={`${import.meta.env.VITE_API_BASE_URL}/uploads/${bannerPath}`}
+        src={`https://res.cloudinary.com/dfp3sk6qs/image/upload/${bannerPath}`}
         alt={`Banner for ${title}`}
         className="w-full h-56 object-cover"
       />

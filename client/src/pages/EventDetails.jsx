@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import { getEventById } from '../services/eventService';
-import axiosInstance from '../utils/axiosInstance';
 
 function EventDetails() {
   const { id } = useParams();
@@ -48,7 +47,7 @@ function EventDetails() {
         <article className="md:w-1/2 w-full overflow-y-auto">
           {event.bannerPath && (
             <img
-              src={`${import.meta.env.VITE_API_BASE_URL}/uploads/${event.bannerPath}`}
+              src={`https://res.cloudinary.com/dfp3sk6qs/image/upload/${event.bannerPath}`}
               alt={`${event.title} banner`}
               className="w-full rounded-2xl shadow-md"
             />

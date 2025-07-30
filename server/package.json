@@ -13,19 +13,20 @@
   "description": "",
   "dependencies": {
     "bcryptjs": "^3.0.2",
+    "cloudinary": "^1.41.3",
     "cors": "^2.8.5",
     "dotenv": "^17.2.0",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.16.4",
+    "multer": "^2.0.2",
+    "multer-storage-cloudinary": "^4.0.0",
     "nodemailer": "^7.0.5",
-    "nodemon": "^3.1.10",
-    "multer": "^2.0.2"
+    "nodemon": "^3.1.10"
   },
   "devDependencies": {
     "@vitest/coverage-v8": "^3.2.4",
     "mongodb-memory-server": "^10.1.4",
-    
     "supertest": "^7.1.4",
     "vitest": "^3.2.4"
   }

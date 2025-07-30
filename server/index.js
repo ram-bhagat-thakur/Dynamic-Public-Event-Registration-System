@@ -13,6 +13,7 @@ app.use(express.json());
 
 // Serve frontend build
 app.use(express.static(path.join(__dirname, 'dist')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Connect Route to Server
 const eventRoutes = require('./routes/events');
@@ -27,9 +28,7 @@ app.use('/api/contact', contactRoutes);
 const adminRoutes = require('./routes/admin');
 app.use('/api/admin', adminRoutes);
 
-app.use('/uploads', express.static('uploads'));
-
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// app.use('/uploads', express.static('uploads'));
 
 app.use('/api/registrations', require('./routes/registration'));
 

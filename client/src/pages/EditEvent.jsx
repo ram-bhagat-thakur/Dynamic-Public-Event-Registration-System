@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getEventById, updateEvent } from '../services/eventService';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function EditEvent() {
   const { eventId } = useParams();
@@ -12,6 +15,7 @@ function EditEvent() {
   const [removeBanner, setRemoveBanner] = useState(false);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     getEventById(eventId)
@@ -78,10 +82,14 @@ function EditEvent() {
 
     try {
       await updateEvent(eventId, form, localStorage.getItem('adminToken'));
+      toast.success('Event updated successfully!');
       setStatus('Event updated successfully!');
       navigate('/admin');
     } catch (err) {
+      toast.error('Failed to update event');
       setStatus('Failed to update event.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -112,7 +120,7 @@ function EditEvent() {
           <div className="mb-6">
             <p className="font-semibold mb-2">Current Banner:</p>
             <img
-              src={`${import.meta.env.VITE_API_BASE_URL}/uploads/${formData.bannerPath}`}
+              src={`https://res.cloudinary.com/dfp3sk6qs/image/upload/${formData.bannerPath}`}
               alt="Current Banner"
               className="max-w-full h-auto rounded-xl shadow-md"
             />
@@ -143,10 +151,10 @@ function EditEvent() {
                     field.includes('Seats')
                       ? 'number'
                       : field === 'date'
-                      ? 'date'
-                      : field === 'time'
-                      ? 'time'
-                      : 'text'
+                        ? 'date'
+                        : field === 'time'
+                          ? 'time'
+                          : 'text'
                   }
                   name={field}
                   id={field}
@@ -219,7 +227,7 @@ function EditEvent() {
           {previewUrl && (
             <div className="mt-4">
               <p className="font-semibold mb-2">New Preview:</p>
-                            <img
+              <img
                 src={previewUrl}
                 alt="New banner preview"
                 className="max-w-full h-auto rounded-xl shadow-md"
@@ -230,11 +238,15 @@ function EditEvent() {
           {/* Submit Button */}
           <button
             type="submit"
+            disabled={isLoading}
+            aria-busy={isLoading}
             aria-label="Submit updated event"
-            aria-busy={status === 'Event updated successfully!'}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-3 rounded-xl transition w-full shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-yellow-400"
+            // aria-busy={status === 'Event updated successfully!'}
+            className={`bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-3 rounded-xl transition w-full shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-yellow-400 ${isLoading ? 'opacity-70 cursor-not-allowed' : ''
+              }`}
           >
-            ✅ Update Event
+            {isLoading ? '⏳ Updating...' : '✅ Update Event'}
+
           </button>
         </form>
 
@@ -244,11 +256,10 @@ function EditEvent() {
             id="form-status"
             role="status"
             aria-live="polite"
-            className={`mt-6 text-center font-medium ${
-              status.includes('successfully')
-                ? 'text-green-600 dark:text-green-400'
-                : 'text-red-600 dark:text-red-400'
-            }`}
+            className={`mt-6 text-center font-medium ${status.includes('successfully')
+              ? 'text-green-600 dark:text-green-400'
+              : 'text-red-600 dark:text-red-400'
+              }`}
           >
             {status}
           </p>

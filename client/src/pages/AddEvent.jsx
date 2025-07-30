@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createEvent } from '../services/eventService';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function AddEvent() {
   const [formData, setFormData] = useState({
@@ -17,11 +19,13 @@ function AddEvent() {
     bannerPath: '',
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [status, setStatus] = useState('');
   const [errors, setErrors] = useState({});
   const [bannerFile, setBannerFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState('');
   const navigate = useNavigate();
+
 
   const validateForm = () => {
     const newErrors = {};
@@ -57,6 +61,7 @@ function AddEvent() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
@@ -69,10 +74,15 @@ function AddEvent() {
 
     try {
       await createEvent(form, localStorage.getItem('adminToken'));
+      toast.success('Event created successfully!');
+
       setStatus('Event created successfully!');
       navigate('/admin');
     } catch (err) {
+      toast.error('Failed to create event');
       setStatus('Failed to create event.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -201,9 +211,13 @@ function AddEvent() {
           {/* Submit Button */}
           <button
             type="submit"
-            className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-3 rounded-xl transition w-full shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            disabled={isSubmitting}
+            aria-busy={isSubmitting}
+            className={`bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-3 rounded-xl transition w-full shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-500 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
+              }`}
           >
-            🚀 Create Event
+            {isSubmitting ? '⏳ Creating...' : '🚀 Create Event'}
+
           </button>
         </form>
         {/* Status Message */}
