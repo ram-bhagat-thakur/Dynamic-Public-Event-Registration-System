@@ -21,30 +21,3 @@ coverage/
 test-output/
 jest/
 vitest/
-
-# 🧰 IDE & Editor Metadata
-.DS_Store
-Thumbs.db
-*.swp
-.idea/
-.vscode/
-*.sublime-project
-*.sublime-workspace
-
-# 🔄 Auto-generated Files
-*.tsbuildinfo
-*.eslintcache
-
-# 📦 Yarn / npm / pnpm Lockfiles (only keep one)
-yarn.lock
-package-lock.json
-pnpm-lock.yaml
-
-# 🗃️ System Files
-*.log
-*.tmp
-*.bak
-
-# 🖼️ Optional: Prettier / Editor Config
-.prettier*
-.editorconfig

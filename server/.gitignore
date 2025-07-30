@@ -7,29 +7,6 @@ node_modules/
 # 🗃️ Environment Variables
 .env
 .env.local
-.env.test
-
-# ⚙️ OS & IDE Metadata
-.DS_Store
-Thumbs.db
-*.swp
-.vscode/
-.idea/
-
-# 🧪 Coverage & Reports
-coverage/
-*.lcov
-*.nyc_output
-test-output/
-jest/
-
-# 🔄 Auto-generated files
-*.tsbuildinfo
-
-# 🔐 Private Keys or Secrets (if mistakenly placed)
-*.pem
-*.key
-*.crt
 
 # 🧰 Temporary Files
 tmp/

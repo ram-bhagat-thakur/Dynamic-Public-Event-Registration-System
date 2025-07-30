@@ -52,29 +52,17 @@ exports.getAllEvents = async (req, res) => {
 // POST create new event
 exports.createEvent = async (req, res) => {
   try {
-    console.log('Incoming body:', req.body);
-    console.log('Incoming file:', req.file);
-
-    const totalSeatsRaw = req.body.totalSeats;
-    const totalSeats = Number(totalSeatsRaw);
-
-    if (!totalSeatsRaw || isNaN(totalSeats) || totalSeats < 1) {
-      return res.status(400).json({ message: 'Invalid totalSeats: must be a number ≥ 1' });
-    }
-
     const newEvent = new Event({
       ...req.body,
-      totalSeats,
-      leftSeats: totalSeats,
-      bannerPath: req.file?.filename || ''
+      bannerPath: req.file ? req.file.filename : '',
+      leftSeats: req.body.totalSeats // ✅ initialize leftSeats
     });
 
-    const savedEvent = await newEvent.save();
-    console.log('✅ Event saved:', savedEvent);
-    res.status(201).json(savedEvent);
+    await newEvent.save();
+    res.status(201).json(newEvent);
   } catch (error) {
-    console.error('❌ Create event error:', error);
-    res.status(500).json({ message: 'Failed to create event', error: error.message });
+    console.error('Create event error:', error.message);
+    res.status(500).json({ message: 'Failed to create event', error });
   }
 };
 
