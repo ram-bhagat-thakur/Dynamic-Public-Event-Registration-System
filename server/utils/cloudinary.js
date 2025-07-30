@@ -12,7 +12,7 @@ export const storage = new CloudinaryStorage({
   params: {
     folder: '',
     allowed_formats: ['jpg', 'png', 'jpeg'],
-    transformation: [{ width: 1200, height: 600, crop: 'limit' }],
+    // transformation: [{ width: 1200, height: 600, crop: 'limit' }],
   },
 });
 
