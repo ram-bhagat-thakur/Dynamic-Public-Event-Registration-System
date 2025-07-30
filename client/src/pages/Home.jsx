@@ -86,7 +86,7 @@ function Home() {
   });
 
   return (
-    <div className="min-h-screen w-screen bg-gradient-to-br from-indigo-50 to-white dark:from-gray-900 dark:to-gray-800 text-[#1F2937] dark:text-gray-200">
+    <div className="min-h-screen w-full bg-gradient-to-br from-indigo-50 to-white dark:from-gray-900 dark:to-gray-800 text-[#1F2937] dark:text-gray-200">
 
       {/* Hero Section */}
       <div className="relative w-full h-screen max-md:h-fit overflow-hidden">
