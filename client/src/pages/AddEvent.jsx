@@ -57,21 +57,39 @@ function AddEvent() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // ✅ Validate form fields
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
     }
 
+    // ✅ Construct FormData with type-safe values
     const form = new FormData();
-    Object.entries(formData).forEach(([key, value]) => form.append(key, value));
-    form.append('banner', bannerFile);
+    Object.entries(formData).forEach(([key, value]) => {
+      // Coerce totalSeats to number
+      const coercedValue = key === 'totalSeats' ? Number(value) : value;
+      form.append(key, coercedValue);
+    });
 
+    // ✅ Append banner file if present
+    if (bannerFile) {
+      form.append('banner', bannerFile);
+    }
+
+    // ✅ Optional: Log FormData for debugging
+    for (let [key, value] of form.entries()) {
+      console.log(`${key}:`, value);
+    }
+
+    // ✅ Submit form
     try {
       await createEvent(form, localStorage.getItem('adminToken'));
       setStatus('Event created successfully!');
       navigate('/admin');
     } catch (err) {
+      console.error('Event creation failed:', err);
       setStatus('Failed to create event.');
     }
   };

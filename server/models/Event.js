@@ -1,5 +1,18 @@
 const mongoose = require('mongoose');
 
+/**
+ * Event Schema
+ * Represents a public event with seat tracking and optional banner image.
+ *
+ * Required fields:
+ * - title, date, time, location, totalSeats, leftSeats
+ * Optional fields:
+ * - tags, description, highlights, organizer, bannerPath
+ * Auto-generated:
+ * - createdAt
+ */
+
+
 const eventSchema = new mongoose.Schema({
   title: { type: String, required: true },
   date: { type: String, required: true },
