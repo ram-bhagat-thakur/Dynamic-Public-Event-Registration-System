@@ -158,7 +158,7 @@ This project leverages a modern full-stack architecture with robust tooling for 
 ### 🚀 Deployment
 
 - **Hosting Platforms**:  
-  *GitHub + Render*
+  *GitHub + Render + cloudinary*
 
 - **Environment Configuration**:  
   `.env` and `.env.example` files for managing secrets and environment-specific settings
@@ -171,9 +171,26 @@ This project leverages a modern full-stack architecture with robust tooling for 
 
 ---
 
-### 🖼️ Screenshots / GIFs
+### 🖼️ Screenshots of the Project
 
-*Visuals to be added later for impact and clarity*
+![Admin Dashbord](assets/image-7.png)
+![Home Page Header](assets/image-8.png)
+![Home Event Preview](assets/image-5.png)
+![Events List](assets/image-6.png)
+![Contact Us](assets/image-14.png)
+![Contact Message List](assets/image.png)
+![Registrant List](assets/image-1.png)
+![Registrant List by Particular Event](assets/image-13.png)
+![Feedback Control](assets/image-2.png)
+![Feedback on Home After Veryfied By Admin](assets/image-3.png)
+![What This Platform Does](assets/image-12.png)
+![Footer](assets/image-4.png)
+![Why choose this](assets/image-9.png)
+![Hoe to Book Event](assets/image-10.png)
+![Share Your Experience](assets/image-11.png)
+![Admin Register](assets/image-16.png)
+![Admin Login](assets/image-17.png)
+![Create New Event](assets/image-18.png)
 
 ---
 
