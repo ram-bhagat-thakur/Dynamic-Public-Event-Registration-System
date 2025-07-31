@@ -78,6 +78,7 @@ function AddEvent() {
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       toast.error('Banner size must be less than 2 MB');
+      setIsSubmitting(false);
       return;
     }
 

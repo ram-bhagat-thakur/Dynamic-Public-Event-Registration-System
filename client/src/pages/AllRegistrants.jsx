@@ -118,14 +118,14 @@ function AllRegistrants() {
             >
               📤 Export CSV
             </button>
-            <button
+            {/* <button
               onClick={handleDeleteAll}
               data-testid="remove-all"
               aria-label="Remove all registrants"
               className="bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-2 rounded-xl text-sm shadow-md transition"
             >
               🗑️ Remove All
-            </button>
+            </button> */}
           </div>
         </div>
 
