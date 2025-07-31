@@ -16,14 +16,14 @@ const storage = new CloudinaryStorage({
   params: {
     folder: '',
     allowed_formats: ['jpg', 'jpeg', 'png', 'webp'],
-    // transformation: [{ width: 1200, height: 600, crop: 'limit' }],
+    transformation: [{ width: 1200, height: 600, crop: 'limit' }],
   },
 });
 
 // ✅ Multer middleware with file size and type filter
 const upload = multer({
   storage,
-  // limits: { fileSize: 2 * 1024 * 1024 }, // 2MB
+  limits: { fileSize: 2 * 1024 * 1024 }, // 2MB
   fileFilter: (req, file, cb) => {
     const allowed = ['image/jpeg', 'image/png', 'image/webp'];
     if (allowed.includes(file.mimetype)) cb(null, true);

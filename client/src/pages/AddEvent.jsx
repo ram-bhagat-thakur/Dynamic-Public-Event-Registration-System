@@ -36,6 +36,18 @@ function AddEvent() {
     if (!formData.leftSeats || isNaN(formData.leftSeats)) newErrors.leftSeats = 'Left seats must be a number';
     if (!formData.location.trim()) newErrors.location = 'Location is required';
     if (!bannerFile) newErrors.banner = 'Banner image is required';
+
+    if (bannerFile) {
+      const validTypes = ['image/jpeg', 'image/png', 'image/webp'];
+      if (!validTypes.includes(bannerFile.type)) {
+        newErrors.banner = 'Only JPG, PNG, or WEBP images are allowed';
+      }
+      if (bannerFile.size > 2 * 1024 * 1024) {
+        toast.error('Banner size must be less than 2 MB');
+        newErrors.banner = 'Image must be smaller than 2MB';
+      }
+    }
+
     return newErrors;
   };
 
@@ -65,6 +77,7 @@ function AddEvent() {
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
+      toast.error('Banner size must be less than 2 MB');
       return;
     }
 

@@ -58,6 +58,7 @@ function EditEvent() {
         newErrors.banner = 'Only JPG, PNG, or WEBP images are allowed';
       }
       if (bannerFile.size > 2 * 1024 * 1024) {
+        toast.error('Banner size must be less than 2 MB');
         newErrors.banner = 'Image must be smaller than 2MB';
       }
     }
@@ -219,7 +220,7 @@ function EditEvent() {
               onChange={(e) => handleBannerUpload(e.target.files[0])}
               className="mt-3"
             />
-            {errors.banner && (
+            {errors.banner && (              
               <p className="text-red-500 text-sm mt-2">{errors.banner}</p>
             )}
           </div>
