@@ -4,6 +4,17 @@
 
 A full-stack web application that streamlines public event registration and management.
 
+## 🔐 Admin Access (For Evaluation Only)
+
+To access the admin dashboard:
+
+- **Deployment Link:** `https://dynamic-public-event-registration-system.onrender.com/`
+- **Username:** `12345Admin`
+- **Password:** `12345Admin`
+
+> ⚠️ This section is for evaluation purposes only and will be removed after submission.
+
+
 ### 🎟️ For Users
 - Browse upcoming events  
 - Register with a dynamic form  
@@ -208,6 +219,8 @@ This project leverages a modern full-stack architecture with robust tooling for 
 ![Admin Login](assets/image-17.png)
 
 ![Create New Event](assets/image-18.png)
+
+![Email Conformatioon Formate](assets/Email-conformation.png)
 
 ---
 
