@@ -31,24 +31,21 @@ function AllRegistrants() {
     if (!window.confirm('Remove this registrant?')) return;
     try {
       await deleteSingleRegistrant(regId, token);
-      setRegistrants((prev) => prev.filter((r) => r._id !== regId));
-      toast.success('👤 Registrant removed successfully!');
+      setRegistrants((prev) => prev.filter((r) => r._id !== regId),
+        toast.success('👤 Registrant removed successfully!')
+      );
     } catch {
-      // alert('Failed to remove registrant');
-       toast.error('❌ Failed to remove registrant');
+      toast.error('❌ Failed to remove registrant');
     }
   };
 
-  const handleDeleteAll = async () => {
+ const handleDeleteAll = async () => {
     if (!window.confirm('Remove all registrants?')) return;
     try {
-    const deletToast = toast.loading('🗑️ Deleting All registrants...');
       await deleteAllRegistrants(token);
       setRegistrants([]);
-      toast.success('🗑️ All registrants deleted!', { id: deletToast });
     } catch {
-      // alert('Failed to remove all registrants');
-      toast.error('❌ Failed to delete registrants', { id: deletToast });
+      alert('Failed to remove all registrants');
     }
   };
 
