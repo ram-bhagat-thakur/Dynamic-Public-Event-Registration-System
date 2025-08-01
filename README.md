@@ -14,6 +14,21 @@ To access the admin dashboard:
 
 > ⚠️ This section is for evaluation purposes only and will be removed after submission.
 
+---
+
+## ⚙️ Accessibility & Usage Notes
+
+- 🌓 **Dark Mode Recommended**: For optimal visual experience, please switch your system theme to **dark mode** or **light mode** based on your preference before using the application.
+
+- 🕸️ **Content Loading Delay**: If data does not appear immediately, it may be due to **slow internet** or **delayed content loading**. Please **wait a moment** or **refresh the page**.
+
+- 🔐 **Admin Token Expiry**: If you're an admin and remain logged in without logging out, your authentication token may expire after **1 hour**. In such cases, some dashboard content may not load properly. To resolve this:
+  - **Logout once**
+  - Then **login again with your credentials**
+
+This will restore full access to the admin dashboard.
+
+---
 
 ### 🎟️ For Users
 - Browse upcoming events  
@@ -54,6 +69,7 @@ Explore our Open Source [Open Source Roadmap](https://github.com/users/ram-bhaga
 ## ✨ Features
 
 This system delivers a complete event registration workflow for both users and admins, with dynamic UI interactions, robust access control, and a responsive design.
+
 
 ### 👤 User Features
 - 🔍 **Browse Events**  
@@ -194,7 +210,7 @@ This project leverages a modern full-stack architecture with robust tooling for 
 
 ![Contact Us](assets/image-14.png)
 
-![Contact Message List](assets/image.png)
+![Contact Message List](assets/Contact-list.png)
 
 ![Registrant List](assets/image-1.png)
 
