@@ -1,19 +1,32 @@
+🏅 **Ranked 3rd in the SECT Internship Program**
+
+This project was built entirely solo as part of the SECT internship, where I handled everything from architecture and backend logic to frontend design, deployment, and documentation.  
+The ranking reflects not just the final product, but the depth of effort, reproducibility, and clarity I brought to the entire development process.  
+I'm now opening it up for feedback, collaboration, and deeper learning—thanks for being here!
+
+![SECT Internship Ranking – 3rd Place](assets/Ranking-Board.png)
+
+---
+
+
 # 🏷️ Project Overview :
 
 ## [Dynamic Public Event Registration System](https://dynamic-public-event-registration-system.onrender.com/)
 
 A full-stack web application that streamlines public event registration and management.
 
-## 🔐 Admin Access (For Evaluation Only)
 
-To access the admin dashboard:
+## 🔐 Admin Access (Demo Credentials)
 
-- **Deployment Link:** `https://dynamic-public-event-registration-system.onrender.com/`
-- **Username:** `12345Admin`
-- **Password:** `12345Admin`
+You’re welcome to explore the admin dashboard using the demo credentials below.  
+This access is provided for testing, learning, and evaluation purposes.
 
-> ⚠️ This section is for evaluation purposes only and will be removed after submission.
+- **🔗 Deployment Link:** [`https://dynamic-public-event-registration-system.onrender.com/`](https://dynamic-public-event-registration-system.onrender.com/)
+- **👤 Username:** `12345Admin`
+- **🔑 Password:** `12345Admin`
 
+> 🛡️ Please note: This is a demo admin account with limited privileges.  
+> Data may reset periodically, and sensitive actions are restricted to protect the system.
 ---
 
 ## ⚙️ Accessibility & Usage Notes
@@ -1194,5 +1207,20 @@ This project represents a scalable, full-stack solution tailored for dynamic eve
 🎯 Whether you're an admin managing events, a contributor exploring the codebase, or a developer eager to expand it further — this repository provides the blueprint for a modern, inclusive, and high-performing event system.
 
 💡 With continuous improvements in testing, documentation, and community support, the project is well-positioned to evolve and thrive. Your feedback and contributions are the key to shaping its next chapter — **thank you for being a part of it!**
+
+---
+
+
+
+## 💬 Join the Conversation
+
+We’ve opened [GitHub Discussions](https://github.com/ram-bhagat-thakur/Dynamic-Public-Event-Registration-System/discussions/1) to connect with contributors, mentors, and curious developers.
+
+Feel free to:
+- Ask questions about the codebase
+- Share feedback or ideas
+- Collaborate on improvements
+
+👉 [Introduce yourself and join the thread](https://github.com/ram-bhagat-thakur/Dynamic-Public-Event-Registration-System/discussions/1)
 
 ---

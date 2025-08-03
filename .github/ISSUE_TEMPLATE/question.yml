@@ -1,0 +1,17 @@
+name: ❓ Question
+description: Ask a question about the project
+title: "[Question]: "
+labels: [question]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        💬 Prefer open conversation? [Join the discussion](https://github.com/ram-bhagat-thakur/Dynamic-Public-Event-Registration-System/discussions/1)
+
+        If your question is more technical or needs a deep dive, feel free to open an issue here.
+  - type: input
+    id: question
+    attributes:
+      label: What’s your question?
+      description: Be as specific as possible.
+      placeholder: e.g. How does the admin dashboard handle authentication?
