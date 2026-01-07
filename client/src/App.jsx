@@ -39,7 +39,7 @@ function App() {
                 <Route path="/admin/add-event" element={<ProtectedRoute><AddEvent /></ProtectedRoute>} />
                 <Route path="/admin/edit-event/:eventId" element={<ProtectedRoute><EditEvent /></ProtectedRoute>} />
                 <Route path="/register/:eventId" element={<RegisterEvent />} />
-                <Route path="/admin/register" element={<AdminRegister />} />
+                <Route path="/admin/register" element={<ProtectedRoute><AdminRegister /></ProtectedRoute>} />
                 <Route path="/admin/messages" element={<MessageList />} />
                 <Route path="/admin/registrants" element={<AllRegistrants />} />
                 <Route path="/admin/registrants/event/:eventId" element={<EventRegistrants />} />
